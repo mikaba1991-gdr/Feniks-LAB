@@ -1,0 +1,119 @@
+---
+import Logo from './Logo.astro';
+import Testo from './Testo.astro';
+import { contatti, isTodo, site, telHref, whatsappHref } from '../config/site';
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="thermal-line" aria-hidden="true"></div>
+  <div class="container cols">
+    <div>
+      <Logo />
+      <p class="tagline">{site.tagline}.</p>
+      <p class="muted">{site.owner}<br /><Testo value={contatti.citta} /></p>
+    </div>
+    <div>
+      <h2>{t(locale, 'footer.contacts')}</h2>
+      <ul>
+        <li><a href={telHref(contatti.telefono)}><Testo value={contatti.telefono} /></a></li>
+        <li><a href={whatsappHref(contatti.whatsapp)} target="_blank" rel="noopener">WhatsApp</a></li>
+        <li><a href={isTodo(contatti.email) ? '/contatti' : `mailto:${contatti.email}`}><Testo value={contatti.email} /></a></li>
+        {contatti.orari && <li class="muted"><Testo value={contatti.orari} /></li>}
+        {contatti.instagram && <li><a href={contatti.instagram} target="_blank" rel="noopener">Instagram</a></li>}
+      </ul>
+    </div>
+    <div>
+      <h2>{t(locale, 'footer.services')}</h2>
+      <ul>
+        <li><a href="/energia/conto-termico">Conto Termico</a></li>
+        <li><a href="/energia/detrazioni">Detrazioni fiscali</a></li>
+        <li><a href="/energia/progettazione-impianti">Progettazione impianti e Legge 10</a></li>
+        <li><a href="/energia/installatori">{t(locale, 'nav.installatori')}</a></li>
+        <li><a href="/design">Interior &amp; garden design</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>{t(locale, 'footer.info')}</h2>
+      <ul>
+        <li><a href="/lavori">{t(locale, 'nav.lavori')}</a></li>
+        <li><a href="/notizie">{t(locale, 'nav.notizie')}</a></li>
+        <li><a href="/privacy">{t(locale, 'footer.privacy')}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container legal">
+    <p>© {year} {site.name} – {site.owner}. {t(locale, 'footer.vat')} <Testo value={contatti.partitaIva} />. {t(locale, 'footer.rights')}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-8);
+    background: var(--surface);
+  }
+
+  .thermal-line {
+    height: 4px;
+    background: var(--thermal);
+  }
+
+  .cols {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-7) var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-family: var(--sans);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  a {
+    color: var(--ink);
+  }
+
+  a:hover {
+    color: var(--red);
+  }
+
+  .tagline {
+    margin-top: var(--space-3);
+    font-family: var(--serif);
+    font-size: 1.1rem;
+  }
+
+  .muted {
+    color: var(--muted);
+  }
+
+  .legal {
+    border-top: 1px solid var(--line);
+    padding-block: var(--space-4);
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+
+  .legal p {
+    margin: 0;
+  }
+</style>

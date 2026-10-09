@@ -1,0 +1,46 @@
+---
+// Logotipo provvisorio. TODO(Giada): sostituire con il logo vettoriale.
+interface Props {
+  href?: string;
+  label?: string;
+}
+const { href = '/', label = 'Feniks LAB, torna alla home' } = Astro.props;
+---
+
+<a class="logo" href={href} aria-label={label}>
+  <span class="mark" aria-hidden="true"></span>
+  <span class="word">Feniks</span><span class="lab">LAB</span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+
+  .mark {
+    width: 0.9rem;
+    height: 1.25rem;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: linear-gradient(180deg, var(--ember), var(--red));
+    transform: rotate(-12deg);
+  }
+
+  .lab {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 0.15rem 0.4rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--bg);
+  }
+</style>

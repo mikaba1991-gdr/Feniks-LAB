@@ -1,0 +1,109 @@
+---
+// CTA "Parla con l'esperto": barra fissa in basso su mobile (su desktop è nell'header).
+import { contatti, telHref, whatsappHref } from '../config/site';
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const actions = [
+  { href: telHref(contatti.telefono), label: t(locale, 'cta.call'), icon: 'phone' },
+  { href: whatsappHref(contatti.whatsapp, t(locale, 'cta.whatsappText')), label: t(locale, 'cta.whatsapp'), icon: 'chat', external: true },
+  { href: '/contatti#ricontatto', label: t(locale, 'cta.callback'), icon: 'back' },
+];
+---
+
+<aside class="expert" aria-label={t(locale, 'cta.expert')}>
+  <p class="expert-title">{t(locale, 'cta.expert')}</p>
+  <ul>
+    {
+      actions.map((action) => (
+        <li>
+          <a href={action.href} target={action.external ? '_blank' : undefined} rel={action.external ? 'noopener' : undefined}>
+            <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
+              {action.icon === 'phone' && (
+                <path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor" />
+              )}
+              {action.icon === 'chat' && (
+                <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20z" fill="currentColor" />
+              )}
+              {action.icon === 'back' && (
+                <path d="M12 4a8 8 0 1 1-7.4 5H7a6 6 0 1 0 5-3v3L7 5l5-4v3z" fill="currentColor" />
+              )}
+            </svg>
+            <span>{action.label}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</aside>
+
+<style>
+  .expert {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 60;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -4px 16px rgb(0 0 0 / 0.08);
+    padding: var(--space-2) var(--space-3) calc(var(--space-2) + env(safe-area-inset-bottom));
+  }
+
+  .expert-title {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+  }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    min-height: 3rem;
+    border-radius: var(--radius);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  li:first-child a {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  a:hover {
+    background: var(--bg);
+    color: var(--red);
+  }
+
+  li:first-child a:hover {
+    background: var(--accent-hover);
+    color: var(--accent-ink);
+  }
+
+  /* Su desktop la CTA è nell'header (sempre visibile perché fisso) */
+  @media (min-width: 60rem) {
+    .expert {
+      display: none;
+    }
+  }
+</style>
