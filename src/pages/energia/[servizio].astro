@@ -1,0 +1,73 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from '../../components/ServiceHero.astro';
+import Punti from '../../components/Punti.astro';
+import Fasi from '../../components/Fasi.astro';
+import Faq from '../../components/Faq.astro';
+import CtaRichiesta from '../../components/CtaRichiesta.astro';
+import { serviziEnergia, type ServizioEnergia } from '../../config/servizi';
+import { getPagina, hasTodo } from '../../lib/content';
+import { faqJsonLd, serviceJsonLd } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return serviziEnergia.map((servizio) => ({ params: { servizio: servizio.slug }, props: { servizio } }));
+}
+
+interface Props {
+  servizio: ServizioEnergia;
+}
+
+const { servizio } = Astro.props;
+const pagina = await getPagina(servizio.slug);
+const { Content } = await render(pagina);
+const hasBody = Boolean(pagina.body?.trim());
+const siteUrl = new URL('/', Astro.site ?? Astro.url);
+const richiesta = servizio.form ? `/energia/${servizio.slug}/richiesta` : '/contatti#ricontatto';
+
+// I dati strutturati si pubblicano solo quando i testi sono definitivi (senza TODO)
+const jsonLd = [
+  serviceJsonLd({ name: pagina.data.titolo, description: pagina.data.metaDescrizione, url: new URL(Astro.url.pathname, siteUrl), siteUrl }),
+  ...(pagina.data.faq.length > 0 && !hasTodo(pagina.data.faq) ? [faqJsonLd(pagina.data.faq)] : []),
+];
+---
+
+<BaseLayout
+  title={pagina.data.metaTitolo ?? pagina.data.titolo}
+  description={pagina.data.metaDescrizione}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Energia', href: '/energia' },
+    { name: pagina.data.titolo, href: `/energia/${servizio.slug}` },
+  ]}
+  jsonLd={jsonLd}
+>
+  <ServiceHero eyebrow="Energia" titolo={pagina.data.titolo} intro={pagina.data.intro}>
+    <a class="btn btn-primary" href={richiesta}>{servizio.form ? 'Richiedi un preventivo' : 'Chiedi un contatto'}</a>
+    <a class="btn btn-secondary" href="/energia/installatori">Sei un installatore?</a>
+  </ServiceHero>
+
+  <Punti punti={pagina.data.punti} />
+  <Fasi fasi={pagina.data.fasi} />
+
+  {
+    hasBody && (
+      <section class="section">
+        <div class="container narrow prose">
+          <Content />
+        </div>
+      </section>
+    )
+  }
+
+  <CtaRichiesta
+    href={richiesta}
+    titolo={servizio.form ? 'Ricevi un preventivo senza sopralluogo' : 'Parliamo del tuo progetto'}
+    testo={servizio.form
+      ? 'Compila la richiesta guidata e carica le foto dal telefono: riceviamo una scheda completa e ti rispondiamo con un preventivo.'
+      : 'Lascia un recapito e raccontaci cosa ti serve: ti ricontattiamo noi.'}
+    label={servizio.form ? 'Inizia la richiesta' : 'Richiamami'}
+  />
+
+  <Faq faq={pagina.data.faq} />
+</BaseLayout>

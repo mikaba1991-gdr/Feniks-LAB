@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from '../../components/ServiceHero.astro';
+import { getPagina } from '../../lib/content';
+
+const pagina = await getPagina('energia');
+const servizi = [
+  {
+    href: '/energia/conto-termico',
+    titolo: 'Conto Termico',
+    testo: 'Pratica per gli incentivi del GSE sugli impianti di riscaldamento.',
+    richiesta: '/energia/conto-termico/richiesta',
+  },
+  {
+    href: '/energia/detrazioni',
+    titolo: 'Detrazioni fiscali',
+    testo: 'Pratiche per le detrazioni sugli interventi in casa.',
+    richiesta: '/energia/detrazioni/richiesta',
+  },
+  {
+    href: '/energia/progettazione-impianti',
+    titolo: 'Progettazione impianti e Legge 10',
+    testo: 'Progetto dell’impianto termico e relazione tecnica.',
+  },
+];
+---
+
+<BaseLayout
+  title={pagina.data.metaTitolo ?? pagina.data.titolo}
+  description={pagina.data.metaDescrizione}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Energia', href: '/energia' },
+  ]}
+>
+  <ServiceHero eyebrow="Ramo Energia" titolo="Pratiche e progetti per l'energia della casa" intro={pagina.data.intro} />
+
+  <section class="section percorsi" aria-labelledby="percorsi-titolo">
+    <div class="container">
+      <h2 id="percorsi-titolo">Da dove parti?</h2>
+      <div class="grid">
+        <div class="card percorso">
+          <h3>Sono un privato</h3>
+          <p>Vuoi capire se puoi accedere agli incentivi e affidare a noi la pratica. Scegli il servizio e compila la richiesta: ci vogliono pochi minuti.</p>
+          <a class="btn btn-primary" href="/energia/conto-termico/richiesta?profilo=Privato">Richiesta Conto Termico</a>
+          <a class="btn btn-secondary" href="/energia/detrazioni/richiesta?profilo=Privato">Richiesta detrazioni</a>
+        </div>
+        <div class="card percorso installatore">
+          <h3>Sono un installatore o idraulico</h3>
+          <p>Gestiamo le pratiche dei tuoi clienti da remoto, in tutta Italia. Tu mandi foto e dati, noi pensiamo al resto.</p>
+          <a class="btn btn-primary" href="/energia/installatori">Scopri come lavoriamo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="servizi-titolo">
+    <div class="container">
+      <h2 id="servizi-titolo">Servizi</h2>
+      <ul class="grid servizi">
+        {
+          servizi.map((servizio) => (
+            <li class="card">
+              <h3>
+                <a href={servizio.href}>{servizio.titolo}</a>
+              </h3>
+              <p>{servizio.testo}</p>
+              {servizio.richiesta && <a href={servizio.richiesta}>Richiedi un preventivo →</a>}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .percorso {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    justify-items: start;
+  }
+
+  .percorso p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .installatore {
+    border: 2px solid var(--ember);
+  }
+
+  .servizi {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .servizi h3 a {
+    color: var(--ink);
+  }
+
+  .servizi p {
+    color: var(--muted);
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from '../../components/ServiceHero.astro';
+import Punti from '../../components/Punti.astro';
+import Faq from '../../components/Faq.astro';
+import CtaRichiesta from '../../components/CtaRichiesta.astro';
+import { contatti, telHref, whatsappHref } from '../../config/site';
+import { getPagina, hasTodo } from '../../lib/content';
+import { faqJsonLd, serviceJsonLd } from '../../lib/seo';
+
+const pagina = await getPagina('installatori');
+const siteUrl = new URL('/', Astro.site ?? Astro.url);
+const jsonLd = [
+  serviceJsonLd({ name: pagina.data.titolo, description: pagina.data.metaDescrizione, url: new URL(Astro.url.pathname, siteUrl), siteUrl }),
+  ...(pagina.data.faq.length > 0 && !hasTodo(pagina.data.faq) ? [faqJsonLd(pagina.data.faq)] : []),
+];
+---
+
+<BaseLayout
+  title={pagina.data.metaTitolo ?? pagina.data.titolo}
+  description={pagina.data.metaDescrizione}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Energia', href: '/energia' },
+    { name: 'Per installatori', href: '/energia/installatori' },
+  ]}
+  jsonLd={jsonLd}
+>
+  <ServiceHero eyebrow="Per installatori e idraulici" titolo={pagina.data.titolo} intro={pagina.data.intro}>
+    <a class="btn btn-primary" href="/energia/conto-termico/richiesta?profilo=Installatore">Invia una pratica Conto Termico</a>
+    <a class="btn btn-secondary" href="/energia/detrazioni/richiesta?profilo=Installatore">Invia una pratica detrazioni</a>
+  </ServiceHero>
+
+  <Punti punti={pagina.data.punti} />
+
+  <CtaRichiesta
+    href="/energia/conto-termico/richiesta?profilo=Installatore"
+    titolo="Hai un cliente da seguire?"
+    testo="Mandaci i dati e le foto dal cantiere: ti rispondiamo con un preventivo per la pratica. Preferisci parlarne prima?"
+    label="Invia una pratica"
+  >
+    <a href={telHref(contatti.telefono)}>Chiama</a>
+    <a href={whatsappHref(contatti.whatsapp, 'Buongiorno, sono un installatore e vorrei informazioni sulle pratiche.')} target="_blank" rel="noopener">WhatsApp</a>
+  </CtaRichiesta>
+
+  <Faq faq={pagina.data.faq} />
+</BaseLayout>

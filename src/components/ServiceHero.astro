@@ -1,0 +1,40 @@
+---
+import Testo from './Testo.astro';
+
+interface Props {
+  eyebrow: string;
+  titolo: string;
+  intro: string;
+}
+
+const { eyebrow, titolo, intro } = Astro.props;
+---
+
+<section class="service-hero">
+  <div class="container">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{titolo}</h1>
+    <p class="lead"><Testo value={intro} /></p>
+    <div class="actions"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .service-hero {
+    padding-block: var(--space-6) var(--space-7);
+    background:
+      radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--ember) 18%, transparent), transparent 60%),
+      radial-gradient(ellipse at 0% 100%, color-mix(in srgb, var(--cold) 14%, transparent), transparent 60%);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  .actions:empty {
+    display: none;
+  }
+</style>

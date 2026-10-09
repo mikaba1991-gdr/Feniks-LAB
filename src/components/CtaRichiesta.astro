@@ -1,0 +1,79 @@
+---
+// Fascia di invito all'azione verso il modulo guidato.
+interface Props {
+  href: string;
+  titolo: string;
+  testo: string;
+  label?: string;
+}
+
+const { href, titolo, testo, label = 'Inizia la richiesta' } = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <div class="cta">
+      <div>
+        <h2>{titolo}</h2>
+        <p>{testo}</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-light" href={href}>{label}</a>
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    display: grid;
+    gap: var(--space-5);
+    padding: var(--space-6) var(--space-5);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(120deg, #2b5470 0%, #7d2a24 60%, #9e1b22 100%);
+    color: #fff;
+  }
+
+  h2 {
+    color: #fff;
+  }
+
+  p {
+    margin: 0;
+    opacity: 0.95;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  .btn-light {
+    background: #fff;
+    color: #9e1b22;
+  }
+
+  .btn-light:hover {
+    background: #fbf5f3;
+    color: #6f1218;
+  }
+
+  .cta-actions :global(a:not(.btn)) {
+    color: #fff;
+  }
+
+  @media (min-width: 60rem) {
+    .cta {
+      grid-template-columns: 1.5fr 1fr;
+      align-items: center;
+      padding: var(--space-7);
+    }
+
+    .cta-actions {
+      justify-content: flex-end;
+    }
+  }
+</style>

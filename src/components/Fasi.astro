@@ -1,0 +1,90 @@
+---
+// Schema visivo delle fasi di una pratica.
+import Testo from './Testo.astro';
+
+interface Props {
+  fasi: { titolo: string; testo: string }[];
+  titolo?: string;
+}
+
+const { fasi, titolo = 'Come funziona' } = Astro.props;
+---
+
+{
+  fasi.length > 0 && (
+    <section class="fasi section" aria-labelledby="fasi-titolo">
+      <div class="container">
+        <h2 id="fasi-titolo">{titolo}</h2>
+        <ol>
+          {fasi.map((fase, index) => (
+            <li>
+              <span class="num" aria-hidden="true">{index + 1}</span>
+              <h3><Testo value={fase.titolo} /></h3>
+              <p><Testo value={fase.testo} /></p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+    counter-reset: fase;
+  }
+
+  li {
+    position: relative;
+    padding: var(--space-4) var(--space-4) var(--space-4) 4rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+
+  .num {
+    position: absolute;
+    left: var(--space-4);
+    top: var(--space-4);
+    width: 2.25rem;
+    height: 2.25rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--thermal);
+    background-size: 500% 100%;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  li:nth-child(1) .num { background-position: 0% 0; }
+  li:nth-child(2) .num { background-position: 25% 0; }
+  li:nth-child(3) .num { background-position: 50% 0; }
+  li:nth-child(4) .num { background-position: 75% 0; }
+  li:nth-child(5) .num { background-position: 100% 0; }
+
+  h3 {
+    font-size: 1.15rem;
+    margin-bottom: var(--space-1);
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  @media (min-width: 60rem) {
+    ol {
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    }
+
+    li {
+      padding: 4rem var(--space-4) var(--space-4);
+    }
+  }
+</style>
