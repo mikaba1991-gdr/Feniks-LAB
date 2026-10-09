@@ -1,0 +1,11 @@
+# Copia questo file in .dev.vars (ignorato da git) per provare le Functions in locale
+# con `npm run build && npm run preview`. Sono tutti valori finti.
+
+# Chiave di test Turnstile che fa sempre passare la verifica
+TURNSTILE_SECRET="1x0000000000000000000000000000000AA"
+FILE_LINK_SECRET="segreto-di-sviluppo-da-cambiare"
+RESEND_API_KEY="re_finta"
+MAIL_TO="giada@example.com"
+MAIL_FROM="Feniks LAB <richieste@example.com>"
+# Con "1" le email non vengono inviate ma stampate nel terminale
+MAIL_DRY_RUN="1"
