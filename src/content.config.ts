@@ -7,6 +7,10 @@ import { formConfigSchema } from './lib/forms/schema';
 // Schemi dei contenuti gestiti da Giada. Se un campo è sbagliato la build si ferma
 // indicando file e campo: i messaggi sono in italiano dove serve chiarezza.
 
+/** Il pannello può salvare campi lasciati vuoti come "": per gli schemi equivalgono a "non compilato". */
+const emptyToUndefined = (value: unknown) => (value === '' || value === null ? undefined : value);
+const optionalText = (schema: z.ZodString = z.string()) => z.preprocess(emptyToUndefined, schema.optional());
+
 export const SERVIZI = ['conto-termico', 'detrazioni', 'progettazione', 'interior', 'garden'] as const;
 
 const fotoSchema = (image: ImageFunction) =>
@@ -45,9 +49,13 @@ const notizie = defineCollection({
       titolo: z.string({ error: 'manca il titolo' }).min(3),
       data: z.coerce.date({ error: 'data non valida: usa il formato AAAA-MM-GG' }),
       sommario: z.string({ error: 'manca il sommario' }).min(20).max(300, 'sommario troppo lungo (max 300 caratteri)'),
-      video: youtubeUrl.optional(),
-      immagine: fotoSchema(image).optional(),
-      tag: z.array(z.string()).default([]),
+      video: optionalText(youtubeUrl),
+      // Immagine facoltativa: se il pannello salva un oggetto vuoto, vale come "nessuna immagine"
+      immagine: z.preprocess(
+        (value) => (value && typeof value === 'object' && !(value as { src?: unknown }).src ? undefined : value),
+        fotoSchema(image).optional(),
+      ),
+      tag: z.preprocess(emptyToUndefined, z.array(z.string()).default([])),
       bozza: z.boolean().default(false),
     }),
 });
@@ -59,7 +67,7 @@ const pagine = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/pagine' }),
   schema: z.object({
     titolo: z.string({ error: 'manca il titolo' }),
-    metaTitolo: z.string().max(60, 'metaTitolo troppo lungo per Google (max 60 caratteri)').optional(),
+    metaTitolo: optionalText(z.string().max(60, 'metaTitolo troppo lungo per Google (max 60 caratteri)')),
     metaDescrizione: z
       .string({ error: 'manca la metaDescrizione (testo che appare su Google)' })
       .max(160, 'metaDescrizione troppo lunga (max 160 caratteri)'),

@@ -60,3 +60,15 @@ Non impostare `MAIL_DRY_RUN` in produzione.
 1. Invia una richiesta di prova dal telefono con 2–3 foto.
 2. Controlla che a Giada arrivi la scheda e al cliente la conferma.
 3. Apri un link a una foto dall'email: deve aprirsi; modificando un carattere del link deve dare "Link non valido".
+
+## 7. Pannello contenuti (Pages CMS)
+
+1. Vai su [app.pagescms.org](https://app.pagescms.org), entra con GitHub (Michele) e installa la GitHub App
+   di Pages CMS **solo** su questo repository.
+2. Apri il repository nel pannello: legge `.pages.yml` e mostra Lavori, Notizie, Testi delle pagine, Contatti.
+3. Collaborators → invita l'email di Giada. Lei entra con un codice via email, senza account GitHub.
+4. Ogni salvataggio dal pannello è un commit su `main` → Cloudflare ricostruisce il sito in 2–3 minuti.
+5. In Cloudflare → Notifications attiva l'avviso "Pages build failed" verso Michele: se Giada salva un campo
+   non valido la build si ferma con il nome del file e del campo, e il sito resta alla versione precedente.
+
+`/admin` sul sito reindirizza al pannello (`public/_redirects`).

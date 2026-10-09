@@ -32,8 +32,8 @@ i contenuti da sola tramite pannello `/admin`.
 | Storage file | Cloudflare R2, binding `RICHIESTE` |
 | Email | Resend (API HTTP) |
 | Anti-spam | Cloudflare Turnstile |
-| CMS | Git-based su `/admin` — **decisione aperta**: Decap/Sveltia CMS oppure Pages CMS. Non implementare finché non è deciso |
-| Mappa | Leaflet + tile OpenStreetMap (con attribuzione obbligatoria) |
+| CMS | **Pages CMS** (hosted, app.pagescms.org), configurato in `.pages.yml`; `/admin` reindirizza lì (`public/_redirects`). Giada entra come collaboratrice invitata per email |
+| Mappa | Leaflet + tile OpenStreetMap (con attribuzione obbligatoria), caricata in automatico quando entra nello schermo |
 | Analytics | Cloudflare Web Analytics (senza cookie) |
 | Package manager | npm, versioni fissate nel `package-lock.json` |
 
@@ -56,7 +56,7 @@ i contenuti da sola tramite pannello `/admin`.
 ├─ docs/specifiche.md            # specifiche di business
 ├─ astro.config.mjs              # i18n, sitemap, integrazioni
 ├─ public/
-│  └─ admin/                     # pannello CMS (quando deciso)
+│  └─ _redirects                 # /admin → Pages CMS
 ├─ src/
 │  ├─ config/
 │  │  ├─ forms/                  # un file JSON per modulo (vedi §6)
@@ -220,7 +220,7 @@ Ogni voce = una PR. Spunta solo quando la PR è unita.
 - [ ] F1-08 Mappa lavori + elenco + pagina dettaglio lavoro
 - [ ] F1-09 Notizie: elenco, dettaglio, video al click
 - [ ] F1-10 SEO (§9), privacy, pagina 404, pagina "Design in arrivo"
-- [ ] F1-11 Pannello CMS `/admin` (dopo la decisione Decap vs Pages CMS)
+- [ ] F1-11 Pannello CMS: Pages CMS con `.pages.yml` (decisione presa)
 - [ ] F1-12 Guida d'uso per Giada in `docs/guida-pannello.md` (linguaggio semplice, con passi)
 
 ## 12. Backlog — Fase 2 (Design)
