@@ -5,56 +5,58 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Feniks LAB – Proposte grafiche</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&amp;family=Fraunces:opsz,wght@9..144,600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&amp;family=Fraunces:opsz,wght@9..144,600&amp;family=Jost:wght@400&amp;display=swap">
 <style>
-body{margin:0;background:#F4E7E3;color:#2E2828;font:17px/1.6 'Bricolage Grotesque',system-ui,sans-serif}
-main{max-width:960px;margin:0 auto;padding:48px 20px 80px}
-h1{font:600 clamp(32px,6vw,52px)/1.1 Fraunces,Georgia,serif;margin:0 0 12px}
-.lead{color:#6E6260;margin:0 0 32px;max-width:40em}
-.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))}
-.card{background:#FBF5F3;border:1px solid #DCC7C2;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
-.swatch{height:120px}
+body{margin:0;background:#FBF7F4;color:#3B3B3B;font:17px/1.6 'Bricolage Grotesque',system-ui,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:40px 20px 80px}
+.top{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:12px}
+.top img{width:110px;height:auto}
+h1{font:600 clamp(30px,5vw,46px)/1.1 Fraunces,Georgia,serif;margin:0}
+.lead{color:#6B6461;margin:0 0 32px;max-width:44em}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))}
+.card{background:#fff;border:1px solid #EAD9D0;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.swatch{height:110px}
 .body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
 h2{font:600 26px/1.15 Fraunces,Georgia,serif;margin:0}
-p{margin:0;color:#6E6260}
-.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
-a.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:99px;background:#9E1B22;color:#fff;text-decoration:none;font-weight:600}
-a.btn.alt{background:transparent;color:#2E2828;border:2px solid #2E2828}
-a.btn:hover{background:#7D141A;color:#fff}
-.note{margin-top:32px;font-size:15px;color:#6E6260}
+p{margin:0;color:#6B6461}
+.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+a.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:99px;background:#B04A2A;color:#fff;text-decoration:none;font-weight:600}
+a.btn.alt{background:transparent;color:#3B3B3B;border:2px solid #3B3B3B}
+a.btn:hover{background:#8A3820;color:#fff}
+.note{margin-top:32px;font-size:15px}
 </style>
 </head>
 <body>
 <main>
-  <h1>Feniks LAB – tre proposte grafiche</h1>
-  <p class="lead">Stessi colori del logo e stessi contenuti, tre caratteri diversi. Guarda ogni proposta sia su computer sia su telefono, poi scegli quella che senti più tua (si possono anche mescolare dettagli). I testi tra [parentesi quadre] sono da scrivere.</p>
+  <div class="top"><img src="img/logo.png" alt="Feniks LAB – Re-image your living space"><h1>Tre proposte grafiche per il sito</h1></div>
+  <p class="lead">Stessa struttura (home con Energia e Interior, pagina Energia con privati e installatori, versione telefono), stessi colori del logo, tre caratteri diversi. Guardale sia su computer sia su telefono e scegli quella che senti più tua: si possono anche mescolare dettagli. I testi tra [parentesi quadre] sono da scrivere.</p>
   <div class="grid">
     <article class="card">
-      <div class="swatch" style="background:linear-gradient(90deg,#3D6E8C,#E9C3BE,#D9542B,#9E1B22)"></div>
+      <div class="swatch" style="background:linear-gradient(90deg,#8DBF8A,#FFCE6D,#F18A6B)"></div>
       <div class="body">
         <h2>A · Studio caldo</h2>
-        <p>Accogliente ed elegante, da rivista. Titoli con grazie, fondo rosa cipria, la fascia termica come firma. Parla soprattutto ai privati.</p>
-        <div class="links"><a class="btn" href="a-desktop.html">Computer</a><a class="btn alt" href="a-telefono.html">Telefono</a></div>
+        <p>Accogliente ed elegante, toni chiari e caldi, titoli con grazie. Morbida e rassicurante, parla bene ai privati.</p>
+        <div class="links"><a class="btn" href="a-home.html">Home</a><a class="btn alt" href="a-energia.html">Energia</a><a class="btn alt" href="a-telefono.html">Telefono</a></div>
       </div>
     </article>
     <article class="card">
-      <div class="swatch" style="background:#FBF5F3;background-image:linear-gradient(#DCC7C2 1px,transparent 1px),linear-gradient(90deg,#DCC7C2 1px,transparent 1px);background-size:20px 20px;border-bottom:3px solid #2E2828"></div>
+      <div class="swatch" style="background:#fff;background-image:linear-gradient(#EAD9D0 1px,transparent 1px),linear-gradient(90deg,#EAD9D0 1px,transparent 1px);background-size:20px 20px;border-bottom:3px solid #3B3B3B"></div>
       <div class="body">
         <h2>B · Tecnico preciso</h2>
-        <p>Da studio di ingegneria: griglia, numeri, scheda cliente in vista. Trasmette metodo e affidabilità, ottimo per gli installatori.</p>
-        <div class="links"><a class="btn" href="b-desktop.html">Computer</a><a class="btn alt" href="b-telefono.html">Telefono</a></div>
+        <p>Da studio di ingegneria: griglia, numeri, schede ordinate. Trasmette metodo e affidabilità, ottima per gli installatori.</p>
+        <div class="links"><a class="btn" href="b-home.html">Home</a><a class="btn alt" href="b-energia.html">Energia</a><a class="btn alt" href="b-telefono.html">Telefono</a></div>
       </div>
     </article>
     <article class="card">
-      <div class="swatch" style="background:#1C1717;border-bottom:8px solid #D9542B"></div>
+      <div class="swatch" style="background:#1E1B1A;border-bottom:10px solid #F18A6B"></div>
       <div class="body">
         <h2>C · Fenice audace</h2>
-        <p>Scuro e d'impatto, titoli grandi e corsivi, molto "Instagram". Si ricorda, ma è la più lontana da un sito tecnico classico.</p>
-        <div class="links"><a class="btn" href="c-desktop.html">Computer</a><a class="btn alt" href="c-telefono.html">Telefono</a></div>
+        <p>Scura e d'impatto, la fenice in primo piano, titoli grandi. Si ricorda, molto "Instagram", ma meno classica.</p>
+        <div class="links"><a class="btn" href="c-home.html">Home</a><a class="btn alt" href="c-energia.html">Energia</a><a class="btn alt" href="c-telefono.html">Telefono</a></div>
       </div>
     </article>
   </div>
-  <p class="note">Le immagini sono segnaposto: nel sito vero ci saranno le foto di Giada e dei lavori. I pulsanti non portano da nessuna parte.</p>
+  <p class="note">La foto è quella della firma email: per il sito servirà l'originale ad alta risoluzione. I pulsanti non portano da nessuna parte.</p>
 </main>
 </body>
 </html>
