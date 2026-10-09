@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import VideoYouTube from '../../components/VideoYouTube.astro';
+import { formatDate, getNotizie } from '../../lib/content';
+import { articleJsonLd } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  const notizie = await getNotizie();
+  return notizie.map((notizia) => ({ params: { id: notizia.id }, props: { notizia } }));
+}
+
+const { notizia } = Astro.props;
+const { titolo, data, sommario, video, immagine, tag } = notizia.data;
+const { Content } = await render(notizia);
+const siteUrl = new URL('/', Astro.site ?? Astro.url);
+const imageUrl = immagine ? new URL(immagine.src.src, siteUrl).href : undefined;
+---
+
+<BaseLayout
+  title={titolo}
+  description={sommario}
+  image={immagine?.src.src}
+  ogType="article"
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Notizie', href: '/notizie' },
+    { name: titolo, href: `/notizie/${notizia.id}` },
+  ]}
+  jsonLd={[articleJsonLd({ title: titolo, description: sommario, url: new URL(Astro.url.pathname, siteUrl), date: data, image: imageUrl, siteUrl })]}
+>
+  <article class="section">
+    <div class="container narrow">
+      <p class="eyebrow"><time datetime={data.toISOString()}>{formatDate(data)}</time>{tag.length > 0 && ` · ${tag.join(', ')}`}</p>
+      <h1>{titolo}</h1>
+      <p class="lead">{sommario}</p>
+      {video && <VideoYouTube url={video} title={titolo} />}
+      {!video && immagine && <Image src={immagine.src} alt={immagine.alt} widths={[600, 1200]} sizes="(min-width: 48rem) 44rem, 100vw" class="cover" />}
+      <div class="prose"><Content /></div>
+      <p class="back"><a href="/notizie">← Tutte le notizie</a></p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .cover {
+    border-radius: var(--radius-lg);
+    margin-block: var(--space-5);
+    width: 100%;
+  }
+
+  .back {
+    margin-top: var(--space-6);
+  }
+</style>

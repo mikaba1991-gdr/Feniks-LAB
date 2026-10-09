@@ -1,0 +1,96 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, SERVIZIO_LABEL } from '../lib/content';
+
+interface Props {
+  lavoro: CollectionEntry<'lavori'>;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { lavoro, headingLevel: Heading = 'h3' } = Astro.props;
+const { titolo, citta, servizio, foto, data, descrizione, bozza } = lavoro.data;
+const cover = foto[0];
+---
+
+<article class="card lavoro">
+  {cover && <Image src={cover.src} alt={cover.alt} widths={[400, 800]} sizes="(min-width: 60rem) 22rem, 100vw" class="cover" />}
+  <p class="meta">
+    <span class="tag">{SERVIZIO_LABEL[servizio]}</span>
+    {citta} · <time datetime={data.toISOString()}>{formatDate(data)}</time>
+    {bozza && <span class="todo">bozza</span>}
+  </p>
+  <Heading class="title"><a href={`/lavori/${lavoro.id}`}>{titolo}</a></Heading>
+  <p class="desc">{descrizione}</p>
+</article>
+
+<style>
+  .lavoro {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .cover {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .meta,
+  .title,
+  .desc {
+    padding-inline: var(--space-4);
+  }
+
+  .meta {
+    margin: var(--space-4) 0 var(--space-2);
+    font-size: var(--fs-sm);
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .tag {
+    background: var(--blush);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 0 var(--space-2);
+    font-weight: 600;
+  }
+
+  .title {
+    font-size: 1.2rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .title a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  /* Tutta la card è cliccabile */
+  .title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .title a:focus-visible {
+    outline: none;
+  }
+
+  .lavoro:has(a:focus-visible) {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .desc {
+    color: var(--muted);
+    margin-bottom: var(--space-4);
+  }
+</style>

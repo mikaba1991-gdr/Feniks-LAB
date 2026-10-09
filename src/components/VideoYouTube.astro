@@ -1,0 +1,104 @@
+---
+// Video YouTube caricato solo al click, dal dominio youtube-nocookie.com.
+// Prima del click non parte nessuna richiesta verso YouTube (niente anteprima remota).
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  url: string;
+  title: string;
+  locale?: Locale;
+}
+
+const { url, title, locale = 'it' } = Astro.props;
+const match = url.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w-]{11})/);
+const videoId = match?.[1];
+---
+
+{
+  videoId && (
+    <div class="video" data-video={videoId} data-title={title}>
+      <button type="button" class="play">
+        <svg viewBox="0 0 68 48" width="68" height="48" aria-hidden="true">
+          <path d="M66.5 7.7A8.6 8.6 0 0 0 60.4 1.6C55.1.2 34 .2 34 .2S12.9.2 7.6 1.6A8.6 8.6 0 0 0 1.5 7.7C.1 13 .1 24 .1 24s0 11 1.4 16.3a8.6 8.6 0 0 0 6.1 6.1C12.9 47.8 34 47.8 34 47.8s21.1 0 26.4-1.4a8.6 8.6 0 0 0 6.1-6.1C67.9 35 67.9 24 67.9 24s0-11-1.4-16.3z" fill="#9E1B22" />
+          <path d="M45 24 27 14v20" fill="#fff" />
+        </svg>
+        <span class="label">{t(locale, 'video.play')}: {title}</span>
+      </button>
+      <p class="notice">{t(locale, 'video.notice')}</p>
+    </div>
+  )
+}
+
+<script>
+  for (const box of document.querySelectorAll<HTMLElement>('[data-video]')) {
+    box.querySelector('button')?.addEventListener(
+      'click',
+      () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${box.dataset.video}?autoplay=1&rel=0`;
+        iframe.title = box.dataset.title ?? 'Video';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        box.replaceChildren(iframe);
+        iframe.focus();
+      },
+      { once: true },
+    );
+  }
+</script>
+
+<style>
+  .video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: linear-gradient(135deg, #2e2828, #3d6e8c);
+    color: #fff;
+    margin-block: var(--space-5);
+  }
+
+  .play {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-3);
+    background: none;
+    border: 0;
+    color: inherit;
+    font: 600 1rem var(--sans);
+    cursor: pointer;
+    padding: var(--space-4);
+    text-align: center;
+  }
+
+  .play:hover svg {
+    transform: scale(1.08);
+  }
+
+  .play svg {
+    transition: transform 0.15s;
+  }
+
+  .notice {
+    position: absolute;
+    bottom: var(--space-2);
+    left: 0;
+    right: 0;
+    margin: 0;
+    font-size: 0.8rem;
+    text-align: center;
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  .video :global(iframe) {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>

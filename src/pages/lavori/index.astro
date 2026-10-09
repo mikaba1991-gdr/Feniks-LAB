@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LavoroCard from '../../components/LavoroCard.astro';
+import MappaLavori from '../../components/MappaLavori.astro';
+import { getLavori } from '../../lib/content';
+
+const lavori = await getLavori();
+---
+
+<BaseLayout
+  title="Lavori"
+  description="I lavori di Feniks LAB in Italia: pratiche Conto Termico, detrazioni, progettazione impianti e design, sulla mappa e in elenco."
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Lavori', href: '/lavori' },
+  ]}
+>
+  <section class="section">
+    <div class="container">
+      <h1>Lavori</h1>
+      <p class="lead">Alcuni dei lavori seguiti dallo studio, in tutta Italia.</p>
+      {
+        lavori.length === 0 ? (
+          <p>A breve pubblicheremo qui i primi lavori.</p>
+        ) : (
+          <>
+            <MappaLavori lavori={lavori} />
+            <h2 class="visually-hidden">Elenco dei lavori</h2>
+            <div class="grid elenco">
+              {lavori.map((lavoro) => <LavoroCard lavoro={lavoro} />)}
+            </div>
+          </>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .elenco {
+    margin-top: var(--space-6);
+  }
+</style>

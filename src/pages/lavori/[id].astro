@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, getLavori, SERVIZIO_LABEL } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const lavori = await getLavori();
+  return lavori.map((lavoro) => ({ params: { id: lavoro.id }, props: { lavoro } }));
+}
+
+const { lavoro } = Astro.props;
+const { titolo, citta, servizio, data, foto, descrizione } = lavoro.data;
+const { Content } = await render(lavoro);
+const servizioHref: Record<string, string> = {
+  'conto-termico': '/energia/conto-termico',
+  detrazioni: '/energia/detrazioni',
+  progettazione: '/energia/progettazione-impianti',
+  interior: '/design',
+  garden: '/design',
+};
+---
+
+<BaseLayout
+  title={titolo}
+  description={descrizione}
+  image={foto[0]?.src.src}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Lavori', href: '/lavori' },
+    { name: titolo, href: `/lavori/${lavoro.id}` },
+  ]}
+>
+  <article class="section">
+    <div class="container narrow">
+      <p class="eyebrow">
+        <a href={servizioHref[servizio]}>{SERVIZIO_LABEL[servizio]}</a> · {citta} · <time datetime={data.toISOString()}>{formatDate(data)}</time>
+      </p>
+      <h1>{titolo}</h1>
+      <p class="lead">{descrizione}</p>
+      <div class="prose"><Content /></div>
+      <div class="gallery">
+        {foto.map((item) => <Image src={item.src} alt={item.alt} widths={[600, 1200]} sizes="(min-width: 48rem) 44rem, 100vw" />)}
+      </div>
+      <p><a href="/lavori">← Tutti i lavori</a></p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .gallery {
+    display: grid;
+    gap: var(--space-4);
+    margin-block: var(--space-6);
+  }
+
+  .gallery :global(img) {
+    border-radius: var(--radius-lg);
+    width: 100%;
+  }
+</style>
