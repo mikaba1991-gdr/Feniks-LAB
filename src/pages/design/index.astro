@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from '../../components/ServiceHero.astro';
+import { contatti, telHref, whatsappHref } from '../../config/site';
+import { getPagina } from '../../lib/content';
+
+const pagina = await getPagina('design');
+---
+
+<BaseLayout
+  title={pagina.data.metaTitolo ?? pagina.data.titolo}
+  description={pagina.data.metaDescrizione}
+  alternate={{ it: '/design', en: '/en/design' }}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Design', href: '/design' },
+  ]}
+>
+  <ServiceHero eyebrow="Design · in arrivo" titolo={pagina.data.titolo} intro={pagina.data.intro}>
+    <a class="btn btn-primary" href="/contatti#ricontatto">Chiedi informazioni</a>
+    <a class="btn btn-secondary" href={whatsappHref(contatti.whatsapp, 'Buongiorno, vorrei informazioni sul servizio di interior design.')} target="_blank" rel="noopener">WhatsApp</a>
+  </ServiceHero>
+
+  <section class="section">
+    <div class="container narrow">
+      <div class="card soon">
+        <h2>Il servizio online è in arrivo</h2>
+        <p>
+          Stiamo preparando pacchetti a prezzo chiaro, un breve quiz di stile e una stima indicativa del costo del progetto.
+          Nel frattempo puoi già contattarci per un progetto di interni o di giardino.
+        </p>
+        <p><a href={telHref(contatti.telefono)}>Chiama</a> · <a href="/contatti#ricontatto">Lascia un recapito</a></p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .soon {
+    border-left: 4px solid var(--ember);
+  }
+</style>

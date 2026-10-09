@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { contatti, isTodo, whatsappHref } from '../../../config/site';
+---
+
+<BaseLayout
+  locale="en"
+  title="Interior & garden design"
+  description="Interior and garden design by Feniks LAB: clear fixed-price packages and tailor-made projects. The online service is coming soon."
+  alternate={{ it: '/design', en: '/en/design' }}
+>
+  <section class="section">
+    <div class="container narrow">
+      <p class="eyebrow">Design · coming soon</p>
+      <h1>Interior &amp; garden design</h1>
+      <p class="lead">
+        We are preparing fixed-price design packages, a short style quiz and an indicative estimate of your project cost.
+        In the meantime, feel free to get in touch about an interior or garden project.
+      </p>
+      <p>
+        <a class="btn btn-primary" href={isTodo(contatti.email) ? '/contatti' : `mailto:${contatti.email}`}>Email us</a>
+        <a class="btn btn-secondary" href={whatsappHref(contatti.whatsapp, 'Hello, I would like information about your interior design service.')} target="_blank" rel="noopener">WhatsApp</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
