@@ -60,8 +60,6 @@
   "video.play": "Guarda il video",
   "video.notice": "Il video viene caricato da YouTube solo quando premi il pulsante.",
   "map.label": "Mappa dei lavori",
-  "map.load": "Mostra la mappa",
-  "map.notice": "La mappa usa i server di OpenStreetMap.",
   "slider.label": "Confronto prima e dopo",
   "wizard.err.tooLong": "Testo troppo lungo (massimo {max} caratteri).",
   "wizard.err.option": "Scegli una delle opzioni proposte.",

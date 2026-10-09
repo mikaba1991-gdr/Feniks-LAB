@@ -1,6 +1,6 @@
 ---
-// Mappa dei lavori (Leaflet + OpenStreetMap). Si carica solo al click:
-// così nessuna richiesta parte verso server esterni senza un'azione dell'utente.
+// Mappa dei lavori (Leaflet + OpenStreetMap). Si carica da sola quando arriva vicino allo schermo,
+// così le pagine restano leggere finché la mappa non serve.
 import type { CollectionEntry } from 'astro:content';
 import { SERVIZIO_LABEL } from '../lib/content';
 import { t, type Locale } from '../i18n';
@@ -26,14 +26,7 @@ const points = lavori.map((lavoro) => ({
 <div class="mappa" data-mappa style={`--map-height:${height}`}>
   <script type="application/json" data-points set:html={JSON.stringify(points)} />
   <div class="mappa-canvas" data-canvas role="region" aria-label={t(locale, 'map.label')}>
-    <div class="mappa-placeholder" data-placeholder>
-      <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true">
-        <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" />
-      </svg>
-      <p class="count">{points.length} {points.length === 1 ? 'lavoro' : 'lavori'}</p>
-      <button type="button" class="btn btn-primary" data-load>{t(locale, 'map.load')}</button>
-      <p class="notice">{t(locale, 'map.notice')}</p>
-    </div>
+    <p class="mappa-placeholder">{points.length} {points.length === 1 ? 'lavoro' : 'lavori'}</p>
   </div>
 </div>
 
@@ -94,9 +87,17 @@ const points = lavori.map((lavoro) => ({
     }
   }
 
-  for (const root of document.querySelectorAll<HTMLElement>('[data-mappa]')) {
-    root.querySelector('[data-load]')?.addEventListener('click', () => void loadMap(root), { once: true });
-  }
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        observer.unobserve(entry.target);
+        void loadMap(entry.target as HTMLElement);
+      }
+    },
+    { rootMargin: '300px' },
+  );
+  for (const root of document.querySelectorAll<HTMLElement>('[data-mappa]')) observer.observe(root);
 </script>
 
 <style>
@@ -115,26 +116,12 @@ const points = lavori.map((lavoro) => ({
 
   .mappa-placeholder {
     height: 100%;
+    margin: 0;
     display: grid;
     place-content: center;
-    justify-items: center;
-    gap: var(--space-2);
-    text-align: center;
-    padding: var(--space-4);
-    color: var(--red);
-  }
-
-  .count {
     font-family: var(--serif);
     font-size: var(--fs-h3);
-    color: var(--ink);
-    margin: 0;
-  }
-
-  .notice {
-    font-size: var(--fs-sm);
     color: var(--muted);
-    margin: 0;
   }
 </style>
 

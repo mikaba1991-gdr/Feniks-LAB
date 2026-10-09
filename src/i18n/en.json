@@ -60,8 +60,6 @@
   "video.play": "Watch the video",
   "video.notice": "The video is loaded from YouTube only when you press the button.",
   "map.label": "Project map",
-  "map.load": "Show the map",
-  "map.notice": "The map uses OpenStreetMap servers.",
   "slider.label": "Before and after comparison",
   "wizard.err.tooLong": "Text too long (maximum {max} characters).",
   "wizard.err.option": "Please choose one of the options.",
