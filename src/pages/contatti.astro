@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormWizard from '../components/FormWizard.astro';
+import Testo from '../components/Testo.astro';
+import { contatti, isTodo, telHref, whatsappHref } from '../config/site';
+---
+
+<BaseLayout
+  title="Contatti"
+  description="Contatta Feniks LAB, studio dell'Ing. Giada Molari: telefono, WhatsApp, email o richiesta di ricontatto."
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Contatti', href: '/contatti' },
+  ]}
+>
+  <section class="section">
+    <div class="container cols">
+      <div>
+        <h1>Parla con l'esperto</h1>
+        <p class="lead">Scegli il modo più comodo per te. Se preferisci, lascia un recapito e ti richiamiamo noi.</p>
+        <ul class="canali">
+          <li>
+            <span class="label">Telefono</span>
+            <a href={telHref(contatti.telefono)}><Testo value={contatti.telefono} /></a>
+          </li>
+          <li>
+            <span class="label">WhatsApp</span>
+            <a href={whatsappHref(contatti.whatsapp)} target="_blank" rel="noopener"><Testo value={contatti.whatsapp} /></a>
+          </li>
+          <li>
+            <span class="label">Email</span>
+            {isTodo(contatti.email) ? <Testo value={contatti.email} /> : <a href={`mailto:${contatti.email}`}>{contatti.email}</a>}
+          </li>
+          {
+            contatti.orari && (
+              <li>
+                <span class="label">Orari</span>
+                <Testo value={contatti.orari} />
+              </li>
+            )
+          }
+        </ul>
+        <p class="hint">
+          Per una pratica Conto Termico o detrazioni è più veloce la <a href="/energia/conto-termico/richiesta">richiesta guidata</a>:
+          ci arrivano subito dati e foto.
+        </p>
+      </div>
+      <div id="ricontatto">
+        <FormWizard formId="ricontatto" showTitle />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .cols {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .canali {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+    margin-block: var(--space-5);
+  }
+
+  .canali li {
+    display: grid;
+    gap: 0.1rem;
+    padding: var(--space-3) var(--space-4);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .label {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .canali a {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .hint {
+    color: var(--muted);
+  }
+
+  #ricontatto {
+    scroll-margin-top: 5rem;
+  }
+
+  @media (min-width: 60rem) {
+    .cols {
+      grid-template-columns: 1fr 1.1fr;
+      align-items: start;
+    }
+  }
+</style>

@@ -1,0 +1,569 @@
+---
+// Modulo guidato generico: disegna qualsiasi modulo descritto in src/config/forms/*.json.
+// L'HTML dei campi è generato qui (etichette e struttura accessibili), la logica è in scripts/wizard.ts.
+import { getEntry } from 'astro:content';
+import { contatti } from '../config/site';
+import { fieldLabel, normalizeOption, resolveForm, acceptedTypes, MAX_TOTAL_MB } from '../lib/forms/resolve';
+import { fileLimits } from '../lib/forms/validate';
+import type { FieldConfig, FormConfig } from '../lib/forms/types';
+import { formRegistry } from '../config/forms';
+import { pick, t, type Locale } from '../i18n';
+
+interface Props {
+  formId: string;
+  locale?: Locale;
+  /** Mostra il titolo del modulo sopra i passi */
+  showTitle?: boolean;
+}
+
+const { formId, locale = 'it', showTitle = false } = Astro.props;
+const entry = await getEntry('forms', formId);
+if (!entry) throw new Error(`Modulo "${formId}" non trovato in src/config/forms/`);
+if (!formRegistry[formId]) {
+  throw new Error(`Il modulo "${formId}" non è registrato in src/config/forms/index.ts: la Function non potrebbe riceverlo.`);
+}
+
+const form = resolveForm(entry.data as FormConfig);
+const strings = { ...pick(locale, 'wizard.') };
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '1x00000000000000000000AA';
+const total = form.passi.length;
+const uid = `w-${form.id}`;
+
+const fieldId = (field: FieldConfig) => `${uid}-${field.nome}`;
+const describedBy = (field: FieldConfig) =>
+  [field.aiuto || field.tipo === 'file' ? `${fieldId(field)}-aiuto` : '', `${fieldId(field)}-errore`].filter(Boolean).join(' ');
+const useRadios = (field: FieldConfig) => (field.opzioni?.length ?? 0) <= 6;
+const inputType = (field: FieldConfig): 'email' | 'tel' | 'text' =>
+  field.tipo === 'email' ? 'email' : field.tipo === 'telefono' ? 'tel' : 'text';
+const isTodoText = (text?: string) => Boolean(text && text.includes('TODO('));
+---
+
+<div class="wizard" data-wizard data-form-id={form.id} data-site-key={siteKey} data-locale={locale}>
+  <script type="application/json" data-config set:html={JSON.stringify(form)} />
+  <script type="application/json" data-strings set:html={JSON.stringify(strings)} />
+
+  <noscript>
+    <p class="noscript">{t(locale, 'wizard.noscript', { email: contatti.email, telefono: contatti.telefono })}</p>
+  </noscript>
+
+  {showTitle && <h2 class="wizard-title">{form.titolo}</h2>}
+  {form.descrizione && <p class:list={['wizard-intro', { todo: isTodoText(form.descrizione) }]}>{form.descrizione}</p>}
+
+  <form class="wizard-form" novalidate hidden aria-labelledby={`${uid}-step-title`}>
+    {
+      total > 1 && (
+        <div class="progress">
+          <p class="progress-text" aria-live="polite">
+            <span data-progress-label>{t(locale, 'wizard.step')} 1 {t(locale, 'wizard.of')} {total}</span>
+          </p>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-bar" data-progress-bar style={`width:${100 / total}%`} />
+          </div>
+        </div>
+      )
+    }
+
+    <p class="draft-notice" data-draft-notice hidden role="status">{t(locale, 'wizard.draftRestored')}</p>
+    <div class="error-summary" data-error-summary role="alert" tabindex="-1" hidden></div>
+
+    {
+      form.passi.map((passo, stepIndex) => (
+        <section class="step" data-step={stepIndex} hidden={stepIndex !== 0} aria-labelledby={`${uid}-step-${stepIndex}`}>
+          <h2 class="step-title" id={stepIndex === 0 ? `${uid}-step-title` : `${uid}-step-${stepIndex}`} tabindex="-1">
+            <span class="visually-hidden">{t(locale, 'wizard.step')} {stepIndex + 1}: </span>
+            {passo.titolo}
+          </h2>
+          {passo.descrizione && <p class="step-intro">{passo.descrizione}</p>}
+
+          {passo.campi.map((field) => {
+            const id = fieldId(field);
+            const label = fieldLabel(field);
+            const required = field.obbligatorio === true;
+            const showIf = field.mostraSe ? JSON.stringify(field.mostraSe) : undefined;
+            const hint = (
+              <>
+                {field.aiuto && (
+                  <p class:list={['hint', { todo: isTodoText(field.aiuto) }]} id={`${id}-aiuto`}>
+                    {field.aiuto}
+                  </p>
+                )}
+              </>
+            );
+            const error = <p class="field-error" id={`${id}-errore`} data-error-for={field.nome} hidden />;
+            const marker = required ? (
+              <span class="req" aria-hidden="true"> *</span>
+            ) : (
+              <span class="opt"> ({t(locale, 'wizard.optional')})</span>
+            );
+
+            if (field.tipo === 'scelta' || field.tipo === 'sceltaMultipla' || field.tipo === 'sceltaImmagini') {
+              const multiple = field.tipo === 'sceltaMultipla' || (field.tipo === 'sceltaImmagini' && field.multipla);
+              const options = (field.opzioni ?? []).map(normalizeOption);
+              if (field.tipo === 'scelta' && !useRadios(field)) {
+                return (
+                  <div class="field" data-field={field.nome} data-show-if={showIf}>
+                    <label for={id}>
+                      {label}
+                      {marker}
+                    </label>
+                    {hint}
+                    <select id={id} name={field.nome} required={required} aria-describedby={describedBy(field)}>
+                      <option value="">{t(locale, 'wizard.select')}</option>
+                      {options.map((option) => (
+                        <option value={option.valore}>{option.etichetta}</option>
+                      ))}
+                    </select>
+                    {error}
+                  </div>
+                );
+              }
+              return (
+                <fieldset
+                  class:list={['field', 'choices', { 'choices-images': field.tipo === 'sceltaImmagini' }]}
+                  data-field={field.nome}
+                  data-show-if={showIf}
+                  aria-describedby={describedBy(field)}
+                  aria-required={required ? 'true' : undefined}
+                >
+                  <legend>
+                    {label}
+                    {marker}
+                  </legend>
+                  {hint}
+                  <div class="choice-list">
+                    {options.map((option, index) => (
+                      <label class:list={['choice', { todo: isTodoText(option.etichetta) }]} for={`${id}-${index}`}>
+                        <input
+                          type={multiple ? 'checkbox' : 'radio'}
+                          id={`${id}-${index}`}
+                          name={field.nome}
+                          value={option.valore}
+                        />
+                        {option.immagine && <img src={option.immagine} alt="" loading="lazy" width="320" height="240" />}
+                        <span>{option.etichetta}</span>
+                      </label>
+                    ))}
+                  </div>
+                  {error}
+                </fieldset>
+              );
+            }
+
+            if (field.tipo === 'consenso') {
+              return (
+                <div class="field consent" data-field={field.nome} data-show-if={showIf}>
+                  <label class="consent-label" for={id}>
+                    <input type="checkbox" id={id} name={field.nome} required={required} aria-describedby={describedBy(field)} />
+                    <span>
+                      {field.testo}{' '}
+                      <a href="/privacy" target="_blank" rel="noopener">
+                        {t(locale, 'wizard.privacyLink')}
+                      </a>
+                      {marker}
+                    </span>
+                  </label>
+                  {error}
+                </div>
+              );
+            }
+
+            if (field.tipo === 'file') {
+              const { maxFile, maxMB } = fileLimits(field);
+              return (
+                <div class="field file-field" data-field={field.nome} data-show-if={showIf} data-file-field>
+                  <p class="file-label" id={`${id}-label`}>
+                    {label}
+                    {marker}
+                  </p>
+                  {field.aiuto && (
+                    <p class:list={['hint', { todo: isTodoText(field.aiuto) }]}>{field.aiuto}</p>
+                  )}
+                  <p class="hint" id={`${id}-aiuto`}>
+                    {t(locale, 'wizard.files.max', { maxFile, maxMB, total: MAX_TOTAL_MB })}
+                  </p>
+                  <input
+                    class="visually-hidden file-input"
+                    type="file"
+                    id={id}
+                    name={field.nome}
+                    multiple={maxFile > 1}
+                    accept={[...acceptedTypes(field), ...(acceptedTypes(field).includes('image/heic') ? ['.heic', '.heif'] : [])].join(',')}
+                    aria-describedby={describedBy(field)}
+                  />
+                  <label class="btn btn-secondary file-button" for={id}>
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                      <path fill="currentColor" d="M9 3 7.2 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3H9zm3 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                    </svg>
+                    {t(locale, 'wizard.files.add')}
+                  </label>
+                  <p class="file-status" data-file-status aria-live="polite" />
+                  <ul class="file-list" data-file-list />
+                  {error}
+                </div>
+              );
+            }
+
+            const common = {
+              id,
+              name: field.nome,
+              required,
+              placeholder: field.placeholder,
+              autocomplete: field.autocomplete,
+              'aria-describedby': describedBy(field),
+            };
+            return (
+              <div class="field" data-field={field.nome} data-show-if={showIf}>
+                <label for={id}>
+                  {label}
+                  {marker}
+                </label>
+                {hint}
+                {field.tipo === 'testoLungo' ? (
+                  <textarea {...common} rows="4" maxlength={field.maxLunghezza ?? 3000} />
+                ) : (
+                  <input
+                    {...common}
+                    type={inputType(field)}
+                    inputmode={field.tipo === 'numero' ? 'decimal' : undefined}
+                    maxlength={field.tipo === 'numero' ? undefined : (field.maxLunghezza ?? 200)}
+                  />
+                )}
+                {error}
+              </div>
+            );
+          })}
+
+          {stepIndex === total - 1 && (
+            <div class="field turnstile-field">
+              <p class="file-label">{t(locale, 'wizard.turnstile')}</p>
+              <div data-turnstile />
+              <p class="field-error" data-error-for="_turnstile" hidden />
+            </div>
+          )}
+        </section>
+      ))
+    }
+
+    <div class="wizard-nav">
+      <button type="button" class="btn btn-secondary" data-back hidden>{t(locale, 'wizard.back')}</button>
+      <button type="button" class="btn btn-primary" data-next hidden={total === 1}>{t(locale, 'wizard.next')}</button>
+      <button type="submit" class="btn btn-primary" data-submit hidden={total > 1}>{t(locale, 'wizard.submit')}</button>
+    </div>
+  </form>
+
+  <div class="success" data-success hidden tabindex="-1">
+    <h2>{t(locale, 'wizard.success.title')}</h2>
+    <p data-success-text></p>
+  </div>
+</div>
+
+<script>
+  import { initWizards } from '../scripts/wizard';
+  initWizards();
+</script>
+
+<style>
+  .wizard {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5) var(--space-4);
+    box-shadow: var(--shadow);
+  }
+
+  @media (min-width: 40rem) {
+    .wizard {
+      padding: var(--space-6);
+    }
+  }
+
+  .wizard-intro {
+    color: var(--muted);
+  }
+
+  .progress {
+    margin-bottom: var(--space-5);
+  }
+
+  .progress-text {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: var(--space-2);
+  }
+
+  .progress-track {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--line);
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--thermal);
+    background-size: 100vw 100%;
+    transition: width 0.3s ease;
+  }
+
+  .step-title {
+    font-size: var(--fs-h3);
+    outline: none;
+  }
+
+  .step-intro {
+    color: var(--muted);
+  }
+
+  .field {
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+
+  .field > label:not(.btn),
+  legend,
+  .file-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+    padding: 0;
+  }
+
+  .req {
+    color: var(--red);
+  }
+
+  .opt {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: var(--fs-sm);
+  }
+
+  .hint {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+    margin: calc(-1 * var(--space-1)) 0 var(--space-2);
+  }
+
+  input:not([type='checkbox'], [type='radio'], [type='file']),
+  select,
+  textarea {
+    width: 100%;
+    min-height: 3rem;
+    padding: var(--space-2) var(--space-3);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--ink);
+    font: inherit;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    border-color: var(--focus);
+  }
+
+  [aria-invalid='true'] {
+    border-color: var(--danger) !important;
+  }
+
+  .choice-list {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 3rem;
+    padding: var(--space-2) var(--space-4);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg);
+    cursor: pointer;
+  }
+
+  .choice:has(input:checked) {
+    border-color: var(--red);
+    background: color-mix(in srgb, var(--blush) 45%, var(--bg));
+  }
+
+  .choice:has(input:focus-visible) {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .choice input {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--red);
+    flex-shrink: 0;
+  }
+
+  .choices-images .choice-list {
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  }
+
+  .choices-images .choice {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-2);
+  }
+
+  .choices-images img {
+    border-radius: calc(var(--radius) - 4px);
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .consent-label {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  .consent-label input {
+    width: 1.35rem;
+    height: 1.35rem;
+    margin-top: 0.2rem;
+    accent-color: var(--red);
+    flex-shrink: 0;
+  }
+
+  .file-button {
+    cursor: pointer;
+  }
+
+  .file-input:focus-visible + .file-button {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .file-status {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+    margin: var(--space-2) 0;
+  }
+
+  .field-error {
+    color: var(--danger);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    margin: var(--space-2) 0 0;
+  }
+
+  .error-summary {
+    border: 2px solid var(--danger);
+    border-radius: var(--radius);
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-5);
+    color: var(--danger);
+    font-weight: 600;
+  }
+
+  .draft-notice {
+    background: color-mix(in srgb, var(--cold) 15%, var(--surface));
+    border-radius: var(--radius);
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--fs-sm);
+  }
+
+  .wizard-nav {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: var(--space-5);
+  }
+
+  .wizard-nav [data-next],
+  .wizard-nav [data-submit] {
+    margin-left: auto;
+  }
+
+  .noscript {
+    font-weight: 600;
+  }
+
+  .success h2 {
+    color: var(--ok);
+    outline: none;
+  }
+
+  .success:focus {
+    outline: none;
+  }
+</style>
+
+<style is:global>
+  /* Elementi creati dallo script: fuori dallo scope del componente */
+  .wizard .file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .wizard .file-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg);
+    font-size: var(--fs-sm);
+  }
+
+  .wizard .file-item img,
+  .wizard .file-item .file-icon {
+    width: 3rem;
+    height: 3rem;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background: var(--line);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 0.7rem;
+  }
+
+  .wizard .file-item .file-name {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .wizard .file-item button {
+    min-height: 2.5rem;
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .wizard .error-summary ul {
+    margin: var(--space-2) 0 0;
+    padding-left: var(--space-5);
+  }
+
+  .wizard .error-summary a {
+    color: var(--danger);
+  }
+</style>
