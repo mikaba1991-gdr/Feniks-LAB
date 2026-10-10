@@ -2,132 +2,177 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<title>B · Tecnico preciso – Energia</title>
+<title>B · Mix A+C – Energia</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&amp;family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,700&amp;family=Jost:wght@400;500&amp;display=swap">
 <style>
 body{margin:0}
-a{color:#B04A2A}a:hover{color:#8A3820}
+a{color:inherit}a:hover{opacity:.85}
 </style>
+<style>
+[data-theme-root] { --bg: #1E1B1A; --surface: #2A2524; --soft: #272120; --ink: #F3E9E6; --muted: #B9AAA7; --line: #3A3433; --accent: #F18A6B; --btn-bg: #F18A6B; --btn-ink: #2E2B2A; --inv: #2A2524; --inv-row: #3A3433; --inv-ink: #F3E9E6; --inv-muted: #D8CCC9; --field: #1E1B1A; --show-dark: block; --show-light: none; }
+html[data-theme="light"] [data-theme-root] { --bg: #FBF7F4; --surface: #FFFFFF; --soft: #F6E3D9; --ink: #3B3B3B; --muted: #6B6461; --line: #EAD9D0; --accent: #B04A2A; --btn-bg: #B04A2A; --btn-ink: #FFFFFF; --inv: #3B3B3B; --inv-row: #4A4645; --inv-ink: #FBF7F4; --inv-muted: #E4DCD8; --field: #FBF7F4; --show-dark: none; --show-light: block; }
+</style>
+<script>
+// Tema chiaro/scuro: scuro di default, la scelta resta salvata nel browser
+(function () {
+  var KEY = 'feniks-tema', root = document.documentElement;
+  try { var saved = localStorage.getItem(KEY); if (saved) root.dataset.theme = saved; } catch (e) {}
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-theme-toggle]');
+    if (!button) return;
+    var next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    root.dataset.theme = next;
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+  });
+})();
+</script>
 </head>
 <body>
-<div style="background: #FFFFFF; color: #3B3B3B; font-family: Jost, system-ui, sans-serif; font-size: 18px; line-height: 1.6; background-image: linear-gradient(#F3ECE8 1px, transparent 1px), linear-gradient(90deg, #F3ECE8 1px, transparent 1px); background-size: 40px 40px">
+<div data-theme-root style="background: var(--bg); color: var(--ink); font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 17px; line-height: 1.6">
 
-  <header style="background: #FFFFFF; border-bottom: 1px solid #DDD3CE">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 8px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap">
-      <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #3B3B3B">
-        <img src="img/marchio.png" alt="" style="width: 46px; height: 50px; object-fit: contain">
-        <span style="font-size: 21px; letter-spacing: 0.14em">FENIKS LAB</span>
+  <header style="background: var(--bg); border-bottom: 1px solid var(--line)">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 10px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap">
+      <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink)">
+        <img src="img/marchio-chiaro.png" alt="" style="display: var(--show-dark); width: 48px; height: 52px; object-fit: contain">
+        <img src="img/marchio.png" alt="" style="display: var(--show-light); width: 48px; height: 52px; object-fit: contain">
+        <span style="font-family: Jost, sans-serif; font-size: 21px; letter-spacing: 0.14em">FENIKS LAB</span>
       </a>
-      <nav aria-label="Navigazione principale" style="display: flex; gap: 4px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em">
-        <a href="#" style="color: #B04A2A; text-decoration: underline; padding: 8px 12px">01 Energia</a>
-        <a href="#" style="color: #3B3B3B; text-decoration: none; padding: 8px 12px">02 Interior</a>
-        <a href="#" style="color: #3B3B3B; text-decoration: none; padding: 8px 12px">03 Chi sono</a>
-        <a href="#" style="color: #3B3B3B; text-decoration: none; padding: 8px 12px">04 Contatti</a>
+      <nav aria-label="Navigazione principale" style="display: flex; gap: 28px; flex-wrap: wrap; font-size: 15px; font-weight: 500">
+        <a href="#" style="color: var(--accent); text-decoration: none; font-weight: 700">Energia</a>
+        <a href="#" style="color: var(--ink); text-decoration: none">Interior</a>
+        <a href="#" style="color: var(--ink); text-decoration: none">Chi sono</a>
+        <a href="#" style="color: var(--ink); text-decoration: none">Contatti</a>
       </nav>
-      <a href="#" style="background: #3B3B3B; color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 16px; padding: 11px 20px; border-radius: 6px">Parla con l'esperto</a>
+      <div style="display: flex; align-items: center; gap: 10px">
+        <button type="button" data-theme-toggle aria-label="Cambia tema chiaro o scuro" style="display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border: 1.5px solid var(--line); border-radius: 99px; background: var(--surface); color: var(--ink); cursor: pointer">
+          <svg style="display: var(--show-dark)" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+          <svg style="display: var(--show-light)" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg>
+        </button>
+        <a href="#" style="background: var(--btn-bg); color: var(--btn-ink); text-decoration: none; font-weight: 700; font-size: 15px; padding: 12px 22px; border-radius: 99px">Parla con l'esperto</a>
+      </div>
     </div>
   </header>
 
-  <section style="max-width: 1200px; margin: 0 auto; padding: 56px 32px 32px">
-    <p style="margin: 0 0 16px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #6B6461">HOME / 01 ENERGIA</p>
-    <h1 style="margin: 0 0 16px; font-weight: 600; font-size: clamp(44px, 7vw, 76px); line-height: 1; letter-spacing: -0.02em">Energia<span style="color: #F18A6B">.</span></h1>
-    <p style="margin: 0; max-width: 36em; font-size: 21px; color: #6B6461">[Due righe di Giada sui servizi per l'impianto.]</p>
+  <section style="max-width: 1240px; margin: 0 auto; padding: 64px 32px 40px">
+    <p style="margin: 0 0 20px; font-family: Jost, sans-serif; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted)">Home / Energia</p>
+    <h1 style="margin: 0 0 20px; font-family: Fraunces, Georgia, serif; font-weight: 700; font-style: italic; font-size: clamp(60px, 11vw, 124px); line-height: 0.9; color: var(--accent)">Energia</h1>
+    <p style="margin: 0; max-width: 32em; font-size: 21px; color: var(--muted)">[Due righe di Giada sui servizi per l'impianto.]</p>
   </section>
 
-  <section style="max-width: 1200px; margin: 0 auto; padding: 16px 32px 56px">
-    <div style="background: #FFFFFF; border: 1.5px solid #3B3B3B; border-radius: 10px; overflow: hidden">
-      <a href="#" style="display: grid; grid-template-columns: 90px minmax(0, 1fr) minmax(0, 1.3fr) 40px; gap: 16px; align-items: center; padding: 24px 28px; border-bottom: 1px solid #DDD3CE; color: #3B3B3B; text-decoration: none">
-        <span style="font-family: 'IBM Plex Mono', monospace; color: #B04A2A">E.01</span><span style="font-size: 26px; font-weight: 600">Legge 10</span><span style="color: #6B6461">[Descrizione breve di Giada]</span><span style="font-size: 24px">→</span>
-      </a>
-      <a href="#" style="display: grid; grid-template-columns: 90px minmax(0, 1fr) minmax(0, 1.3fr) 40px; gap: 16px; align-items: center; padding: 24px 28px; border-bottom: 1px solid #DDD3CE; color: #3B3B3B; text-decoration: none">
-        <span style="font-family: 'IBM Plex Mono', monospace; color: #B04A2A">E.02</span><span style="font-size: 26px; font-weight: 600">Conto Termico</span><span style="color: #6B6461">[Descrizione breve di Giada]</span><span style="font-size: 24px">→</span>
-      </a>
-      <a href="#" style="display: grid; grid-template-columns: 90px minmax(0, 1fr) minmax(0, 1.3fr) 40px; gap: 16px; align-items: center; padding: 24px 28px; color: #3B3B3B; text-decoration: none">
-        <span style="font-family: 'IBM Plex Mono', monospace; color: #B04A2A">E.03</span><span style="font-size: 26px; font-weight: 600">Detrazioni fiscali</span><span style="color: #6B6461">[Descrizione breve di Giada]</span><span style="font-size: 24px">→</span>
-      </a>
-    </div>
+  <section style="max-width: 1240px; margin: 0 auto; padding: 0 32px 72px">
+    <a href="#" style="display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; padding: 22px 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none">
+      <span style="flex: 0 0 120px; height: 84px; border-radius: 14px; background: #6E7F8C url(img/foto/progetto.jpg) center / cover"></span>
+      <span style="flex: 0 0 60px; font-family: Fraunces, Georgia, serif; font-size: 40px; font-style: italic; color: var(--accent)">01</span>
+      <span style="flex: 1 1 240px; font-family: Fraunces, Georgia, serif; font-size: 38px">Legge 10</span>
+      <span style="flex: 1 1 280px; color: var(--muted)">[Descrizione breve di Giada]</span>
+      <span style="font-size: 28px">→</span>
+    </a>
+    <a href="#" style="display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; padding: 22px 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none">
+      <span style="flex: 0 0 120px; height: 84px; border-radius: 14px; background: #E7A48E url(img/foto/pompa-di-calore.jpg) center / cover"></span>
+      <span style="flex: 0 0 60px; font-family: Fraunces, Georgia, serif; font-size: 40px; font-style: italic; color: var(--accent)">02</span>
+      <span style="flex: 1 1 240px; font-family: Fraunces, Georgia, serif; font-size: 38px">Conto Termico</span>
+      <span style="flex: 1 1 280px; color: var(--muted)">[Descrizione breve di Giada]</span>
+      <span style="font-size: 28px">→</span>
+    </a>
+    <a href="#" style="display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; padding: 22px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none">
+      <span style="flex: 0 0 120px; height: 84px; border-radius: 14px; background: #C9A86A url(img/foto/casa-solare.jpg) center / cover"></span>
+      <span style="flex: 0 0 60px; font-family: Fraunces, Georgia, serif; font-size: 40px; font-style: italic; color: var(--accent)">03</span>
+      <span style="flex: 1 1 240px; font-family: Fraunces, Georgia, serif; font-size: 38px">Detrazioni fiscali</span>
+      <span style="flex: 1 1 280px; color: var(--muted)">[Descrizione breve di Giada]</span>
+      <span style="font-size: 28px">→</span>
+    </a>
   </section>
 
-  <section style="max-width: 1200px; margin: 0 auto; padding: 0 32px 56px">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); border: 1.5px solid #3B3B3B; border-radius: 10px; overflow: hidden; background: #FFFFFF">
-      <div style="padding: 40px; border-right: 1.5px solid #3B3B3B">
-        <p style="margin: 0 0 8px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #B04A2A">PERCORSO A · PRIVATI</p>
-        <h2 style="margin: 0 0 8px; font-weight: 600; font-size: 38px; line-height: 1.1">Sei un privato?</h2>
-        <p style="margin: 0 0 24px; color: #6B6461">Compila questi campi: ricevi un preventivo in <strong style="color: #3B3B3B">24/48 ore</strong>.</p>
-        <div style="border: 1.5px solid #3B3B3B; border-radius: 8px; box-shadow: 6px 6px 0 #F18A6B; overflow: hidden">
-          <div style="display: flex; justify-content: space-between; padding: 10px 16px; background: #3B3B3B; color: #FFFFFF; font-family: 'IBM Plex Mono', monospace; font-size: 12px"><span>RICHIESTA · 1/4</span><span>LA PRATICA</span></div>
-          <div style="height: 4px; background: #DDD3CE"><div style="width: 25%; height: 100%; background: #F18A6B"></div></div>
-          <div style="padding: 18px 16px">
-            <label for="b-pratica" style="display: block; font-weight: 600; margin-bottom: 6px">Tipo di pratica</label>
-            <select id="b-pratica" style="box-sizing: border-box; width: 100%; min-height: 48px; padding: 0 12px; border: 1.5px solid #DDD3CE; border-radius: 6px; font: inherit; background: #FFFFFF; margin-bottom: 14px">
-              <option>Conto Termico</option>
-              <option>Detrazioni fiscali</option>
-              <option>Legge 10</option>
-            </select>
-            <label for="b-mq" style="display: block; font-weight: 600; margin-bottom: 6px">Superficie (m²)</label>
-            <input id="b-mq" placeholder="es. 120" style="box-sizing: border-box; width: 100%; min-height: 48px; padding: 0 12px; border: 1.5px solid #DDD3CE; border-radius: 6px; font: inherit; margin-bottom: 18px">
-            <a href="#" style="display: flex; justify-content: center; background: #B04A2A; color: #FFFFFF; text-decoration: none; font-weight: 600; padding: 13px; border-radius: 6px">Avanti →</a>
+  <section style="max-width: 1240px; margin: 0 auto; padding: 0 32px 72px">
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch">
+      <div style="flex: 1 1 460px; min-width: 0; background: var(--soft); border: 1px solid var(--line); border-radius: 28px; padding: clamp(24px, 4vw, 40px)">
+        <p style="margin: 0 0 6px; font-family: Jost, sans-serif; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent)">Privati</p>
+        <h2 style="margin: 0 0 8px; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 38px; line-height: 1.1">Sei un privato?</h2>
+        <p style="margin: 0 0 24px; font-size: 18px">Compila pochi campi e ricevi un <strong>preventivo in 24/48 ore</strong>.</p>
+        <div style="background: var(--surface); border-radius: 20px; padding: 24px">
+          <p style="margin: 0 0 8px; font-size: 13px; font-weight: 600; color: var(--muted)">Passo 1 di 4</p>
+          <div style="height: 6px; border-radius: 99px; background: var(--line); margin-bottom: 20px"><div style="width: 25%; height: 100%; border-radius: 99px; background: #F18A6B"></div></div>
+          <fieldset style="border: 0; margin: 0 0 16px; padding: 0">
+            <legend style="font-weight: 600; margin-bottom: 8px; padding: 0">Di cosa hai bisogno?</legend>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              <label for="m-p1" style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border: 1.5px solid var(--accent); border-radius: 12px; background: var(--field)"><input id="m-p1" type="radio" name="m-pratica" checked style="accent-color: #F18A6B">Conto Termico</label>
+              <label for="m-p2" style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border: 1.5px solid var(--line); border-radius: 12px"><input id="m-p2" type="radio" name="m-pratica" style="accent-color: #F18A6B">Detrazioni</label>
+              <label for="m-p3" style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border: 1.5px solid var(--line); border-radius: 12px"><input id="m-p3" type="radio" name="m-pratica" style="accent-color: #F18A6B">Legge 10</label>
+            </div>
+          </fieldset>
+          <label for="m-comune" style="display: block; font-weight: 600; margin-bottom: 6px">Comune dell'immobile</label>
+          <input id="m-comune" placeholder="es. Bologna" style="box-sizing: border-box; width: 100%; min-height: 48px; padding: 0 14px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--field); color: var(--ink); font: inherit; margin-bottom: 20px">
+          <a href="#" style="display: flex; justify-content: center; background: var(--btn-bg); color: var(--btn-ink); text-decoration: none; font-weight: 700; padding: 14px; border-radius: 99px">Avanti</a>
+        </div>
+      </div>
+      <div style="flex: 1 1 460px; min-width: 0; background: var(--inv); border: 1px solid var(--line); color: var(--inv-ink); border-radius: 28px; padding: clamp(24px, 4vw, 40px); display: flex; flex-direction: column">
+        <p style="margin: 0 0 6px; font-family: Jost, sans-serif; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: #FFCE6D">Installatori e idraulici</p>
+        <h2 style="margin: 0 0 8px; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 38px; line-height: 1.1">Sei un installatore?</h2>
+        <p style="margin: 0 0 24px; font-size: 18px; color: var(--inv-muted)">Pacchetti di pratiche per i tuoi clienti, gestite da remoto in tutta Italia.</p>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--inv-row); border-radius: 16px; padding: 18px 20px">
+            <span><strong style="font-size: 19px">[Pacchetto Start]</strong><br><span style="color: var(--inv-muted); font-size: 15px">[n] pratiche</span></span>
+            <span style="font-family: Fraunces, Georgia, serif; font-size: 24px; color: #FFCE6D">[€]</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--inv-row); border-radius: 16px; padding: 18px 20px; outline: 2px solid #FFCE6D">
+            <span><strong style="font-size: 19px">[Pacchetto Pro]</strong><br><span style="color: var(--inv-muted); font-size: 15px">[n] pratiche</span></span>
+            <span style="font-family: Fraunces, Georgia, serif; font-size: 24px; color: #FFCE6D">[€]</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--inv-row); border-radius: 16px; padding: 18px 20px">
+            <span><strong style="font-size: 19px">[Pacchetto Partner]</strong><br><span style="color: var(--inv-muted); font-size: 15px">[n] pratiche</span></span>
+            <span style="font-family: Fraunces, Georgia, serif; font-size: 24px; color: #FFCE6D">[€]</span>
           </div>
         </div>
-      </div>
-      <div style="padding: 40px; background: #3B3B3B; color: #FFFFFF">
-        <p style="margin: 0 0 8px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #FFCE6D">PERCORSO B · INSTALLATORI</p>
-        <h2 style="margin: 0 0 8px; font-weight: 600; font-size: 38px; line-height: 1.1">Sei un installatore?</h2>
-        <p style="margin: 0 0 24px; color: #E4DCD8">Pacchetti di pratiche a prezzo fisso per i tuoi clienti.</p>
-        <div style="border: 1px solid #6B6461; border-radius: 8px; overflow: hidden">
-          <div style="display: grid; grid-template-columns: minmax(0, 1fr) 90px 90px; gap: 8px; padding: 10px 16px; background: #4A4645; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #E4DCD8"><span>PACCHETTO</span><span>PRATICHE</span><span>PREZZO</span></div>
-          <div style="display: grid; grid-template-columns: minmax(0, 1fr) 90px 90px; gap: 8px; padding: 14px 16px; border-top: 1px solid #6B6461"><strong>[Start]</strong><span style="font-family: 'IBM Plex Mono', monospace">[n]</span><span style="font-family: 'IBM Plex Mono', monospace; color: #FFCE6D">[€]</span></div>
-          <div style="display: grid; grid-template-columns: minmax(0, 1fr) 90px 90px; gap: 8px; padding: 14px 16px; border-top: 1px solid #6B6461; background: #46403E"><strong>[Pro] <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #3B3B3B; background: #FFCE6D; padding: 2px 6px; border-radius: 3px">CONSIGLIATO</span></strong><span style="font-family: 'IBM Plex Mono', monospace">[n]</span><span style="font-family: 'IBM Plex Mono', monospace; color: #FFCE6D">[€]</span></div>
-          <div style="display: grid; grid-template-columns: minmax(0, 1fr) 90px 90px; gap: 8px; padding: 14px 16px; border-top: 1px solid #6B6461"><strong>[Partner]</strong><span style="font-family: 'IBM Plex Mono', monospace">[n]</span><span style="font-family: 'IBM Plex Mono', monospace; color: #FFCE6D">[€]</span></div>
-        </div>
-        <a href="#" style="display: inline-block; margin-top: 24px; background: #FFCE6D; color: #3B3B3B; text-decoration: none; font-weight: 700; padding: 13px 22px; border-radius: 6px">Richiedi un pacchetto →</a>
+        <a href="#" style="margin-top: 24px; align-self: flex-start; background: #FFCE6D; color: #2E2B2A; text-decoration: none; font-weight: 700; padding: 14px 24px; border-radius: 99px">Richiedi un pacchetto</a>
       </div>
     </div>
   </section>
 
-  <section style="max-width: 1200px; margin: 0 auto; padding: 0 32px 56px">
-    <p style="margin: 0 0 8px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #B04A2A">// METODO</p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); border-top: 3px solid #3B3B3B">
-      <div style="padding: 20px 24px 20px 0">
-        <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 40px; color: #6E9E6A">01</p>
-        <h3 style="margin: 4px 0; font-size: 22px; font-weight: 600">Mandi dati e foto</h3>
-        <p style="margin: 0; font-size: 16px; color: #6B6461">Dal telefono, in pochi minuti.</p>
+  <section style="max-width: 1240px; margin: 0 auto; padding: 0 32px 72px">
+    <h2 style="margin: 0 0 32px; font-family: Fraunces, Georgia, serif; font-weight: 400; font-size: clamp(40px, 5vw, 56px); letter-spacing: -0.02em">Come <em style="font-weight: 700; color: var(--accent)">funziona.</em></h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px">
+      <div style="flex: 1 1 260px; padding: 24px; border-top: 4px solid #8DBF8A">
+        <p style="margin: 0; font-family: Fraunces, Georgia, serif; font-size: 44px; font-style: italic; color: var(--ink)">1</p>
+        <h3 style="margin: 4px 0; font-size: 22px">Mandi dati e foto</h3>
+        <p style="margin: 0; color: var(--muted)">Dal telefono, in pochi minuti. Niente sopralluogo se non serve.</p>
       </div>
-      <div style="padding: 20px 24px 20px 0">
-        <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 40px; color: #9A7414">02</p>
-        <h3 style="margin: 4px 0; font-size: 22px; font-weight: 600">Preventivo in 24/48 ore</h3>
-        <p style="margin: 0; font-size: 16px; color: #6B6461">Chiaro, senza sopralluogo se non serve.</p>
+      <div style="flex: 1 1 260px; padding: 24px; border-top: 4px solid #FFCE6D">
+        <p style="margin: 0; font-family: Fraunces, Georgia, serif; font-size: 44px; font-style: italic; color: var(--ink)">2</p>
+        <h3 style="margin: 4px 0; font-size: 22px">Ricevi il preventivo</h3>
+        <p style="margin: 0; color: var(--muted)">Entro 24/48 ore, chiaro e senza sorprese.</p>
       </div>
-      <div style="padding: 20px 24px 20px 0">
-        <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 40px; color: #E0714F">03</p>
-        <h3 style="margin: 4px 0; font-size: 22px; font-weight: 600">Seguiamo la pratica</h3>
-        <p style="margin: 0; font-size: 16px; color: #6B6461">[Testo di Giada sulle fasi successive.]</p>
+      <div style="flex: 1 1 260px; padding: 24px; border-top: 4px solid #F18A6B">
+        <p style="margin: 0; font-family: Fraunces, Georgia, serif; font-size: 44px; font-style: italic; color: var(--ink)">3</p>
+        <h3 style="margin: 4px 0; font-size: 22px">Seguiamo la pratica</h3>
+        <p style="margin: 0; color: var(--muted)">[Testo di Giada sulle fasi successive.]</p>
       </div>
     </div>
   </section>
 
-  <section style="max-width: 1200px; margin: 0 auto; padding: 0 32px 96px">
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; border: 1.5px solid #3B3B3B; border-radius: 10px; background: #FFFFFF; padding: 28px 32px">
-      <div style="display: flex; align-items: center; gap: 18px">
-        <img src="img/giada.jpg" alt="" style="width: 64px; height: 64px; border-radius: 6px; border: 1.5px solid #3B3B3B; object-fit: cover; object-position: top">
+  <section style="max-width: 1240px; margin: 0 auto; padding: 0 32px 96px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: clamp(24px, 4vw, 40px) clamp(24px, 4vw, 48px)">
+      <div style="display: flex; align-items: center; gap: 20px">
+        <span style="flex: 0 0 72px; width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: #F6EEE9; display: flex">
+          <img src="img/giada.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: top; mix-blend-mode: multiply">
+        </span>
         <div>
-          <p style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B6461">DUBBI PRIMA DI INIZIARE?</p>
-          <p style="margin: 0; font-size: 22px; font-weight: 600">Parla direttamente con Giada</p>
+          <h2 style="margin: 0; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 28px">Hai un dubbio prima di iniziare?</h2>
+          <p style="margin: 0; color: var(--muted)">Scrivi o chiama Giada: +39 328 199 4346</p>
         </div>
       </div>
       <div style="display: flex; gap: 12px; flex-wrap: wrap">
-        <a href="#" style="background: #B04A2A; color: #FFFFFF; text-decoration: none; font-weight: 600; padding: 13px 22px; border-radius: 6px">+39 328 199 4346</a>
-        <a href="#" style="border: 1.5px solid #3B3B3B; color: #3B3B3B; text-decoration: none; font-weight: 600; padding: 11.5px 20px; border-radius: 6px">WhatsApp</a>
+        <a href="#" style="background: var(--btn-bg); color: var(--btn-ink); text-decoration: none; font-weight: 700; padding: 14px 24px; border-radius: 99px">Chiama</a>
+        <a href="#" style="border: 1.5px solid var(--ink); color: var(--ink); text-decoration: none; font-weight: 700; padding: 12.5px 22px; border-radius: 99px">WhatsApp</a>
       </div>
     </div>
   </section>
 
-  <footer style="background: #3B3B3B; color: #E4DCD8">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 28px 32px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 13px">
-      <span style="display: flex; align-items: center; gap: 12px"><img src="img/marchio-chiaro.png" alt="" style="width: 34px; height: auto">FENIKS LAB · RE-IMAGE YOUR LIVING SPACE</span>
-      <span>ING. GIADA MOLARI · P.IVA [DA INSERIRE] · PRIVACY</span>
+  <footer style="border-top: 1px solid var(--line)">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 32px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; font-size: 14px; color: var(--muted)">
+      <span>© Feniks LAB – Ing. Giada Molari · info.fenikslab@gmail.com</span>
+      <span>P.IVA [da inserire] · Privacy</span>
     </div>
   </footer>
 </div>

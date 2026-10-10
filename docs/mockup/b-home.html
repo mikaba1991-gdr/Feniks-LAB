@@ -2,109 +2,124 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<title>B · Tecnico preciso – Home</title>
+<title>B · Mix A+C – Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&amp;family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,700&amp;family=Jost:wght@400;500&amp;display=swap">
 <style>
 body{margin:0}
-a{color:#B04A2A}a:hover{color:#8A3820}
+a{color:inherit}a:hover{opacity:.85}
 </style>
+<style>
+[data-theme-root] { --bg: #1E1B1A; --surface: #2A2524; --soft: #272120; --ink: #F3E9E6; --muted: #B9AAA7; --line: #3A3433; --accent: #F18A6B; --btn-bg: #F18A6B; --btn-ink: #2E2B2A; --inv: #2A2524; --inv-row: #3A3433; --inv-ink: #F3E9E6; --inv-muted: #D8CCC9; --field: #1E1B1A; --show-dark: block; --show-light: none; }
+html[data-theme="light"] [data-theme-root] { --bg: #FBF7F4; --surface: #FFFFFF; --soft: #F6E3D9; --ink: #3B3B3B; --muted: #6B6461; --line: #EAD9D0; --accent: #B04A2A; --btn-bg: #B04A2A; --btn-ink: #FFFFFF; --inv: #3B3B3B; --inv-row: #4A4645; --inv-ink: #FBF7F4; --inv-muted: #E4DCD8; --field: #FBF7F4; --show-dark: none; --show-light: block; }
+</style>
+<script>
+// Tema chiaro/scuro: scuro di default, la scelta resta salvata nel browser
+(function () {
+  var KEY = 'feniks-tema', root = document.documentElement;
+  try { var saved = localStorage.getItem(KEY); if (saved) root.dataset.theme = saved; } catch (e) {}
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-theme-toggle]');
+    if (!button) return;
+    var next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    root.dataset.theme = next;
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+  });
+})();
+</script>
 </head>
 <body>
-<div style="background: #FFFFFF; color: #3B3B3B; font-family: Jost, system-ui, sans-serif; font-size: 18px; line-height: 1.6; background-image: linear-gradient(#F3ECE8 1px, transparent 1px), linear-gradient(90deg, #F3ECE8 1px, transparent 1px); background-size: 40px 40px">
+<div data-theme-root style="background: var(--bg); color: var(--ink); font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 17px; line-height: 1.6">
 
-  <header style="background: #FFFFFF; border-bottom: 1px solid #DDD3CE">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 8px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap">
-      <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #3B3B3B">
-        <img src="img/marchio.png" alt="" style="width: 46px; height: 50px; object-fit: contain">
-        <span style="font-size: 21px; letter-spacing: 0.14em">FENIKS LAB</span>
+  <header style="position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line)">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 10px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap">
+      <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink)">
+        <img src="img/marchio-chiaro.png" alt="" style="display: var(--show-dark); width: 48px; height: 52px; object-fit: contain">
+        <img src="img/marchio.png" alt="" style="display: var(--show-light); width: 48px; height: 52px; object-fit: contain">
+        <span style="font-family: Jost, sans-serif; font-size: 21px; letter-spacing: 0.14em">FENIKS LAB</span>
       </a>
-      <nav aria-label="Navigazione principale" style="display: flex; gap: 4px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em">
-        <a href="#" style="color: #3B3B3B; text-decoration: none; padding: 8px 12px">01 Energia</a>
-        <a href="#" style="color: #3B3B3B; text-decoration: none; padding: 8px 12px">02 Interior</a>
-        <a href="#" style="color: #3B3B3B; text-decoration: none; padding: 8px 12px">03 Chi sono</a>
-        <a href="#" style="color: #3B3B3B; text-decoration: none; padding: 8px 12px">04 Contatti</a>
+      <nav aria-label="Navigazione principale" style="display: flex; gap: 28px; flex-wrap: wrap; font-size: 15px; font-weight: 500">
+        <a href="#" style="color: var(--ink); text-decoration: none">Energia</a>
+        <a href="#" style="color: var(--ink); text-decoration: none">Interior</a>
+        <a href="#" style="color: var(--ink); text-decoration: none">Chi sono</a>
+        <a href="#" style="color: var(--ink); text-decoration: none">Contatti</a>
       </nav>
-      <a href="#" style="background: #3B3B3B; color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 16px; padding: 11px 20px; border-radius: 6px">Parla con l'esperto</a>
+      <div style="display: flex; align-items: center; gap: 10px">
+        <button type="button" data-theme-toggle aria-label="Cambia tema chiaro o scuro" style="display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border: 1.5px solid var(--line); border-radius: 99px; background: var(--surface); color: var(--ink); cursor: pointer">
+          <svg style="display: var(--show-dark)" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+          <svg style="display: var(--show-light)" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg>
+        </button>
+        <a href="#" style="background: var(--btn-bg); color: var(--btn-ink); text-decoration: none; font-weight: 700; font-size: 15px; padding: 12px 22px; border-radius: 99px">Parla con l'esperto</a>
+      </div>
     </div>
   </header>
 
-  <section style="max-width: 1200px; margin: 0 auto; padding: 72px 32px 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 48px; align-items: center">
+  <section style="max-width: 1240px; margin: 0 auto; padding: 72px 32px 64px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 40px">
+    <div style="flex: 1 1 560px; min-width: 0">
+      <p style="margin: 0 0 24px; font-family: Jost, sans-serif; font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted)">Ing. Giada Molari · Re-image your living space</p>
+      <h1 style="margin: 0; font-family: Fraunces, Georgia, serif; font-weight: 400; font-size: clamp(52px, 9.5vw, 108px); line-height: 0.94; letter-spacing: -0.035em">Servizi di <em style="font-weight: 700; color: var(--accent)">ingegneria.</em></h1>
+      <p style="margin: 32px 0 0; font-size: 21px; color: var(--muted); max-width: 28em">Per l'energia della casa e per i suoi interni. Da remoto, in tutta Italia.</p>
+    </div>
+    <div style="flex: 0 1 320px; max-width: 100%">
+      <img src="img/logo-chiaro.png" alt="Feniks LAB – Re-image your living space" style="display: var(--show-dark); width: 100%; height: auto">
+      <img src="img/logo.png" alt="Feniks LAB – Re-image your living space" style="display: var(--show-light); width: 100%; height: auto">
+    </div>
+  </section>
+
+  <section style="display: flex; flex-wrap: wrap">
+    <a href="#" style="flex: 1 1 480px; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; min-height: 520px; padding: clamp(24px, 5vw, 56px); background: linear-gradient(180deg, rgba(241, 138, 107, 0) 0%, rgba(241, 138, 107, 0.55) 38%, #F18A6B 64%), #E7A48E url(img/foto/pompa-di-calore.jpg) center top / cover; color: #2E2B2A; text-decoration: none">
+      <span style="font-family: Jost, sans-serif; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase">01 · privati e installatori</span>
+      <span style="font-family: Fraunces, Georgia, serif; font-size: clamp(54px, 8vw, 84px); font-weight: 700; font-style: italic; line-height: 1">Energia</span>
+      <span style="font-size: 20px; max-width: 24em">Legge 10, Conto Termico, detrazioni fiscali. Preventivo in 24/48 ore.</span>
+      <span style="font-weight: 700">Entra →</span>
+    </a>
+    <a href="#" style="flex: 1 1 480px; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; min-height: 520px; padding: clamp(24px, 5vw, 56px); background: linear-gradient(180deg, rgba(61, 107, 87, 0) 0%, rgba(61, 107, 87, 0.6) 38%, #3D6B57 64%), #6E8F7E url(img/foto/soggiorno.jpg) center / cover; color: #FFFFFF; text-decoration: none">
+      <span style="font-family: Jost, sans-serif; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase">02 · in arrivo</span>
+      <span style="font-family: Fraunces, Georgia, serif; font-size: clamp(54px, 8vw, 84px); font-weight: 700; font-style: italic; line-height: 1">Interior</span>
+      <span style="font-size: 20px; max-width: 24em">Render online: indichi metri quadri, stanza e stile, e sai subito quanto costa.</span>
+      <span style="font-weight: 700">Scopri →</span>
+    </a>
+  </section>
+
+  <section style="background: var(--soft)">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 96px 32px; display: flex; flex-wrap: wrap; gap: 64px; align-items: center">
+      <div style="flex: 0 1 380px; margin: 0 auto; border-radius: 200px 200px 28px 28px; background: #F6EEE9; overflow: hidden; padding-top: 32px; display: flex">
+        <img src="img/giada.jpg" alt="Ing. Giada Molari" style="width: 100%; height: auto; mix-blend-mode: multiply">
+      </div>
+      <div style="flex: 1 1 420px; min-width: 0">
+        <p style="margin: 0 0 12px; font-family: Jost, sans-serif; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted)">Chi sono</p>
+        <h2 style="margin: 0 0 8px; font-family: Fraunces, Georgia, serif; font-weight: 400; font-size: clamp(42px, 6vw, 60px); line-height: 1; letter-spacing: -0.02em">Ing. Giada <em style="font-weight: 700; color: var(--accent)">Molari</em></h2>
+        <p style="margin: 0 0 24px; font-size: 19px; font-weight: 600">Ingegnere civile</p>
+        <p style="margin: 0 0 28px; font-size: 20px; color: var(--muted)">[Due o tre frasi di Giada: chi è, cosa sa fare, perché Feniks LAB.]</p>
+        <a href="#" style="display: inline-block; background: var(--btn-bg); color: var(--btn-ink); text-decoration: none; font-weight: 700; padding: 15px 26px; border-radius: 99px">La mia storia</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: #FFCE6D; color: #2E2B2A">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 56px 32px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px">
+      <h2 style="margin: 0; font-family: Fraunces, Georgia, serif; font-weight: 400; font-size: clamp(32px, 4.5vw, 44px); line-height: 1.05">Sei un installatore? <em style="font-weight: 700">Pacchetti di pratiche.</em></h2>
+      <a href="#" style="background: #2E2B2A; color: #FFCE6D; text-decoration: none; font-weight: 700; padding: 16px 28px; border-radius: 99px">Scopri i pacchetti</a>
+    </div>
+  </section>
+
+  <section style="max-width: 1240px; margin: 0 auto; padding: 96px 32px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 32px">
     <div>
-      <p style="margin: 0 0 20px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #B04A2A">// STUDIO DI INGEGNERIA · TUTTA ITALIA · DA REMOTO</p>
-      <h1 style="margin: 0 0 24px; font-weight: 600; font-size: clamp(46px, 8vw, 84px); line-height: 0.98; letter-spacing: -0.02em">Servizi di ingegneria<span style="color: #F18A6B">.</span></h1>
-      <p style="margin: 0 0 32px; font-size: 21px; color: #6B6461; max-width: 28em">Pratiche per l'energia della casa e progetti d'interni. Scegli il servizio, mandi i dati, ricevi un preventivo chiaro.</p>
-      <div style="display: flex; gap: 12px; flex-wrap: wrap">
-        <a href="#" style="background: #B04A2A; color: #FFFFFF; text-decoration: none; font-weight: 600; padding: 15px 24px; border-radius: 6px">Energia →</a>
-        <a href="#" style="background: #FFFFFF; border: 1.5px solid #3B3B3B; color: #3B3B3B; text-decoration: none; font-weight: 600; padding: 13.5px 22px; border-radius: 6px">Interior →</a>
-      </div>
+      <h2 style="margin: 0 0 12px; font-family: Fraunces, Georgia, serif; font-weight: 400; font-size: clamp(44px, 6vw, 64px); line-height: 1; letter-spacing: -0.02em">Parliamone <em style="font-weight: 700; color: var(--accent)">adesso.</em></h2>
+      <p style="margin: 0; font-size: 20px; color: var(--muted)">+39 328 199 4346 · info.fenikslab@gmail.com</p>
     </div>
-    <div style="background: #FFFFFF; border: 1.5px solid #3B3B3B; border-radius: 10px; box-shadow: 8px 8px 0 #F18A6B; overflow: hidden; display: grid; grid-template-columns: 200px minmax(0, 1fr)">
-      <img src="img/giada.jpg" alt="Ing. Giada Molari" style="width: 200px; height: 100%; min-height: 250px; object-fit: cover; object-position: top; border-right: 1.5px solid #3B3B3B">
-      <div style="padding: 18px 20px; font-size: 15px">
-        <p style="margin: 0 0 10px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B6461">SCHEDA PROFESSIONISTA</p>
-        <div style="padding: 8px 0; border-bottom: 1px dashed #DDD3CE"><span style="color: #6B6461">Nome</span><br><strong style="font-size: 19px">Ing. Giada Molari</strong></div>
-        <div style="padding: 8px 0; border-bottom: 1px dashed #DDD3CE"><span style="color: #6B6461">Qualifica</span><br><strong>Ingegnere civile</strong></div>
-        <div style="padding: 8px 0; border-bottom: 1px dashed #DDD3CE"><span style="color: #6B6461">Contatti</span><br><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">+39 328 199 4346</span></div>
-        <a href="#" style="display: inline-block; margin-top: 10px; font-weight: 600">Chi sono →</a>
-      </div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap">
+      <a href="#" style="background: var(--btn-bg); color: var(--btn-ink); text-decoration: none; font-weight: 700; padding: 16px 28px; border-radius: 99px">Chiama</a>
+      <a href="#" style="border: 1.5px solid var(--ink); color: var(--ink); text-decoration: none; font-weight: 700; padding: 14.5px 26px; border-radius: 99px">WhatsApp</a>
+      <a href="#" style="border: 1.5px solid var(--ink); color: var(--ink); text-decoration: none; font-weight: 700; padding: 14.5px 26px; border-radius: 99px">Email</a>
     </div>
   </section>
 
-  <section style="max-width: 1200px; margin: 0 auto; padding: 24px 32px 56px">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); border: 1.5px solid #3B3B3B; border-radius: 10px; overflow: hidden; background: #FFFFFF">
-      <div style="padding: 36px 40px; border-right: 1.5px solid #3B3B3B">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px">
-          <h2 style="margin: 0; font-weight: 600; font-size: 44px">Energia</h2>
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 40px; color: #F18A6B">01</span>
-        </div>
-        <p style="margin: 4px 0 20px; color: #6B6461">Per privati e installatori · preventivo in 24/48 ore</p>
-        <a href="#" style="display: flex; justify-content: space-between; padding: 14px 0; border-top: 1px solid #DDD3CE; color: #3B3B3B; text-decoration: none; font-size: 20px; font-weight: 500">Legge 10 <span>→</span></a>
-        <a href="#" style="display: flex; justify-content: space-between; padding: 14px 0; border-top: 1px solid #DDD3CE; color: #3B3B3B; text-decoration: none; font-size: 20px; font-weight: 500">Conto Termico <span>→</span></a>
-        <a href="#" style="display: flex; justify-content: space-between; padding: 14px 0; border-top: 1px solid #DDD3CE; border-bottom: 1px solid #DDD3CE; color: #3B3B3B; text-decoration: none; font-size: 20px; font-weight: 500">Detrazioni fiscali <span>→</span></a>
-        <a href="#" style="display: inline-block; margin-top: 24px; background: #B04A2A; color: #FFFFFF; text-decoration: none; font-weight: 600; padding: 13px 22px; border-radius: 6px">Vai a Energia</a>
-      </div>
-      <div style="padding: 36px 40px; background: #F4F8F2">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px">
-          <h2 style="margin: 0; font-weight: 600; font-size: 44px">Interior</h2>
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 40px; color: #6E9E6A">02</span>
-        </div>
-        <p style="margin: 4px 0 20px; color: #6B6461">In arrivo · render online con prezzo immediato</p>
-        <div style="background: #FFFFFF; border: 1px solid #C9DCC5; border-radius: 8px; padding: 18px 20px; font-size: 16px">
-          <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #C9DCC5"><span style="color: #6B6461">Superficie</span><span style="font-family: 'IBM Plex Mono', monospace">25 m²</span></div>
-          <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #C9DCC5"><span style="color: #6B6461">Stanza</span><span>Soggiorno</span></div>
-          <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #C9DCC5"><span style="color: #6B6461">Stile</span><span>[Stile scelto]</span></div>
-          <div style="display: flex; justify-content: space-between; padding: 10px 0 0; font-weight: 700"><span>Costo del servizio</span><span style="font-family: 'IBM Plex Mono', monospace; color: #3F6B3C">[€ stima]</span></div>
-        </div>
-        <a href="#" style="display: inline-block; margin-top: 24px; background: #FFFFFF; border: 1.5px solid #3F6B3C; color: #3F6B3C; text-decoration: none; font-weight: 600; padding: 11.5px 20px; border-radius: 6px">Vai a Interior</a>
-      </div>
-    </div>
-  </section>
-
-  <section style="max-width: 1200px; margin: 0 auto; padding: 24px 32px 56px">
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; background: #3B3B3B; color: #FFFFFF; border-radius: 10px; padding: 36px 44px">
-      <div>
-        <p style="margin: 0 0 4px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #FFCE6D">// PER INSTALLATORI E IDRAULICI</p>
-        <h2 style="margin: 0; font-weight: 600; font-size: 34px">Pacchetti di pratiche per i tuoi clienti</h2>
-      </div>
-      <a href="#" style="background: #FFCE6D; color: #3B3B3B; text-decoration: none; font-weight: 700; padding: 14px 22px; border-radius: 6px">Vedi i pacchetti →</a>
-    </div>
-  </section>
-
-  <section style="max-width: 1200px; margin: 0 auto; padding: 24px 32px 96px">
-    <p style="margin: 0 0 8px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #B04A2A">// CONTATTI</p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 0; border: 1.5px solid #3B3B3B; border-radius: 10px; overflow: hidden; background: #FFFFFF">
-      <a href="#" style="padding: 24px 28px; border-right: 1px solid #DDD3CE; color: #3B3B3B; text-decoration: none"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B6461">TELEFONO</span><br><strong style="font-size: 21px">+39 328 199 4346</strong></a>
-      <a href="#" style="padding: 24px 28px; border-right: 1px solid #DDD3CE; color: #3B3B3B; text-decoration: none"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B6461">WHATSAPP</span><br><strong style="font-size: 21px">Scrivimi →</strong></a>
-      <a href="#" style="padding: 24px 28px; color: #3B3B3B; text-decoration: none"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #6B6461">EMAIL</span><br><strong style="font-size: 19px">info.fenikslab@gmail.com</strong></a>
-    </div>
-  </section>
-
-  <footer style="background: #3B3B3B; color: #E4DCD8">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 28px 32px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 13px">
-      <span style="display: flex; align-items: center; gap: 12px"><img src="img/marchio-chiaro.png" alt="" style="width: 34px; height: auto">FENIKS LAB · RE-IMAGE YOUR LIVING SPACE</span>
-      <span>ING. GIADA MOLARI · P.IVA [DA INSERIRE] · PRIVACY</span>
+  <footer style="border-top: 1px solid var(--line)">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 32px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; font-size: 14px; color: var(--muted)">
+      <span>© Feniks LAB – Ing. Giada Molari · P.IVA [da inserire]</span>
+      <span>Energia · Interior · Chi sono · Privacy</span>
     </div>
   </footer>
 </div>
