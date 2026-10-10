@@ -32,7 +32,7 @@ i contenuti da sola tramite pannello `/admin`.
 | Storage file | Cloudflare R2, binding `RICHIESTE` |
 | Email | Resend (API HTTP) |
 | Anti-spam | Cloudflare Turnstile |
-| CMS | **Pages CMS** (hosted, app.pagescms.org), configurato in `.pages.yml`; `/admin` reindirizza lì (`public/_redirects`). Giada entra come collaboratrice invitata per email |
+| CMS | **Decap CMS** ospitato sul sito in `/admin` (file in `public/admin/decap/`, versione bloccata, aggiornabile con `scripts/aggiorna-decap.sh`), configurato in `public/admin/config.yml`. Login GitHub tramite le Functions `/api/auth` e `/api/callback` (nessun servizio esterno a parte GitHub). Giada usa un suo account GitHub, collaboratrice del repository |
 | Mappa | Leaflet + tile OpenStreetMap (con attribuzione obbligatoria), caricata in automatico quando entra nello schermo |
 | Analytics | Cloudflare Web Analytics (senza cookie) |
 | Package manager | npm, versioni fissate nel `package-lock.json` |
@@ -56,7 +56,7 @@ i contenuti da sola tramite pannello `/admin`.
 ├─ docs/specifiche.md            # specifiche di business
 ├─ astro.config.mjs              # i18n, sitemap, integrazioni
 ├─ public/
-│  └─ _redirects                 # /admin → Pages CMS
+│  └─ admin/                     # pannello Decap CMS (index.html, config.yml, decap/)
 ├─ src/
 │  ├─ config/
 │  │  ├─ forms/                  # un file JSON per modulo (vedi §6)
@@ -173,6 +173,7 @@ Passi lato server:
 7. Risposta `200 { ok: true, id }`. Errori sempre in JSON con messaggio leggibile in italiano.
 
 Variabili e binding: `RESEND_API_KEY`, `TURNSTILE_SECRET`, `FILE_LINK_SECRET`, `MAIL_TO`, `MAIL_FROM`, R2 `RICHIESTE`.
+Pannello: `GITHUB_OAUTH_CLIENT_ID`, `GITHUB_OAUTH_CLIENT_SECRET` (app OAuth GitHub).
 
 Conservazione: regola di lifecycle R2 che elimina `richieste/` dopo 12 mesi (da configurare
 nella dashboard; documentalo nella PR).
@@ -220,7 +221,7 @@ Ogni voce = una PR. Spunta solo quando la PR è unita.
 - [ ] F1-08 Mappa lavori + elenco + pagina dettaglio lavoro
 - [ ] F1-09 Notizie: elenco, dettaglio, video al click
 - [ ] F1-10 SEO (§9), privacy, pagina 404, pagina "Design in arrivo"
-- [ ] F1-11 Pannello CMS: Pages CMS con `.pages.yml` (decisione presa)
+- [ ] F1-11 Pannello CMS: Decap CMS in `/admin` con login GitHub dalle nostre Functions (decisione presa)
 - [ ] F1-12 Guida d'uso per Giada in `docs/guida-pannello.md` (linguaggio semplice, con passi)
 
 ## 12. Backlog — Fase 2 (Design)

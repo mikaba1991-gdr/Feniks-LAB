@@ -73,3 +73,21 @@ test('conferma al cliente senza dati sensibili', () => {
   assert.ok(email.subject.includes('20261009-ab12'));
   assert.ok(email.text.startsWith('Ciao Mario,'));
 });
+
+import { allowedScope, callbackPage, readCookie } from '../functions/_lib/oauth.ts';
+
+test('login pannello: cookie, permessi e pagina di ritorno', () => {
+  assert.equal(readCookie('a=1; decap_oauth_state=abc; b=2', 'decap_oauth_state'), 'abc');
+  assert.equal(readCookie(null, 'x'), undefined);
+  assert.equal(allowedScope('admin:org'), 'repo');
+  assert.equal(allowedScope('public_repo'), 'public_repo');
+
+  const ok = callbackPage('https://example.com', { token: 'tok</script><script>alert(1)' }, 'n0nce');
+  assert.ok(ok.includes('authorization:github:success:'));
+  assert.ok(!ok.includes('</script><script>alert(1)'), 'il token non deve poter chiudere lo script');
+  assert.ok(ok.includes('nonce="n0nce"'));
+  assert.ok(ok.includes('"https://example.com"'));
+
+  const ko = callbackPage('https://example.com', { error: 'negato' }, 'n');
+  assert.ok(ko.includes('authorization:github:error:'));
+});

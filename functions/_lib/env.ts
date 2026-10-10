@@ -8,6 +8,9 @@ export interface Env {
   MAIL_FROM?: string;
   /** "1" in sviluppo: le email vengono stampate nel log invece di essere inviate */
   MAIL_DRY_RUN?: string;
+  /** App OAuth GitHub per il login del pannello Decap (/admin) */
+  GITHUB_OAUTH_CLIENT_ID?: string;
+  GITHUB_OAUTH_CLIENT_SECRET?: string;
 }
 
 /** Controlla che la configurazione minima ci sia; restituisce l'elenco di ciò che manca. */

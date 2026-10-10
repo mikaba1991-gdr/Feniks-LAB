@@ -1,0 +1,4 @@
+# Il pannello non deve finire su Google
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+  Referrer-Policy: same-origin

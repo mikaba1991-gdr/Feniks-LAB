@@ -15,7 +15,8 @@ Contesto, regole e backlog sono in [`CLAUDE.md`](CLAUDE.md); le specifiche di bu
 | `npm run build` | Genera il sito statico in `dist/` |
 | `npm run preview` | Sito + Functions + R2 simulato su `http://localhost:8788` (serve `.dev.vars`, vedi sotto) |
 | `npm run check` | Controllo dei tipi (Astro + Functions) |
-| `npm test` | Test della logica di moduli, firme e file (test runner nativo di Node) |
+| `npm test` | Test della logica di moduli, firme, file e login del pannello (test runner nativo di Node) |
+| `npx decap-server` | Con `npm run dev`: pannello Decap in locale su `http://localhost:4321/admin/index.html`, scrive direttamente nei file |
 
 ### Provare l'invio dei moduli in locale
 
@@ -33,4 +34,6 @@ La chiave Turnstile di test fa sempre passare la verifica; i file finiscono in u
 - `functions/api/richiesta.ts` – riceve i moduli, salva su R2, invia email (Resend).
 - `functions/api/file/[[path]].ts` – download dei file con link firmato (90 giorni).
 - `src/content/` – contenuti di Giada: `lavori/`, `notizie/`, `pagine/` (testi servizi), `settings/contatti.json`.
+- `public/admin/` – pannello Decap CMS (`config.yml` definisce cosa Giada può modificare); login in `functions/api/auth.ts` e `callback.ts`.
+- `docs/mockup/` – proposte grafiche in HTML statico.
 - I testi da completare sono segnati `TODO(Giada)` e appaiono evidenziati in giallo nel sito.

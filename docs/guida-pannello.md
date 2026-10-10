@@ -1,51 +1,39 @@
 # Guida al pannello del sito
 
-Ciao Giada! Questa guida spiega come aggiornare da sola **lavori**, **notizie**, **testi delle pagine**
-e **contatti** del sito Feniks LAB. Non serve installare nulla: basta il browser, anche dal telefono.
+Ciao Giada! Questa guida spiega come aggiornare da sola **aggiornamenti e notizie**, **testi delle
+pagine** e **contatti** del sito Feniks LAB. Serve solo il browser, anche dal telefono.
 
 ## Il primo accesso (una volta sola)
 
-1. Riceverai un'email di invito da **Pages CMS**. Apri il link.
-2. Inserisci la tua email: ti arriva un **codice di 6 cifre**. Scrivilo nella pagina.
-3. Sei dentro. Da qui in poi entri da **tuodominio.it/admin** (o da app.pagescms.org) con la stessa email.
+1. Crea un account gratuito su **github.com** con la tua email (è il servizio dove sono custoditi i
+   file del sito). Ti consiglio di attivare la verifica in due passaggi.
+2. Manda a Michele il tuo nome utente GitHub: ti aggiunge al progetto e ti arriva un'email di invito
+   da accettare.
+3. Vai su **tuodominio.it/admin** e premi **Accedi con GitHub**. La prima volta GitHub ti chiede di
+   autorizzare il pannello: conferma.
 
-Non ti serve un account GitHub.
+Dalle volte successive basta aprire **tuodominio.it/admin**.
 
 ## Come funziona, in due righe
 
-Ogni volta che premi **Save** (Salva), il sito si aggiorna da solo in **2–3 minuti**.
-Se qualcosa non va (ad esempio manca un campo obbligatorio), il sito **non** si rompe: resta la versione
-precedente e Michele riceve un avviso con il nome del campo da sistemare.
+Ogni volta che premi **Pubblica**, il sito si aggiorna da solo in **2–3 minuti**.
+Se qualcosa non va (ad esempio un campo obbligatorio vuoto), il sito **non** si rompe: resta la
+versione precedente e Michele riceve un avviso con il nome del campo da sistemare.
 
-## Aggiungere un lavoro
+## Pubblicare un aggiornamento, un articolo o un video
 
-1. Nel menu a sinistra scegli **Lavori** → **Add an entry** (Aggiungi).
-2. Compila:
-   - **Titolo**: es. "Pompa di calore in villetta a Imola".
-   - **Data** e **Città**.
-   - **Latitudine** e **Longitudine**: servono per il punto sulla mappa. Su Google Maps fai clic destro
-     sul luogo: compaiono due numeri, es. `44.3534, 11.7146`. Il primo è la latitudine, il secondo la longitudine.
-   - **Servizio**: scegli dall'elenco.
-   - **Foto**: premi **Add**, carica la foto e scrivi in una frase **cosa si vede** (es. "Pompa di calore installata in giardino").
-   - **Descrizione breve**: due o tre righe.
-3. Premi **Save**.
-
-Per lavorarci con calma senza pubblicarlo, spunta **Bozza**: il lavoro resta salvato ma non compare sul sito.
-
-> Privacy: non scrivere l'indirizzo preciso del cliente e non usare foto in cui si riconoscono persone
-> o targhe, salvo consenso. Per la mappa basta la città: puoi usare le coordinate del centro del paese.
-
-## Pubblicare una notizia o un video
-
-1. **Notizie e normativa** → **Add an entry**.
+1. **Aggiornamenti e normativa** → **+ aggiornamento**.
 2. **Titolo**, **Data**, **Sommario** (due righe: compaiono anche su Google).
-3. **Video**: se è un video YouTube, incolla il link (es. `https://www.youtube.com/watch?v=...`).
+3. **Video YouTube**: se è un video, incolla il link (es. `https://www.youtube.com/watch?v=...`).
    Sul sito il video parte solo quando il visitatore preme play.
-4. **Testo dell'articolo**: scrivi come in un normale editor (grassetto, elenchi, link, titoletti).
-5. **Save**.
+4. **Immagine** (facoltativa): caricala e scrivi in una frase cosa si vede.
+5. **Testo**: scrivi come in un normale editor (grassetto, elenchi, link, titoletti).
+6. In alto premi **Pubblica** → **Pubblica ora**.
+
+Per lavorarci con calma senza pubblicarlo, spunta **Bozza**: resta salvato ma non compare sul sito.
 
 Consiglio per Google: un argomento per articolo, titolo chiaro con le parole che userebbe un cliente
-(es. "Conto Termico 3.0: cosa cambia per chi sostituisce la caldaia").
+(es. "Conto Termico: cosa cambia per chi sostituisce la caldaia").
 
 ## Cambiare i testi delle pagine
 
@@ -53,15 +41,15 @@ Consiglio per Google: un argomento per articolo, titolo chiaro con le parole che
 Puoi cambiare introduzione, punti principali, fasi e domande frequenti. Le pagine non si possono
 creare o cancellare da qui: per una pagina nuova chiedi a Michele.
 
-- **Titolo per Google** e **Descrizione per Google** sono il testo che appare nei risultati di ricerca:
-  restano entro 60 e 160 caratteri.
+- **Titolo per Google** e **Descrizione per Google** sono il testo che appare nei risultati di
+  ricerca: restano entro 60 e 160 caratteri.
 - Dove vedi **TODO(Giada)** c'è un testo ancora da scrivere: sostituiscilo con il tuo.
 
 ## Cambiare telefono, WhatsApp, email, orari
 
-**Contatti** → modifica → **Save**. Si aggiornano in tutto il sito (pulsanti, piè di pagina, pagina contatti).
+**Contatti** → **Contatti dello studio** → modifica → **Pubblica**. Si aggiornano in tutto il sito.
 
 ## Se sbagli
 
-Niente panico: ogni salvataggio è conservato nello storico. Scrivi a Michele cosa hai cambiato e quando:
-si può tornare alla versione precedente in un minuto.
+Niente panico: ogni pubblicazione è conservata nello storico. Scrivi a Michele cosa hai cambiato e
+quando: si può tornare alla versione precedente in un minuto.

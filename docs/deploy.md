@@ -61,14 +61,28 @@ Non impostare `MAIL_DRY_RUN` in produzione.
 2. Controlla che a Giada arrivi la scheda e al cliente la conferma.
 3. Apri un link a una foto dall'email: deve aprirsi; modificando un carattere del link deve dare "Link non valido".
 
-## 7. Pannello contenuti (Pages CMS)
+## 7. Pannello contenuti (Decap CMS, ospitato sul sito)
 
-1. Vai su [app.pagescms.org](https://app.pagescms.org), entra con GitHub (Michele) e installa la GitHub App
-   di Pages CMS **solo** su questo repository.
-2. Apri il repository nel pannello: legge `.pages.yml` e mostra Lavori, Notizie, Testi delle pagine, Contatti.
-3. Collaborators → invita l'email di Giada. Lei entra con un codice via email, senza account GitHub.
-4. Ogni salvataggio dal pannello è un commit su `main` → Cloudflare ricostruisce il sito in 2–3 minuti.
-5. In Cloudflare → Notifications attiva l'avviso "Pages build failed" verso Michele: se Giada salva un campo
-   non valido la build si ferma con il nome del file e del campo, e il sito resta alla versione precedente.
+Il pannello è in `/admin` ed è parte del sito: nessun servizio esterno. I contenuti restano file nel
+repository (`src/content/`), quindi ogni modifica di Giada è un commit su `main` e Cloudflare
+ricostruisce il sito in 2–3 minuti.
 
-`/admin` sul sito reindirizza al pannello (`public/_redirects`).
+1. **App OAuth su GitHub** (una volta): GitHub → Settings → Developer settings → OAuth Apps → New OAuth App
+   (meglio crearla nell'account o organizzazione che possiede il repository).
+   - Homepage URL: `https://dominio.it`
+   - Authorization callback URL: `https://dominio.it/api/callback`
+   - Genera un Client secret.
+2. In Cloudflare Pages → Settings → Variables and Secrets:
+   - `GITHUB_OAUTH_CLIENT_ID` (variabile) = Client ID
+   - `GITHUB_OAUTH_CLIENT_SECRET` (secret) = Client secret
+3. **Giada**: crea un account GitHub gratuito suo; nel repository → Settings → Collaborators la inviti
+   con permesso di scrittura. Da quel momento entra da `https://dominio.it/admin` con "Accedi con GitHub".
+4. Consigliato: su GitHub attiva per Giada (e per te) la verifica in due passaggi.
+5. In Cloudflare → Notifications attiva l'avviso "Pages build failed": se un campo salvato non è valido
+   la build si ferma con file e campo indicati, e il sito resta alla versione precedente.
+
+Note:
+- Se cambia il dominio, aggiorna Homepage e callback URL dell'app OAuth.
+- Aggiornare Decap: `sh scripts/aggiorna-decap.sh <versione>` (scarica dal registro npm solo i file
+  compilati in `public/admin/decap/`), poi prova `/admin` in anteprima prima di unire.
+- Prova in locale senza GitHub: `npx decap-server` + `npm run dev`, poi `http://localhost:4321/admin/index.html`.
