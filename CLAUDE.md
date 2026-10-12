@@ -240,3 +240,9 @@ Ogni voce = una PR. Spunta solo quando la PR è unita.
 - Accessibilità non opzionale: etichette sui campi, ordine di tabulazione, messaggi di errore leggibili.
 - Non inserire mai testi normativi o importi di incentivi "a memoria": vanno solo da contenuti forniti da Giada.
 - Alla fine di ogni task scrivi nella PR: cosa hai fatto, come verificarlo, cosa resta aperto.
+
+## Second brain di Michele
+A fine sessione, se è successo qualcosa di rilevante a livello di progetto (tappa raggiunta, decisione importante, cambio di stato, blocco), crea il file C:\Users\MicheleAbate\Downloads\SecondoCervello_v2\SecondoCervello\00_Inbox\AAAA-MM-GG progetto Feniks-LAB.md con:
+- prima riga `data: AAAA-MM-GG`
+- da 1 a 3 righe di livello macro
+Niente dettagli tecnici, codice, credenziali o dati di clienti. Se non è successo nulla di rilevante, non scrivere niente.
