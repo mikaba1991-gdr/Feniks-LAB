@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FormWizard from '../../../components/FormWizard.astro';
+import { serviziEnergia } from '../../../config/servizi';
+
+export async function getStaticPaths() {
+  const forms = await getCollection('forms', ({ data }) => data.ramo === 'energia');
+  return forms.map((form) => {
+    const servizio = serviziEnergia.find((item) => item.form === form.id);
+    if (!servizio) throw new Error(`Il modulo "${form.id}" non è collegato a nessun servizio in src/config/servizi.ts`);
+    return { params: { servizio: servizio.slug }, props: { formId: form.id, titolo: form.data.titolo, nome: servizio.nome } };
+  });
+}
+
+interface Props {
+  formId: string;
+  titolo: string;
+  nome: string;
+}
+
+const { formId, titolo, nome } = Astro.props;
+const { servizio } = Astro.params;
+---
+
+<BaseLayout
+  title={titolo}
+  description={`${titolo}: invia online i dati e le foto per ricevere un preventivo. Per privati e installatori, in tutta Italia.`}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Energia', href: '/energia' },
+    { name: nome, href: `/energia/${servizio}` },
+    { name: 'Richiesta', href: `/energia/${servizio}/richiesta` },
+  ]}
+>
+  <section class="section">
+    <div class="container narrow">
+      <h1>{titolo}</h1>
+      <FormWizard formId={formId} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: var(--fs-h2);
+  }
+</style>

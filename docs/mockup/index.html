@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Feniks LAB – Proposte grafiche</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&amp;family=Fraunces:opsz,wght@9..144,600&amp;family=Jost:wght@400&amp;display=swap">
+<style>
+body{margin:0;background:#FBF7F4;color:#3B3B3B;font:17px/1.6 'Bricolage Grotesque',system-ui,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:40px 20px 80px}
+.top{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:12px}
+.top img{width:110px;height:auto}
+h1{font:600 clamp(30px,5vw,46px)/1.1 Fraunces,Georgia,serif;margin:0}
+.lead{color:#6B6461;margin:0 0 32px;max-width:44em}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))}
+.card{background:#fff;border:1px solid #EAD9D0;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.swatch{height:110px}
+.body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
+h2{font:600 26px/1.15 Fraunces,Georgia,serif;margin:0}
+p{margin:0;color:#6B6461}
+.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+a.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:99px;background:#B04A2A;color:#fff;text-decoration:none;font-weight:600}
+a.btn.alt{background:transparent;color:#3B3B3B;border:2px solid #3B3B3B}
+a.btn:hover{background:#8A3820;color:#fff}
+.note{margin-top:32px;font-size:15px}
+</style>
+</head>
+<body>
+<main>
+  <div class="top"><img src="img/logo.png" alt="Feniks LAB – Re-image your living space"><h1>Tre proposte grafiche per il sito</h1></div>
+  <p class="lead">Stessa struttura (home con Energia e Interior, pagina Energia con privati e installatori, versione telefono), stessi colori del logo, tre caratteri diversi. La B è nuova: unisce A e C e ha il tema chiaro/scuro. Guardale sia su computer sia su telefono e scegli quella che senti più tua: si possono anche mescolare dettagli. I testi tra [parentesi quadre] sono da scrivere.</p>
+  <div class="grid">
+    <article class="card">
+      <div class="swatch" style="background:linear-gradient(90deg,#8DBF8A,#FFCE6D,#F18A6B)"></div>
+      <div class="body">
+        <h2>A · Studio caldo</h2>
+        <p>Accogliente ed elegante, toni chiari e caldi, titoli con grazie. Morbida e rassicurante, parla bene ai privati.</p>
+        <div class="links"><a class="btn" href="a-home.html">Home</a><a class="btn alt" href="a-energia.html">Energia</a><a class="btn alt" href="a-telefono.html">Telefono</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="swatch" style="background:linear-gradient(90deg,#1E1B1A 0 50%,#FBF7F4 50% 100%);border-bottom:10px solid #F18A6B"></div>
+      <div class="body">
+        <h2>B · Mix A+C, chiaro o scuro</h2>
+        <p>Il meglio delle due: l'impatto e i colori della C, la sezione Energia (privati e installatori) della A. In alto c'è il pulsante per passare dal tema scuro a quello chiaro.</p>
+        <div class="links"><a class="btn" href="b-home.html">Home</a><a class="btn alt" href="b-energia.html">Energia</a><a class="btn alt" href="b-telefono.html">Telefono</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="swatch" style="background:#1E1B1A;border-bottom:10px solid #F18A6B"></div>
+      <div class="body">
+        <h2>C · Fenice audace</h2>
+        <p>Scura e d'impatto, la fenice in primo piano, titoli grandi. Si ricorda, molto "Instagram", ma meno classica.</p>
+        <div class="links"><a class="btn" href="c-home.html">Home</a><a class="btn alt" href="c-energia.html">Energia</a><a class="btn alt" href="c-telefono.html">Telefono</a></div>
+      </div>
+    </article>
+  </div>
+  <p class="note">Le foto di contorno sono gratuite (Unsplash): dove non compaiono si vede uno sfondo colorato, vedi <code>img/foto/LEGGIMI.txt</code>. La foto di Giada è quella della firma email: per il sito servirà l'originale ad alta risoluzione. I pulsanti non portano da nessuna parte.</p>
+</main>
+</body>
+</html>

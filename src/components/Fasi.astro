@@ -1,0 +1,85 @@
+---
+// Schema visivo delle fasi di una pratica.
+import Testo from './Testo.astro';
+
+interface Props {
+  fasi: { titolo: string; testo: string }[];
+  titolo?: string;
+}
+
+const { fasi, titolo = 'Come funziona' } = Astro.props;
+---
+
+{
+  fasi.length > 0 && (
+    <section class="fasi section" aria-labelledby="fasi-titolo">
+      <div class="container">
+        <h2 id="fasi-titolo">{titolo}</h2>
+        <ol>
+          {fasi.map((fase, index) => (
+            <li>
+              <span class="num" aria-hidden="true">{index + 1}</span>
+              <h3><Testo value={fase.titolo} /></h3>
+              <p><Testo value={fase.testo} /></p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  }
+
+  /* Ogni fase ha il colore di un punto della fascia termica: verde, sole, corallo */
+  li {
+    --fase: #8dbf8a;
+    --fase-num: var(--sage-text);
+    padding: var(--space-5) var(--space-5) var(--space-4);
+    border-top: 4px solid var(--fase);
+  }
+
+  li:nth-child(3n + 2) {
+    --fase: #ffce6d;
+    --fase-num: #8a6a12;
+  }
+
+  li:nth-child(3n + 3) {
+    --fase: #f18a6b;
+    --fase-num: var(--link);
+  }
+
+  .num {
+    display: block;
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    line-height: 1.2;
+    color: var(--fase-num);
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: var(--space-1) 0;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    li:nth-child(3n + 2) {
+      --fase-num: var(--sun);
+    }
+  }
+</style>

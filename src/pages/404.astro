@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Pagina non trovata" description="La pagina che cerchi non esiste o è stata spostata." noindex>
+  <section class="section">
+    <div class="container narrow">
+      <p class="eyebrow">Errore 404</p>
+      <h1>Questa pagina non c'è</h1>
+      <p class="lead">Forse è stata spostata, oppure l'indirizzo non è corretto. Da qui puoi ripartire:</p>
+      <ul>
+        <li><a href="/">Home dello studio</a></li>
+        <li><a href="/energia">Energia</a>: <a href="/energia/legge-10">Legge 10</a>, <a href="/energia/conto-termico">Conto Termico</a>, <a href="/energia/detrazioni">Detrazioni fiscali</a></li>
+        <li><a href="/energia/installatori">Per installatori</a></li>
+        <li><a href="/chi-sono">Chi sono</a></li>
+        <li><a href="/contatti">Contatti</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

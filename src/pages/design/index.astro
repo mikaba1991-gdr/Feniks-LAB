@@ -1,0 +1,81 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from '../../components/ServiceHero.astro';
+import { contatti, telHref, whatsappHref } from '../../config/site';
+import { getPagina } from '../../lib/content';
+import foto from '../../assets/foto/soggiorno.jpg';
+
+const pagina = await getPagina('design');
+---
+
+<BaseLayout
+  title={pagina.data.metaTitolo ?? pagina.data.titolo}
+  description={pagina.data.metaDescrizione}
+  alternate={{ it: '/design', en: '/en/design' }}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Interior', href: '/design' },
+  ]}
+>
+  <ServiceHero eyebrow="Interior · in arrivo" titolo={pagina.data.titolo} intro={pagina.data.intro}>
+    <a class="btn btn-primary" href={`/contatti?argomento=${encodeURIComponent('Interior o garden design')}#ricontatto`}>Chiedi informazioni</a>
+    <a class="btn btn-secondary" href={whatsappHref(contatti.whatsapp, 'Buongiorno, vorrei informazioni sul servizio di interior design.')} target="_blank" rel="noopener">WhatsApp</a>
+  </ServiceHero>
+
+  <section class="section">
+    <div class="container">
+      <div class="soon">
+        <Image src={foto} alt="" widths={[480, 960]} sizes="(min-width: 60rem) 34rem, 92vw" class="foto" />
+        <div>
+          <p class="eyebrow">In arrivo</p>
+          <h2>Il servizio online è in preparazione</h2>
+          <p>
+            Indicherai metri quadri, città, cosa desideri e lo stile che ti piace, e vedrai subito quanto costa il servizio.
+            Nel frattempo puoi già contattare Giada per un progetto di interni o di giardino.
+          </p>
+          <p class="links"><a href={telHref(contatti.telefono)}>Chiama</a> · <a href="/contatti#ricontatto">Lascia un recapito</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .soon {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    background: var(--sage);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+  }
+
+  @media (min-width: 40rem) {
+    .soon {
+      padding: 2.5rem;
+    }
+  }
+
+  .foto {
+    width: 100%;
+    height: clamp(12rem, 30vw, 18rem);
+    object-fit: cover;
+    border-radius: 1.25rem;
+    background: var(--sage-strong);
+  }
+
+  .eyebrow,
+  .links a {
+    color: var(--sage-text);
+  }
+
+  .soon p:not(.eyebrow) {
+    color: var(--muted);
+  }
+
+  .links {
+    font-weight: 700;
+  }
+</style>

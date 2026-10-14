@@ -1,0 +1,10 @@
+# Configurazione Cloudflare Pages (usata anche da `npm run preview`).
+# I segreti NON vanno qui: si impostano nella dashboard di Cloudflare Pages
+# (Settings → Variables and Secrets) e in locale nel file .dev.vars.
+name = "feniks-lab"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-09-01"
+
+[[r2_buckets]]
+binding = "RICHIESTE"
+bucket_name = "feniks-lab-richieste"

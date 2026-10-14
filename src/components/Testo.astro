@@ -1,0 +1,12 @@
+---
+// Mostra un testo dei contenuti; se è un segnaposto "TODO(...)" lo evidenzia.
+import { isTodo } from '../config/site';
+
+interface Props {
+  value: string | undefined;
+}
+
+const { value = '' } = Astro.props;
+---
+
+{isTodo(value) ? <span class="todo">{value || 'TODO'}</span> : value}

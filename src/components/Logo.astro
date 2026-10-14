@@ -1,0 +1,71 @@
+---
+// Marchio (fenice) + nome in Jost spaziato, come nella proposta grafica A.
+// Due versioni del marchio: quella chiara compare solo con il tema scuro.
+import { Image } from 'astro:assets';
+import marchio from '../assets/brand/marchio.png';
+import marchioChiaro from '../assets/brand/marchio-chiaro.png';
+
+interface Props {
+  href?: string;
+  label?: string;
+}
+const { href = '/', label = 'Feniks LAB, torna alla home' } = Astro.props;
+---
+
+<a class="logo" href={href} aria-label={label}>
+  <Image src={marchio} alt="" width={48} height={52} densities={[1, 2]} class="mark mark-light" loading="eager" />
+  <Image src={marchioChiaro} alt="" width={48} height={52} densities={[1, 2]} class="mark mark-dark" loading="eager" />
+  <span class="word" aria-hidden="true">FENIKS LAB</span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .logo:hover {
+    color: var(--ink);
+  }
+
+  .mark {
+    width: 2.5rem;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .mark-dark {
+    display: none;
+  }
+
+  .word {
+    font-family: var(--display);
+    font-size: 1.125rem;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 40rem) {
+    .mark {
+      width: 3rem;
+    }
+
+    .word {
+      font-size: 1.3125rem;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .mark-light {
+      display: none;
+    }
+
+    .mark-dark {
+      display: block;
+    }
+  }
+</style>

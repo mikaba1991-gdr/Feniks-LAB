@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NotiziaCard from '../../components/NotiziaCard.astro';
+import { getNotizie } from '../../lib/content';
+
+const notizie = await getNotizie();
+---
+
+<BaseLayout
+  title="Aggiornamenti"
+  description="Notizie e aggiornamenti su Conto Termico, detrazioni fiscali e normativa per impianti e casa, a cura dell'Ing. Giada Molari."
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Aggiornamenti', href: '/notizie' },
+  ]}
+>
+  <section class="section">
+    <div class="container">
+      <h1>Aggiornamenti</h1>
+      <p class="lead">Aggiornamenti su incentivi, detrazioni e regole per impianti e casa, spiegati in modo semplice.</p>
+      {
+        notizie.length === 0 ? (
+          <p>A breve pubblicheremo qui i primi aggiornamenti.</p>
+        ) : (
+          <div class="grid">
+            {notizie.map((notizia) => <NotiziaCard notizia={notizia} headingLevel="h2" />)}
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

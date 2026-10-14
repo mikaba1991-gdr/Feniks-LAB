@@ -1,0 +1,108 @@
+/* Design system Feniks LAB: proposta grafica A ("studio caldo") scelta da Giada.
+   Palette calda dal logo, verde per Interior, fascia termica dal verde al corallo. */
+:root {
+  color-scheme: light dark;
+
+  --bg: #fbf7f4;
+  --surface: #fff;
+  --ink: #3b3b3b;
+  --muted: #6b6461;
+  --line: #ead9d0;
+
+  /* Accento (pulsanti, link) e varianti */
+  --accent: #b04a2a;
+  --accent-ink: #fff;
+  --accent-hover: #8a3820;
+  --link: var(--accent);
+
+  /* Superfici colorate: pesca per Energia, salvia per Interior */
+  --warm: #f6e3d9;
+  --warm-strong: #e7c6b8;
+  --warm-text: #8a3820;
+  --sage: #e7efe3;
+  --sage-strong: #c9d9c4;
+  --sage-text: #3f6b3c;
+
+  /* Fascia scura (installatori) con accento giallo sole */
+  --band: #3b3b3b;
+  --band-raised: #4a4645;
+  --band-ink: #fbf7f4;
+  --band-muted: #e4dcd8;
+  --sun: #ffce6d;
+  --sun-ink: #3b3b3b;
+
+  --coral: #f18a6b;
+  --focus: #2f6f9f;
+  --danger: #a1121b;
+  --ok: #2f6b45;
+  --info: #e8f0f5;
+
+  /* Fascia termica: dal fresco (verde) al caldo (corallo) */
+  --thermal: linear-gradient(90deg, #8dbf8a 0%, #ffce6d 45%, #f18a6b 100%);
+
+  --serif: "Fraunces Variable", "Fraunces", Georgia, serif;
+  --sans: "Bricolage Grotesque Variable", "Bricolage Grotesque", system-ui, sans-serif;
+  /* Marchio e sovratitoli in maiuscoletto spaziato */
+  --display: "Jost", "Bricolage Grotesque Variable", system-ui, sans-serif;
+
+  /* Scala tipografica fluida */
+  --fs-sm: 0.875rem;
+  --fs-base: 1.0625rem;
+  --fs-lg: clamp(1.15rem, 1.05rem + 0.4vw, 1.25rem);
+  --fs-h3: clamp(1.35rem, 1.15rem + 0.8vw, 1.65rem);
+  --fs-h2: clamp(1.9rem, 1.45rem + 1.8vw, 2.75rem);
+  --fs-h1: clamp(2.5rem, 1.6rem + 4vw, 4.75rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  --radius: 0.75rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 1.75rem;
+  --shadow: 0 1px 2px rgb(59 59 59 / 0.05), 0 8px 24px rgb(59 59 59 / 0.07);
+  --container: 73.75rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --cta-bar-height: 4.25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1e1a19;
+    --surface: #2a2524;
+    --ink: #f3ece8;
+    --muted: #bdb1ac;
+    --line: #443b38;
+
+    --accent: #b8502c;
+    --accent-ink: #fff;
+    --accent-hover: #93401f;
+    --link: #f0936f;
+
+    --warm: #3a2a24;
+    --warm-strong: #5a3a2e;
+    --warm-text: #f0a585;
+    --sage: #25302a;
+    --sage-strong: #34453a;
+    --sage-text: #9ccb98;
+
+    --band: #352e2c;
+    --band-raised: #463d3a;
+    --band-ink: #fbf7f4;
+    --band-muted: #e4dcd8;
+
+    --coral: #f0936f;
+    --focus: #8cc4ea;
+    --danger: #ff8d8d;
+    --ok: #7ccf98;
+    --info: #22313b;
+
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.35);
+    --thermal: linear-gradient(90deg, #6f9f6c 0%, #d9ad55 45%, #d8735a 100%);
+  }
+}

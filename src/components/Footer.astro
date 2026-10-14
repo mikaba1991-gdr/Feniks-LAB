@@ -1,0 +1,137 @@
+---
+import { Image } from 'astro:assets';
+import Testo from './Testo.astro';
+import { contatti, isTodo, site, telHref, whatsappHref } from '../config/site';
+import { getNotizie } from '../lib/content';
+import { t, type Locale } from '../i18n';
+import logo from '../assets/brand/logo.png';
+import logoChiaro from '../assets/brand/logo-chiaro.png';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const year = new Date().getFullYear();
+// "Aggiornamenti" compare solo quando c'è almeno un articolo pubblicato
+const hasNotizie = (await getNotizie()).length > 0;
+---
+
+<footer class="site-footer">
+  <div class="container cols">
+    <div class="brand">
+      <Image src={logo} alt={`${site.name} – Re-image your living space`} width={120} densities={[1, 2]} class="logo logo-light" />
+      <Image src={logoChiaro} alt={`${site.name} – Re-image your living space`} width={120} densities={[1, 2]} class="logo logo-dark" />
+      <p>{site.owner}<br />Ingegnere civile</p>
+    </div>
+    <div>
+      <h2>{t(locale, 'footer.services')}</h2>
+      <ul>
+        <li><a href="/energia">{t(locale, 'nav.energia')}</a></li>
+        <li><a href="/energia/installatori">{t(locale, 'nav.installatori')}</a></li>
+        <li><a href={locale === 'en' ? '/en/design' : '/design'}>{t(locale, 'nav.design')}</a></li>
+        <li><a href="/chi-sono">{t(locale, 'nav.chiSono')}</a></li>
+        {hasNotizie && <li><a href="/notizie">{t(locale, 'nav.notizie')}</a></li>}
+      </ul>
+    </div>
+    <div>
+      <h2>{t(locale, 'footer.contacts')}</h2>
+      <ul>
+        <li><a href={telHref(contatti.telefono)}><Testo value={contatti.telefono} /></a></li>
+        <li><a href={whatsappHref(contatti.whatsapp)} target="_blank" rel="noopener">WhatsApp</a></li>
+        <li><a href={isTodo(contatti.email) ? '/contatti' : `mailto:${contatti.email}`}><Testo value={contatti.email} /></a></li>
+        {contatti.orari && <li class="muted"><Testo value={contatti.orari} /></li>}
+        {contatti.instagram && <li><a href={contatti.instagram} target="_blank" rel="noopener">Instagram</a></li>}
+      </ul>
+    </div>
+  </div>
+  <div class="container legal">
+    <p>
+      © {year} {site.name} – {site.owner} · {t(locale, 'footer.vat')} <Testo value={contatti.partitaIva} />{' · '}
+      <a href="/privacy">{t(locale, 'footer.privacy')}</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-8);
+    background: var(--warm);
+    color: var(--ink);
+  }
+
+  .cols {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-7) var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  }
+
+  .brand p {
+    margin: var(--space-3) 0 0;
+    color: var(--muted);
+  }
+
+  .logo {
+    width: 7.5rem;
+    height: auto;
+  }
+
+  .logo-dark {
+    display: none;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--warm-text);
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  a {
+    color: var(--ink);
+  }
+
+  a:hover {
+    color: var(--warm-text);
+  }
+
+  .muted {
+    color: var(--muted);
+  }
+
+  .legal {
+    border-top: 1px solid var(--warm-strong);
+    padding-block: var(--space-4);
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+
+  .legal p {
+    margin: 0;
+  }
+
+  .legal a {
+    color: var(--muted);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .logo-light {
+      display: none;
+    }
+
+    .logo-dark {
+      display: block;
+    }
+  }
+</style>

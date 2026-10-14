@@ -1,0 +1,20 @@
+FOTO DI CONTORNO (gratuite, licenza Unsplash: uso libero anche commerciale, senza obbligo di citazione)
+
+Scarica ogni foto (pulsante "Download free", va bene la misura "Medium") e salvala
+in questa cartella con ESATTAMENTE questo nome. Le pagine le mostrano da sole;
+finché manca una foto si vede uno sfondo colorato al suo posto.
+
+pompa-di-calore.jpg
+  https://unsplash.com/photos/outdoor-heat-pump-unit-next-to-a-brick-building-4VCm8l6wLQY
+
+soggiorno.jpg
+  https://unsplash.com/photos/a-bright-airy-living-room-with-minimalist-decor-eLMSYhpAGEI
+
+progetto.jpg
+  https://unsplash.com/photos/architectural-blueprints-and-a-laptop-on-a-marble-desk-rn00OVh0gEI
+
+casa-solare.jpg
+  https://unsplash.com/photos/a-house-with-solar-panels-gqpuuF3a2tY
+
+Prima di usarle nel sito vero, controlla sulla pagina di ogni foto che la licenza sia
+"Unsplash License" (gratuita) e non "Unsplash+".

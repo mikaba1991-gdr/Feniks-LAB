@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Testo from '../components/Testo.astro';
+import { contatti, site } from '../config/site';
+---
+
+<BaseLayout
+  title="Informativa privacy"
+  description="Informativa sul trattamento dei dati personali del sito Feniks LAB."
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Privacy', href: '/privacy' },
+  ]}
+>
+  <section class="section">
+    <div class="container narrow prose">
+      <h1>Informativa privacy</h1>
+      <p class="todo">
+        BOZZA da far verificare a un consulente privacy prima della pubblicazione. TODO(Giada): dati del titolare e data di
+        aggiornamento.
+      </p>
+
+      <h2>Titolare del trattamento</h2>
+      <p>
+        {site.owner} – {site.name}, <Testo value={contatti.citta} />, P.IVA <Testo value={contatti.partitaIva} />. Email:
+        <Testo value={contatti.email} />.
+      </p>
+
+      <h2>Quali dati raccogliamo</h2>
+      <ul>
+        <li>
+          <strong>Richieste dai moduli</strong>: dati di contatto (nome, email, telefono), dati dell'immobile (comune, superficie,
+          impianto) e le foto e i documenti che scegli di caricare.
+        </li>
+        <li>
+          <strong>Dati tecnici</strong>: indirizzo IP e informazioni sul browser, trattati dai fornitori dell'infrastruttura per
+          sicurezza e funzionamento del sito.
+        </li>
+      </ul>
+
+      <h2>Perché li trattiamo</h2>
+      <p>
+        Per rispondere alla tua richiesta e preparare un preventivo (misure precontrattuali richieste da te) e per proteggere il
+        sito da abusi e spam (legittimo interesse). Non usiamo i tuoi dati per pubblicità e non li vendiamo.
+      </p>
+
+      <h2>Per quanto tempo</h2>
+      <p>
+        Le richieste inviate dal sito, con foto e documenti, vengono cancellate automaticamente dopo 12 mesi. Se la richiesta
+        diventa un incarico, i dati necessari sono conservati per il tempo previsto dagli obblighi di legge.
+        TODO(Giada): verificare i tempi con il consulente.
+      </p>
+
+      <h2>Fornitori che trattano i dati per nostro conto</h2>
+      <ul>
+        <li><strong>Cloudflare</strong>: hosting del sito, archiviazione dei file inviati, protezione anti-spam (Turnstile) e statistiche di visita senza cookie.</li>
+        <li><strong>Resend</strong>: invio delle email di conferma e di notifica.</li>
+      </ul>
+      <p>
+        Alcuni fornitori possono trattare dati fuori dall'Unione Europea, con le garanzie previste dal GDPR (es. clausole
+        contrattuali standard). TODO(Giada): verificare con il consulente.
+      </p>
+
+      <h2>Contenuti di terze parti</h2>
+      <p>
+        I video di YouTube si caricano <strong>solo quando premi il pulsante</strong> per vederli: da quel momento si applica
+        l'informativa di Google/YouTube.
+      </p>
+
+      <h2>Cookie</h2>
+      <p>
+        Il sito non usa cookie di profilazione né statistiche con cookie, per questo non trovi un banner. Il modulo guidato salva
+        temporaneamente i dati che inserisci nel tuo browser (sessionStorage) per non perderli se ricarichi la pagina: si
+        cancellano chiudendo la scheda.
+      </p>
+
+      <h2>I tuoi diritti</h2>
+      <p>
+        Puoi chiedere accesso, rettifica, cancellazione, limitazione e portabilità dei tuoi dati, e opporti al trattamento,
+        scrivendo a <Testo value={contatti.email} />. Puoi anche proporre reclamo al Garante per la protezione dei dati personali.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

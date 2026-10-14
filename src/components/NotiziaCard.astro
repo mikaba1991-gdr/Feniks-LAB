@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/content';
+
+interface Props {
+  notizia: CollectionEntry<'notizie'>;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { notizia, headingLevel: Heading = 'h3' } = Astro.props;
+const { titolo, data, sommario, immagine, video, bozza } = notizia.data;
+---
+
+<article class="card notizia">
+  {immagine && <Image src={immagine.src} alt={immagine.alt} widths={[400, 800]} sizes="(min-width: 60rem) 22rem, 100vw" class="cover" />}
+  <div class="body">
+    <p class="meta">
+      <time datetime={data.toISOString()}>{formatDate(data)}</time>
+      {video && <span class="tag">Video</span>}
+      {bozza && <span class="todo">bozza</span>}
+    </p>
+    <Heading class="title"><a href={`/notizie/${notizia.id}`}>{titolo}</a></Heading>
+    <p class="desc">{sommario}</p>
+  </div>
+</article>
+
+<style>
+  .notizia {
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cover {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .body {
+    padding: var(--space-4);
+  }
+
+  .meta {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .tag {
+    background: #3d6e8c;
+    color: #fff;
+    border-radius: 999px;
+    padding: 0 var(--space-2);
+    font-weight: 600;
+  }
+
+  .title {
+    font-size: 1.2rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .title a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .title a:focus-visible {
+    outline: none;
+  }
+
+  .notizia:has(a:focus-visible) {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .desc {
+    color: var(--muted);
+    margin: 0;
+  }
+</style>

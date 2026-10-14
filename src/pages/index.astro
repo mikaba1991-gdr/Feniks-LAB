@@ -1,0 +1,310 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Testo from '../components/Testo.astro';
+import Ritratto from '../components/Ritratto.astro';
+import { contatti, isTodo, site, telHref, whatsappHref } from '../config/site';
+import { getPagina } from '../lib/content';
+import fotoEnergia from '../assets/foto/pompa-di-calore.jpg';
+import fotoInterior from '../assets/foto/soggiorno.jpg';
+
+const chiSono = await getPagina('chi-sono');
+const servizi = ['Legge 10', 'Conto Termico', 'Detrazioni fiscali'];
+---
+
+<BaseLayout title={site.name} description={chiSono.data.metaDescrizione}>
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">Re-image your living space</p>
+      <h1>Servizi di <em>ingegneria</em> per la tua casa</h1>
+      <p class="lead">Pratiche per l'energia e progetti d'interni, seguiti dall'{site.owner}. Da remoto, in tutta Italia.</p>
+    </div>
+  </section>
+
+  <section class="doors-section" aria-label="I servizi dello studio">
+    <div class="container doors">
+      <a class="door door-energia" href="/energia">
+        <Image src={fotoEnergia} alt="" widths={[480, 960]} sizes="(min-width: 60rem) 34rem, 92vw" class="door-photo" />
+        <span class="door-eyebrow">Energia</span>
+        <span class="door-title">Pratiche e progetti per l'impianto</span>
+        <span class="chips">
+          {servizi.map((servizio) => <span class="chip">{servizio}</span>)}
+        </span>
+        <span class="door-text">Per privati e installatori. Preventivo in 24/48 ore.</span>
+        <span class="door-cta">Vai a Energia <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="door door-interior" href="/design">
+        <Image src={fotoInterior} alt="" widths={[480, 960]} sizes="(min-width: 60rem) 34rem, 92vw" class="door-photo" />
+        <span class="door-eyebrow">Interior · in arrivo</span>
+        <span class="door-title">Render online della tua stanza</span>
+        <span class="door-text">Indichi metri quadri, città, cosa desideri e lo stile: vedi subito quanto costa il servizio.</span>
+        <span class="door-cta">Vai a Interior <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </section>
+
+  <div class="thermal-band" aria-hidden="true"></div>
+
+  <section class="section chi" aria-labelledby="chi-titolo">
+    <div class="container chi-grid">
+      <Ritratto />
+      <div>
+        <p class="eyebrow">Chi sono</p>
+        <h2 id="chi-titolo">{chiSono.data.titolo}</h2>
+        <p class="ruolo">Ingegnere civile</p>
+        <p class="lead"><Testo value={chiSono.data.intro} /></p>
+        <a class="btn btn-secondary" href="/chi-sono">Conosci Giada</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-section" aria-labelledby="installatori-titolo">
+    <div class="container">
+      <div class="band">
+        <div>
+          <p class="eyebrow band-eyebrow">Per installatori e idraulici</p>
+          <h2 id="installatori-titolo">Pacchetti di pratiche per i tuoi clienti</h2>
+        </div>
+        <a class="btn btn-sun" href="/energia/installatori">Scopri i pacchetti</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contatti" aria-labelledby="contatti-titolo">
+    <div class="container">
+      <div class="contatti-box">
+        <div>
+          <h2 id="contatti-titolo">Parliamone</h2>
+          <p class="lead">
+            <Testo value={contatti.telefono} />
+            {!isTodo(contatti.email) && <> · {contatti.email}</>}
+          </p>
+          {contatti.orari && <p class="orari"><Testo value={contatti.orari} /></p>}
+        </div>
+        <div class="contatti-actions">
+          <a class="btn btn-primary" href={telHref(contatti.telefono)}>Chiama</a>
+          <a class="btn btn-secondary" href={whatsappHref(contatti.whatsapp)} target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn btn-secondary" href={isTodo(contatti.email) ? '/contatti' : `mailto:${contatti.email}`}>Email</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: var(--space-7) var(--space-5);
+    text-align: center;
+  }
+
+  .hero h1 {
+    max-width: 14ch;
+    margin-inline: auto;
+    line-height: 1.02;
+  }
+
+  .hero .eyebrow {
+    letter-spacing: 0.22em;
+    margin-bottom: var(--space-4);
+  }
+
+  .hero .lead {
+    margin-inline: auto;
+    max-width: 36em;
+  }
+
+  .doors-section {
+    padding-block: var(--space-5) var(--space-8);
+  }
+
+  .doors {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 27.5rem), 1fr));
+  }
+
+  .door {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border-radius: var(--radius-xl);
+    color: var(--ink);
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+
+  .door:hover {
+    color: var(--ink);
+    transform: translateY(-3px);
+  }
+
+  .door-energia {
+    background: var(--warm);
+  }
+
+  .door-interior {
+    background: var(--sage);
+  }
+
+  .door-photo {
+    width: 100%;
+    height: clamp(8rem, 22vw, 12.5rem);
+    object-fit: cover;
+    border-radius: 1.25rem;
+  }
+
+  .door-energia .door-photo {
+    background: var(--warm-strong);
+  }
+
+  .door-interior .door-photo {
+    background: var(--sage-strong);
+  }
+
+  .door-eyebrow {
+    font-family: var(--display);
+    font-size: 0.8125rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .door-energia .door-eyebrow,
+  .door-energia .door-cta {
+    color: var(--warm-text);
+  }
+
+  .door-interior .door-eyebrow,
+  .door-interior .door-cta {
+    color: var(--sage-text);
+  }
+
+  .door-title {
+    font-family: var(--serif);
+    font-size: clamp(1.65rem, 1.2rem + 1.8vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .chip {
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .door-text {
+    color: var(--muted);
+  }
+
+  .door-cta {
+    margin-top: auto;
+    font-weight: 700;
+  }
+
+  @media (min-width: 40rem) {
+    .door {
+      padding: var(--space-6) 2.5rem 2.5rem;
+    }
+  }
+
+  .chi-grid {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    padding-block: var(--space-5);
+  }
+
+  .chi h2 {
+    margin-bottom: var(--space-1);
+  }
+
+  .ruolo {
+    color: var(--link);
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+
+  .chi .lead {
+    margin-bottom: var(--space-5);
+  }
+
+  .band-section {
+    padding-bottom: var(--space-8);
+  }
+
+  .band {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-5);
+    background: var(--band);
+    color: var(--band-ink);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .band h2 {
+    margin: 0;
+    font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.125rem);
+  }
+
+  .band-eyebrow {
+    color: var(--sun);
+  }
+
+  @media (min-width: 40rem) {
+    .band {
+      padding: 2.5rem 3rem;
+    }
+  }
+
+  .contatti {
+    padding-top: 0;
+  }
+
+  .contatti-box {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .contatti-box h2 {
+    margin-bottom: var(--space-2);
+  }
+
+  .contatti-box .lead {
+    margin: 0;
+  }
+
+  .orari {
+    margin: var(--space-2) 0 0;
+    color: var(--muted);
+  }
+
+  .contatti-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 40rem) {
+    .contatti-box {
+      padding: var(--space-7);
+    }
+  }
+</style>

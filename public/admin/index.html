@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Pannello Feniks LAB</title>
+  <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <!-- Decap CMS ospitato sul sito (versione bloccata in /admin/decap/VERSIONE) -->
+  <script>window.CMS_MANUAL_INIT = true;</script>
+  <script src="/admin/decap/decap-cms.js"></script>
+</head>
+<body>
+  <script>
+    // Il login passa dalle Functions di questo stesso sito: l'indirizzo si ricava dalla pagina,
+    // così funziona sia sull'anteprima di Cloudflare sia sul dominio definitivo.
+    CMS.init({ config: { backend: { base_url: window.location.origin } } });
+  </script>
+</body>
+</html>

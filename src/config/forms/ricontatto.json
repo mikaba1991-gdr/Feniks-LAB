@@ -1,0 +1,33 @@
+{
+  "id": "ricontatto",
+  "titolo": "Richiesta di ricontatto",
+  "descrizione": "Lascia un recapito: ti richiamiamo noi.",
+  "ramo": "generale",
+  "campiOggetto": ["argomento"],
+  "passi": [
+    {
+      "titolo": "Ti richiamiamo noi",
+      "campi": [
+        { "nome": "nome", "tipo": "testo", "etichetta": "Nome e cognome", "obbligatorio": true, "autocomplete": "name", "maxLunghezza": 120 },
+        { "nome": "telefono", "tipo": "telefono", "etichetta": "Telefono", "obbligatorio": true, "autocomplete": "tel" },
+        { "nome": "email", "tipo": "email", "etichetta": "Email", "aiuto": "Facoltativa: serve per la conferma della richiesta.", "autocomplete": "email" },
+        {
+          "nome": "argomento",
+          "tipo": "scelta",
+          "etichetta": "Di cosa vuoi parlare?",
+          "opzioni": ["Conto Termico", "Detrazioni fiscali", "Progettazione impianti / Legge 10", "Collaborazione come installatore", "Interior o garden design", "Altro"],
+          "obbligatorio": true
+        },
+        { "nome": "quando", "tipo": "scelta", "etichetta": "Quando preferisci essere chiamato?", "opzioni": ["Mattina", "Pomeriggio", "Indifferente"] },
+        { "nome": "messaggio", "tipo": "testoLungo", "etichetta": "Messaggio", "maxLunghezza": 2000 },
+        {
+          "nome": "privacy",
+          "tipo": "consenso",
+          "etichetta": "Privacy",
+          "obbligatorio": true,
+          "testo": "Ho letto l'informativa privacy e acconsento al trattamento dei miei dati per essere ricontattato."
+        }
+      ]
+    }
+  ]
+}

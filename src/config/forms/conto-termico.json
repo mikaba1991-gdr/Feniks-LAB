@@ -1,0 +1,111 @@
+{
+  "id": "conto-termico",
+  "titolo": "Richiesta pratica Conto Termico",
+  "descrizione": "Pochi minuti per raccogliere i dati che servono a valutare la pratica e preparare un preventivo. TODO(Giada): confermare campi e foto richieste.",
+  "ramo": "energia",
+  "destinatari": ["privato", "installatore"],
+  "campiOggetto": ["profilo", "comune"],
+  "passi": [
+    {
+      "titolo": "Chi sei",
+      "campi": [
+        {
+          "nome": "profilo",
+          "tipo": "scelta",
+          "etichetta": "Chi sta facendo la richiesta?",
+          "opzioni": [
+            { "valore": "Privato", "etichetta": "Privato: è casa mia" },
+            { "valore": "Installatore", "etichetta": "Installatore o idraulico: è per un mio cliente" }
+          ],
+          "obbligatorio": true
+        },
+        {
+          "nome": "azienda",
+          "tipo": "testo",
+          "etichetta": "Ragione sociale",
+          "autocomplete": "organization",
+          "obbligatorio": true,
+          "mostraSe": { "campo": "profilo", "valore": "Installatore" }
+        },
+        {
+          "nome": "partita_iva",
+          "tipo": "testo",
+          "etichetta": "Partita IVA",
+          "maxLunghezza": 20,
+          "mostraSe": { "campo": "profilo", "valore": "Installatore" }
+        },
+        {
+          "nome": "codice_installatore",
+          "tipo": "testo",
+          "etichetta": "Codice dell'installatore",
+          "aiuto": "Se ti ha indirizzato qui il tuo installatore, inserisci il codice che ti ha dato. TODO(Giada): confermare condizioni del codice.",
+          "maxLunghezza": 30,
+          "mostraSe": { "campo": "profilo", "valore": "Privato" }
+        }
+      ]
+    },
+    {
+      "titolo": "L'immobile",
+      "campi": [
+        { "nome": "comune", "tipo": "testo", "etichetta": "Comune dell'immobile", "obbligatorio": true, "autocomplete": "address-level2" },
+        { "nome": "provincia", "tipo": "testo", "etichetta": "Provincia", "placeholder": "es. BO", "obbligatorio": true, "maxLunghezza": 40 },
+        {
+          "nome": "superficie_mq",
+          "tipo": "numero",
+          "etichetta": "Superficie riscaldata (m²)",
+          "aiuto": "Anche indicativa.",
+          "min": 10,
+          "max": 5000
+        }
+      ]
+    },
+    {
+      "titolo": "L'intervento",
+      "campi": [
+        {
+          "nome": "intervento",
+          "tipo": "scelta",
+          "etichetta": "Tipo di intervento",
+          "opzioni": ["TODO(Giada): elenco interventi"],
+          "obbligatorio": true
+        },
+        {
+          "nome": "stato_lavori",
+          "tipo": "scelta",
+          "etichetta": "A che punto sono i lavori?",
+          "opzioni": ["Da iniziare", "In corso", "Conclusi"],
+          "obbligatorio": true
+        },
+        {
+          "nome": "impianto_esistente",
+          "tipo": "testoLungo",
+          "etichetta": "Impianto esistente",
+          "aiuto": "Cosa c'è oggi: tipo di generatore, combustibile, anno di installazione se lo conosci.",
+          "obbligatorio": true
+        },
+        {
+          "nome": "impianto_nuovo",
+          "tipo": "testoLungo",
+          "etichetta": "Nuovo impianto",
+          "aiuto": "Cosa vuoi installare (o hai installato): tipo, marca e modello se li conosci."
+        }
+      ]
+    },
+    {
+      "titolo": "Foto e documenti",
+      "descrizione": "Le foto ci evitano un sopralluogo. Vanno bene quelle fatte col telefono.",
+      "campi": [
+        {
+          "nome": "foto",
+          "tipo": "file",
+          "etichetta": "Foto e documenti",
+          "accetta": ["image/*", "application/pdf"],
+          "maxFile": 10,
+          "maxMB": 10,
+          "aiuto": "TODO(Giada): elenco foto e documenti richiesti (es. generatore attuale, targhetta, locale tecnico)."
+        }
+      ]
+    },
+    { "titolo": "Contatti", "campi": "@contatti-standard" }
+  ]
+}

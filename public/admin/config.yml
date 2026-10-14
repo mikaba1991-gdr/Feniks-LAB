@@ -1,0 +1,127 @@
+# Pannello dei contenuti: Decap CMS, ospitato sul sito in /admin.
+# I contenuti restano file nel repository (src/content): nessun database o servizio esterno.
+# I nomi dei campi devono coincidere con gli schemi in src/content.config.ts.
+
+locale: it
+logo_url: /admin/logo.png
+
+backend:
+  name: github
+  repo: mikaba1991-gdr/Feniks-LAB
+  branch: main
+  # Login tramite le Functions del sito (functions/api/auth.ts e callback.ts).
+  # base_url viene impostato in admin/index.html con l'indirizzo del sito.
+  auth_endpoint: api/auth
+  commit_messages:
+    create: 'Pannello: nuovo contenuto in {{collection}} "{{slug}}"'
+    update: 'Pannello: modifica {{collection}} "{{slug}}"'
+    delete: 'Pannello: elimina {{collection}} "{{slug}}"'
+    uploadMedia: 'Pannello: carica "{{path}}"'
+    deleteMedia: 'Pannello: elimina "{{path}}"'
+
+# Prova in locale senza GitHub: `npx decap-server` in un terminale, `npm run dev` in un altro,
+# poi http://localhost:4321/admin/ (le modifiche vengono scritte direttamente nei file locali)
+local_backend: true
+
+# Cartella predefinita per le immagini; ogni raccolta ha la sua (vedi sotto)
+media_folder: src/assets/uploads
+public_folder: /src/assets/uploads
+
+collections:
+  - name: notizie
+    label: Aggiornamenti e normativa
+    label_singular: aggiornamento
+    description: Notizie, articoli e video. Compaiono nella pagina Aggiornamenti.
+    folder: src/content/notizie
+    create: true
+    slug: '{{slug}}'
+    identifier_field: titolo
+    summary: '{{titolo}} · {{data}}'
+    sortable_fields: [data, titolo]
+    # Immagini salvate accanto ai contenuti, con percorsi relativi come li vuole Astro
+    media_folder: ../../assets/notizie
+    public_folder: ../../assets/notizie
+    fields:
+      - { label: Titolo, name: titolo, widget: string }
+      - { label: Data, name: data, widget: datetime, format: YYYY-MM-DD, date_format: DD/MM/YYYY, time_format: false }
+      - { label: Sommario, name: sommario, widget: text, hint: "Due righe che compaiono nell'elenco e su Google (max 300 caratteri)." }
+      - { label: Video YouTube, name: video, widget: string, required: false, hint: "Facoltativo. Incolla il link, es. https://www.youtube.com/watch?v=..." }
+      - label: Immagine
+        name: immagine
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: Immagine, name: src, widget: image, required: false }
+          - { label: Cosa si vede nell'immagine, name: alt, widget: string, required: false }
+      - { label: Etichette, name: tag, widget: list, required: false, default: [] }
+      - { label: Bozza (non pubblicare ancora), name: bozza, widget: boolean, default: false, required: false }
+      - { label: Testo, name: body, widget: markdown }
+
+  - name: pagine
+    label: Testi delle pagine
+    label_singular: pagina
+    description: Testi delle pagine (Chi sono, Energia e servizi, Installatori, Interior). Le pagine non si aggiungono né si cancellano da qui.
+    folder: src/content/pagine
+    create: false
+    delete: false
+    identifier_field: titolo
+    media_folder: ../../assets/pagine
+    public_folder: ../../assets/pagine
+    fields:
+      - { label: Titolo, name: titolo, widget: string }
+      - { label: Titolo per Google, name: metaTitolo, widget: string, required: false, hint: "Facoltativo, max 60 caratteri." }
+      - { label: Descrizione per Google, name: metaDescrizione, widget: text, hint: "Max 160 caratteri." }
+      - { label: Introduzione, name: intro, widget: text }
+      - { label: Descrizione breve, name: sommario, widget: string, required: false, hint: "Una riga per la scheda del servizio nella pagina Energia (max 160 caratteri)." }
+      - label: Punti principali
+        name: punti
+        widget: list
+        required: false
+        summary: '{{fields.titolo}}'
+        fields:
+          - { label: Titolo, name: titolo, widget: string }
+          - { label: Testo, name: testo, widget: text }
+      - label: Fasi della pratica
+        name: fasi
+        widget: list
+        required: false
+        summary: '{{fields.titolo}}'
+        fields:
+          - { label: Titolo, name: titolo, widget: string }
+          - { label: Testo, name: testo, widget: text }
+      - label: Domande frequenti
+        name: faq
+        widget: list
+        required: false
+        summary: '{{fields.domanda}}'
+        fields:
+          - { label: Domanda, name: domanda, widget: string }
+          - { label: Risposta, name: risposta, widget: text }
+      - label: Pacchetti
+        name: pacchetti
+        widget: list
+        required: false
+        hint: "Solo per la pagina installatori: i pacchetti di pratiche a prezzo fisso."
+        summary: '{{fields.nome}} – {{fields.prezzo}}'
+        fields:
+          - { label: Nome, name: nome, widget: string }
+          - { label: Cosa comprende, name: descrizione, widget: string }
+          - { label: Prezzo, name: prezzo, widget: string, hint: 'Come deve apparire sul sito, es. "300 €" o "da 300 €".' }
+          - { label: In evidenza, name: evidenza, widget: boolean, required: false, default: false }
+      - { label: Approfondimento, name: body, widget: markdown, required: false }
+
+  - name: impostazioni
+    label: Contatti
+    files:
+      - name: contatti
+        label: Contatti dello studio
+        file: src/content/settings/contatti.json
+        fields:
+          - { label: Telefono, name: telefono, widget: string }
+          - { label: WhatsApp, name: whatsapp, widget: string, hint: "Numero con prefisso, es. +39 328 199 4346" }
+          - { label: Email pubblica, name: email, widget: string }
+          - { label: Orari, name: orari, widget: string, required: false }
+          - { label: Città dello studio, name: citta, widget: string, required: false }
+          - { label: Partita IVA, name: partitaIva, widget: string, required: false }
+          - { label: Link Instagram, name: instagram, widget: string, required: false }
