@@ -61,7 +61,7 @@ collections:
   - name: pagine
     label: Testi delle pagine
     label_singular: pagina
-    description: Testi delle pagine servizio. Le pagine non si aggiungono né si cancellano da qui.
+    description: Testi delle pagine (Chi sono, Energia e servizi, Installatori, Interior). Le pagine non si aggiungono né si cancellano da qui.
     folder: src/content/pagine
     create: false
     delete: false
@@ -73,6 +73,7 @@ collections:
       - { label: Titolo per Google, name: metaTitolo, widget: string, required: false, hint: "Facoltativo, max 60 caratteri." }
       - { label: Descrizione per Google, name: metaDescrizione, widget: text, hint: "Max 160 caratteri." }
       - { label: Introduzione, name: intro, widget: text }
+      - { label: Descrizione breve, name: sommario, widget: string, required: false, hint: "Una riga per la scheda del servizio nella pagina Energia (max 160 caratteri)." }
       - label: Punti principali
         name: punti
         widget: list
@@ -97,6 +98,17 @@ collections:
         fields:
           - { label: Domanda, name: domanda, widget: string }
           - { label: Risposta, name: risposta, widget: text }
+      - label: Pacchetti
+        name: pacchetti
+        widget: list
+        required: false
+        hint: "Solo per la pagina installatori: i pacchetti di pratiche a prezzo fisso."
+        summary: '{{fields.nome}} – {{fields.prezzo}}'
+        fields:
+          - { label: Nome, name: nome, widget: string }
+          - { label: Cosa comprende, name: descrizione, widget: string }
+          - { label: Prezzo, name: prezzo, widget: string, hint: 'Come deve apparire sul sito, es. "300 €" o "da 300 €".' }
+          - { label: In evidenza, name: evidenza, widget: boolean, required: false, default: false }
       - { label: Approfondimento, name: body, widget: markdown, required: false }
 
   - name: impostazioni

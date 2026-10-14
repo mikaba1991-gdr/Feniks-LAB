@@ -1,0 +1,157 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Ritratto from '../components/Ritratto.astro';
+import Testo from '../components/Testo.astro';
+import { contatti, site, telHref, whatsappHref } from '../config/site';
+import { getPagina } from '../lib/content';
+
+const pagina = await getPagina('chi-sono');
+const { Content: Storia } = await render(pagina);
+---
+
+<BaseLayout
+  title={pagina.data.metaTitolo ?? `Chi sono – ${pagina.data.titolo}`}
+  description={pagina.data.metaDescrizione}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Chi sono', href: '/chi-sono' },
+  ]}
+>
+  <section class="section intro">
+    <div class="container intro-grid">
+      <Ritratto loading="eager" />
+      <div>
+        <p class="eyebrow">Chi sono</p>
+        <h1>{pagina.data.titolo}</h1>
+        <p class="ruolo">Ingegnere civile · {site.name}</p>
+        <p class="lead"><Testo value={pagina.data.intro} /></p>
+        <div class="prose storia"><Storia /></div>
+      </div>
+    </div>
+  </section>
+
+  {
+    pagina.data.punti.length > 0 && (
+      <section class="section valori-section" aria-labelledby="valori-titolo">
+        <div class="container">
+          <h2 id="valori-titolo">Come lavoro</h2>
+          <ul class="valori">
+            {pagina.data.punti.map((punto) => (
+              <li>
+                <h3>
+                  <Testo value={punto.titolo} />
+                </h3>
+                <p>
+                  <Testo value={punto.testo} />
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section" aria-labelledby="contatto-titolo">
+    <div class="container">
+      <div class="contatto">
+        <div>
+          <h2 id="contatto-titolo">Lavoriamo insieme?</h2>
+          <p>Scrivimi o chiamami: <Testo value={contatti.telefono} /></p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href={telHref(contatti.telefono)}>Chiama</a>
+          <a class="btn btn-secondary" href={whatsappHref(contatti.whatsapp)} target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro-grid {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  }
+
+  h1 {
+    margin-bottom: var(--space-1);
+  }
+
+  .ruolo {
+    color: var(--link);
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+
+  .storia {
+    color: var(--ink);
+  }
+
+  .valori-section {
+    padding-top: 0;
+  }
+
+  .valori {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  }
+
+  .valori li {
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--warm);
+  }
+
+  .valori h3 {
+    font-family: var(--sans);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+  }
+
+  .valori p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .contatto {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .contatto h2 {
+    margin-bottom: var(--space-1);
+  }
+
+  .contatto p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 40rem) {
+    .contatto {
+      padding: 2.5rem 3rem;
+    }
+  }
+</style>

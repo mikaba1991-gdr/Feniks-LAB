@@ -332,7 +332,7 @@ const isTodoText = (text?: string) => Boolean(text && text.includes('TODO('));
   }
 
   .req {
-    color: var(--red);
+    color: var(--link);
   }
 
   .opt {
@@ -392,8 +392,8 @@ const isTodoText = (text?: string) => Boolean(text && text.includes('TODO('));
   }
 
   .choice:has(input:checked) {
-    border-color: var(--red);
-    background: color-mix(in srgb, var(--blush) 45%, var(--bg));
+    border-color: var(--link);
+    background: color-mix(in srgb, var(--warm) 60%, var(--bg));
   }
 
   .choice:has(input:focus-visible) {
@@ -404,7 +404,7 @@ const isTodoText = (text?: string) => Boolean(text && text.includes('TODO('));
   .choice input {
     width: 1.25rem;
     height: 1.25rem;
-    accent-color: var(--red);
+    accent-color: var(--link);
     flex-shrink: 0;
   }
 
@@ -437,7 +437,7 @@ const isTodoText = (text?: string) => Boolean(text && text.includes('TODO('));
     width: 1.35rem;
     height: 1.35rem;
     margin-top: 0.2rem;
-    accent-color: var(--red);
+    accent-color: var(--link);
     flex-shrink: 0;
   }
 
@@ -473,7 +473,7 @@ const isTodoText = (text?: string) => Boolean(text && text.includes('TODO('));
   }
 
   .draft-notice {
-    background: color-mix(in srgb, var(--cold) 15%, var(--surface));
+    background: var(--info);
     border-radius: var(--radius);
     padding: var(--space-3) var(--space-4);
     font-size: var(--fs-sm);

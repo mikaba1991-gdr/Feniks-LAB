@@ -37,9 +37,14 @@ Consiglio per Google: un argomento per articolo, titolo chiaro con le parole che
 
 ## Cambiare i testi delle pagine
 
-**Testi delle pagine** → scegli la pagina (Conto Termico, Detrazioni, Installatori, ...).
-Puoi cambiare introduzione, punti principali, fasi e domande frequenti. Le pagine non si possono
-creare o cancellare da qui: per una pagina nuova chiedi a Michele.
+**Testi delle pagine** → scegli la pagina (Ing. Giada Molari = Chi sono, Energia, Legge 10,
+Conto Termico, Detrazioni, Installatori, Interior). Puoi cambiare introduzione, punti principali,
+fasi e domande frequenti. Le pagine non si possono creare o cancellare da qui: per una pagina nuova
+chiedi a Michele.
+
+- **Descrizione breve**: una riga che compare nella scheda del servizio, nella pagina Energia.
+- **Pacchetti** (solo pagina Installatori): nome, cosa comprende, prezzo come deve apparire
+  (es. "da 300 €"). Spunta **In evidenza** sul pacchetto da far risaltare.
 
 - **Titolo per Google** e **Descrizione per Google** sono il testo che appare nei risultati di
   ricerca: restano entro 60 e 160 caratteri.

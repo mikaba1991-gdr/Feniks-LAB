@@ -1,0 +1,81 @@
+---
+// Elenco dei pacchetti per installatori, pensato per stare su una fascia scura.
+import Testo from './Testo.astro';
+
+interface Props {
+  pacchetti: { nome: string; descrizione: string; prezzo: string; evidenza: boolean }[];
+}
+
+const { pacchetti } = Astro.props;
+---
+
+{
+  pacchetti.length > 0 && (
+    <ul class="pacchetti">
+      {pacchetti.map((pacchetto) => (
+        <li class:list={{ evidenza: pacchetto.evidenza }}>
+          <span>
+            <strong>
+              <Testo value={pacchetto.nome} />
+            </strong>
+            <span class="desc">
+              <Testo value={pacchetto.descrizione} />
+            </span>
+          </span>
+          <span class="prezzo">
+            <Testo value={pacchetto.prezzo} />
+          </span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<style>
+  .pacchetti {
+    list-style: none;
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    background: var(--band-raised);
+    color: var(--band-ink);
+    border-radius: 1rem;
+    padding: 1.125rem 1.25rem;
+  }
+
+  li.evidenza {
+    outline: 2px solid var(--sun);
+  }
+
+  strong {
+    display: block;
+    font-size: 1.1875rem;
+  }
+
+  .desc {
+    color: var(--band-muted);
+    font-size: 0.9375rem;
+  }
+
+  .prezzo {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--sun);
+    text-align: right;
+  }
+
+  /* I segnaposto restano leggibili anche sulla fascia scura */
+  .pacchetti :global(.todo) {
+    color: #3b3100;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+  }
+</style>

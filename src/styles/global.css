@@ -1,5 +1,7 @@
 @import "@fontsource-variable/fraunces";
 @import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource/jost/400.css";
+@import "@fontsource/jost/500.css";
 @import "./tokens.css";
 
 *,
@@ -63,13 +65,19 @@ video {
 }
 
 a {
-  color: var(--red);
+  color: var(--link);
   text-underline-offset: 0.18em;
   text-decoration-thickness: 0.08em;
 }
 
 a:hover {
-  color: var(--ember);
+  color: var(--accent-hover);
+}
+
+h1 em,
+h2 em {
+  font-style: italic;
+  color: var(--link);
 }
 
 :focus-visible {
@@ -79,7 +87,7 @@ a:hover {
 }
 
 ::selection {
-  background: var(--blush);
+  background: var(--warm-strong);
   color: var(--ink);
 }
 
@@ -96,12 +104,13 @@ a:hover {
   padding-block: var(--space-7);
 }
 
+/* Sovratitolo in maiuscoletto spaziato (Jost), come nel marchio */
 .eyebrow {
-  font-family: var(--sans);
-  font-size: var(--fs-sm);
-  font-weight: 600;
+  font-family: var(--display);
+  font-size: 0.8125rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.18em;
   color: var(--muted);
   margin-bottom: var(--space-2);
 }
@@ -177,6 +186,18 @@ a:hover {
   color: var(--bg);
 }
 
+/* Pulsante giallo sole, per le fasce scure */
+.btn-sun {
+  background: var(--sun);
+  color: var(--sun-ink);
+  font-weight: 700;
+}
+
+.btn-sun:hover {
+  background: #ffdc94;
+  color: var(--sun-ink);
+}
+
 .btn[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
@@ -188,6 +209,18 @@ a:hover {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
+}
+
+@media (min-width: 40rem) {
+  .card {
+    padding: var(--space-6);
+  }
+}
+
+/* Fascia termica: elemento firma, dal fresco al caldo */
+.thermal-band {
+  height: 10px;
+  background: var(--thermal);
 }
 
 .grid {

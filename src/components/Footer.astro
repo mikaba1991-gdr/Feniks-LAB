@@ -1,8 +1,11 @@
 ---
-import Logo from './Logo.astro';
+import { Image } from 'astro:assets';
 import Testo from './Testo.astro';
 import { contatti, isTodo, site, telHref, whatsappHref } from '../config/site';
+import { getNotizie } from '../lib/content';
 import { t, type Locale } from '../i18n';
+import logo from '../assets/brand/logo.png';
+import logoChiaro from '../assets/brand/logo-chiaro.png';
 
 interface Props {
   locale: Locale;
@@ -10,15 +13,26 @@ interface Props {
 
 const { locale } = Astro.props;
 const year = new Date().getFullYear();
+// "Aggiornamenti" compare solo quando c'è almeno un articolo pubblicato
+const hasNotizie = (await getNotizie()).length > 0;
 ---
 
 <footer class="site-footer">
-  <div class="thermal-line" aria-hidden="true"></div>
   <div class="container cols">
+    <div class="brand">
+      <Image src={logo} alt={`${site.name} – Re-image your living space`} width={120} densities={[1, 2]} class="logo logo-light" />
+      <Image src={logoChiaro} alt={`${site.name} – Re-image your living space`} width={120} densities={[1, 2]} class="logo logo-dark" />
+      <p>{site.owner}<br />Ingegnere civile</p>
+    </div>
     <div>
-      <Logo />
-      <p class="tagline">{site.tagline}.</p>
-      <p class="muted">{site.owner}<br /><Testo value={contatti.citta} /></p>
+      <h2>{t(locale, 'footer.services')}</h2>
+      <ul>
+        <li><a href="/energia">{t(locale, 'nav.energia')}</a></li>
+        <li><a href="/energia/installatori">{t(locale, 'nav.installatori')}</a></li>
+        <li><a href={locale === 'en' ? '/en/design' : '/design'}>{t(locale, 'nav.design')}</a></li>
+        <li><a href="/chi-sono">{t(locale, 'nav.chiSono')}</a></li>
+        {hasNotizie && <li><a href="/notizie">{t(locale, 'nav.notizie')}</a></li>}
+      </ul>
     </div>
     <div>
       <h2>{t(locale, 'footer.contacts')}</h2>
@@ -30,39 +44,20 @@ const year = new Date().getFullYear();
         {contatti.instagram && <li><a href={contatti.instagram} target="_blank" rel="noopener">Instagram</a></li>}
       </ul>
     </div>
-    <div>
-      <h2>{t(locale, 'footer.services')}</h2>
-      <ul>
-        <li><a href="/energia/conto-termico">Conto Termico</a></li>
-        <li><a href="/energia/detrazioni">Detrazioni fiscali</a></li>
-        <li><a href="/energia/progettazione-impianti">Progettazione impianti e Legge 10</a></li>
-        <li><a href="/energia/installatori">{t(locale, 'nav.installatori')}</a></li>
-        <li><a href="/design">Interior &amp; garden design</a></li>
-      </ul>
-    </div>
-    <div>
-      <h2>{t(locale, 'footer.info')}</h2>
-      <ul>
-        <li><a href="/lavori">{t(locale, 'nav.lavori')}</a></li>
-        <li><a href="/notizie">{t(locale, 'nav.notizie')}</a></li>
-        <li><a href="/privacy">{t(locale, 'footer.privacy')}</a></li>
-      </ul>
-    </div>
   </div>
   <div class="container legal">
-    <p>© {year} {site.name} – {site.owner}. {t(locale, 'footer.vat')} <Testo value={contatti.partitaIva} />. {t(locale, 'footer.rights')}</p>
+    <p>
+      © {year} {site.name} – {site.owner} · {t(locale, 'footer.vat')} <Testo value={contatti.partitaIva} />{' · '}
+      <a href="/privacy">{t(locale, 'footer.privacy')}</a>
+    </p>
   </div>
 </footer>
 
 <style>
   .site-footer {
     margin-top: var(--space-8);
-    background: var(--surface);
-  }
-
-  .thermal-line {
-    height: 4px;
-    background: var(--thermal);
+    background: var(--warm);
+    color: var(--ink);
   }
 
   .cols {
@@ -72,12 +67,27 @@ const year = new Date().getFullYear();
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
   }
 
-  h2 {
-    font-size: 1rem;
-    font-family: var(--sans);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+  .brand p {
+    margin: var(--space-3) 0 0;
     color: var(--muted);
+  }
+
+  .logo {
+    width: 7.5rem;
+    height: auto;
+  }
+
+  .logo-dark {
+    display: none;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--warm-text);
   }
 
   ul {
@@ -93,13 +103,7 @@ const year = new Date().getFullYear();
   }
 
   a:hover {
-    color: var(--red);
-  }
-
-  .tagline {
-    margin-top: var(--space-3);
-    font-family: var(--serif);
-    font-size: 1.1rem;
+    color: var(--warm-text);
   }
 
   .muted {
@@ -107,7 +111,7 @@ const year = new Date().getFullYear();
   }
 
   .legal {
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--warm-strong);
     padding-block: var(--space-4);
     font-size: var(--fs-sm);
     color: var(--muted);
@@ -115,5 +119,19 @@ const year = new Date().getFullYear();
 
   .legal p {
     margin: 0;
+  }
+
+  .legal a {
+    color: var(--muted);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .logo-light {
+      display: none;
+    }
+
+    .logo-dark {
+      display: block;
+    }
   }
 </style>

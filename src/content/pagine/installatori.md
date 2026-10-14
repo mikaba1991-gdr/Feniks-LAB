@@ -10,6 +10,17 @@ punti:
     testo: "TODO(Giada): l'installatore dà il suo codice al cliente, che compila il modulo da solo. Condizioni del codice?"
   - titolo: Tutto da remoto
     testo: "TODO(Giada): foto e documenti dal telefono, nessun sopralluogo se non serve."
+pacchetti:
+  - nome: "TODO(Giada): nome pacchetto 1"
+    descrizione: "TODO(Giada): quante pratiche e cosa comprende."
+    prezzo: "TODO(Giada): prezzo"
+  - nome: "TODO(Giada): nome pacchetto 2"
+    descrizione: "TODO(Giada): quante pratiche e cosa comprende."
+    prezzo: "TODO(Giada): prezzo"
+    evidenza: true
+  - nome: "TODO(Giada): nome pacchetto 3"
+    descrizione: "TODO(Giada): quante pratiche e cosa comprende."
+    prezzo: "TODO(Giada): prezzo"
 faq:
   - domanda: "TODO(Giada): domanda frequente degli installatori"
     risposta: "TODO(Giada): risposta."

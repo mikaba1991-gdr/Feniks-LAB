@@ -1,0 +1,35 @@
+---
+// Ritratto di Giada in un arco, sullo sfondo pesca.
+// Lo sfondo resta chiaro anche col tema scuro: la foto ha il fondo bianco e si fonde con "multiply".
+import { Image } from 'astro:assets';
+import { site } from '../config/site';
+import giada from '../assets/giada.jpg';
+
+interface Props {
+  /** Larghezza massima dell'arco */
+  width?: string;
+  loading?: 'eager' | 'lazy';
+}
+
+const { width = '24rem', loading = 'lazy' } = Astro.props;
+---
+
+<div class="arco" style={`--arco-width:${width}`}>
+  <Image src={giada} alt={site.owner} widths={[378]} sizes={`(min-width: 60rem) ${width}, 80vw`} loading={loading} />
+</div>
+
+<style>
+  .arco {
+    justify-self: center;
+    width: min(100%, var(--arco-width));
+    padding-top: var(--space-6);
+    border-radius: 12.5rem 12.5rem var(--radius-xl) var(--radius-xl);
+    background: #f6e3d9;
+    overflow: hidden;
+  }
+
+  img {
+    width: 100%;
+    mix-blend-mode: multiply;
+  }
+</style>

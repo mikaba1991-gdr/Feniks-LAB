@@ -35,42 +35,41 @@ const { fasi, titolo = 'Come funziona' } = Astro.props;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-4);
-    counter-reset: fase;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
   }
 
+  /* Ogni fase ha il colore di un punto della fascia termica: verde, sole, corallo */
   li {
-    position: relative;
-    padding: var(--space-4) var(--space-4) var(--space-4) 4rem;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
+    --fase: #8dbf8a;
+    --fase-num: var(--sage-text);
+    padding: var(--space-5) var(--space-5) var(--space-4);
+    border-top: 4px solid var(--fase);
+  }
+
+  li:nth-child(3n + 2) {
+    --fase: #ffce6d;
+    --fase-num: #8a6a12;
+  }
+
+  li:nth-child(3n + 3) {
+    --fase: #f18a6b;
+    --fase-num: var(--link);
   }
 
   .num {
-    position: absolute;
-    left: var(--space-4);
-    top: var(--space-4);
-    width: 2.25rem;
-    height: 2.25rem;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--thermal);
-    background-size: 500% 100%;
-    color: #fff;
-    font-weight: 700;
+    display: block;
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    line-height: 1.2;
+    color: var(--fase-num);
   }
 
-  li:nth-child(1) .num { background-position: 0% 0; }
-  li:nth-child(2) .num { background-position: 25% 0; }
-  li:nth-child(3) .num { background-position: 50% 0; }
-  li:nth-child(4) .num { background-position: 75% 0; }
-  li:nth-child(5) .num { background-position: 100% 0; }
-
   h3 {
-    font-size: 1.15rem;
-    margin-bottom: var(--space-1);
+    font-family: var(--sans);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: var(--space-1) 0;
   }
 
   p {
@@ -78,13 +77,9 @@ const { fasi, titolo = 'Come funziona' } = Astro.props;
     color: var(--muted);
   }
 
-  @media (min-width: 60rem) {
-    ol {
-      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-    }
-
-    li {
-      padding: 4rem var(--space-4) var(--space-4);
+  @media (prefers-color-scheme: dark) {
+    li:nth-child(3n + 2) {
+      --fase-num: var(--sun);
     }
   }
 </style>

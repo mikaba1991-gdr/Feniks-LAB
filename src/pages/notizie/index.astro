@@ -7,20 +7,20 @@ const notizie = await getNotizie();
 ---
 
 <BaseLayout
-  title="Notizie e normativa"
+  title="Aggiornamenti"
   description="Notizie e aggiornamenti su Conto Termico, detrazioni fiscali e normativa per impianti e casa, a cura dell'Ing. Giada Molari."
   breadcrumbs={[
     { name: 'Home', href: '/' },
-    { name: 'Notizie', href: '/notizie' },
+    { name: 'Aggiornamenti', href: '/notizie' },
   ]}
 >
   <section class="section">
     <div class="container">
-      <h1>Notizie e normativa</h1>
+      <h1>Aggiornamenti</h1>
       <p class="lead">Aggiornamenti su incentivi, detrazioni e regole per impianti e casa, spiegati in modo semplice.</p>
       {
         notizie.length === 0 ? (
-          <p>A breve pubblicheremo qui le prime notizie.</p>
+          <p>A breve pubblicheremo qui i primi aggiornamenti.</p>
         ) : (
           <div class="grid">
             {notizie.map((notizia) => <NotiziaCard notizia={notizia} headingLevel="h2" />)}

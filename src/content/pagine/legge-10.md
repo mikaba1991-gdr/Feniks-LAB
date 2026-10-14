@@ -1,6 +1,7 @@
 ---
-titolo: Progettazione impianti e Legge 10
-metaTitolo: Progettazione impianti termici e relazione Legge 10
+titolo: Legge 10 e progettazione impianti
+metaTitolo: Relazione Legge 10 e progettazione impianti termici
+sommario: "TODO(Giada): una riga sul servizio, per la scheda nella pagina Energia."
 metaDescrizione: "Progettazione di impianti termici e relazione tecnica Legge 10 per privati e installatori, anche da remoto."
 intro: "TODO(Giada): cosa comprende il servizio di progettazione e la relazione Legge 10."
 punti:

@@ -2,6 +2,7 @@
 titolo: Detrazioni fiscali
 metaTitolo: Pratiche detrazioni fiscali per la casa
 metaDescrizione: "Pratiche per le detrazioni fiscali sugli interventi in casa, gestite da remoto in tutta Italia per privati e installatori."
+sommario: "TODO(Giada): una riga sul servizio, per la scheda nella pagina Energia."
 intro: "TODO(Giada): quali detrazioni segue lo studio e cosa fa per il cliente."
 punti:
   - titolo: "TODO(Giada): a chi si rivolge"

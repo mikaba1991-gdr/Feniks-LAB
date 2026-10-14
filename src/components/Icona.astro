@@ -1,0 +1,18 @@
+---
+// Icone a tratto (24×24), decorative: il significato è sempre nel testo accanto.
+interface Props {
+  nome: 'casa' | 'fiamma' | 'ricevuta';
+  size?: number;
+}
+
+const { nome, size = 22 } = Astro.props;
+const paths: Record<Props['nome'], string> = {
+  casa: 'M4 21V9l8-6 8 6v12M9 21v-6h6v6',
+  fiamma: 'M12 3c3 4 6 6.5 6 11a6 6 0 0 1-12 0c0-2.5 1.2-4.4 2.8-5.9.2 1.9 1.1 3.1 2.4 3.6C10.7 9 11.2 6 12 3z',
+  ricevuta: 'M7 3h10v18l-5-3-5 3zM10 8h4M10 12h4',
+};
+---
+
+<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d={paths[nome]} />
+</svg>

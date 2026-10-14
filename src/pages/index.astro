@@ -1,145 +1,91 @@
 ---
 import { Image } from 'astro:assets';
-import { render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Testo from '../components/Testo.astro';
-import LavoroCard from '../components/LavoroCard.astro';
-import NotiziaCard from '../components/NotiziaCard.astro';
-import MappaLavori from '../components/MappaLavori.astro';
+import Ritratto from '../components/Ritratto.astro';
 import { contatti, isTodo, site, telHref, whatsappHref } from '../config/site';
-import { getLavori, getNotizie, getPagina } from '../lib/content';
-import ritratto from '../assets/ritratto-segnaposto.jpg';
+import { getPagina } from '../lib/content';
+import fotoEnergia from '../assets/foto/pompa-di-calore.jpg';
+import fotoInterior from '../assets/foto/soggiorno.jpg';
 
-const studio = await getPagina('studio');
-const { Content: Storia } = await render(studio);
-const lavori = await getLavori();
-const notizie = (await getNotizie()).slice(0, 3);
-
-const servizi = [
-  { href: '/energia/conto-termico', titolo: 'Conto Termico', testo: 'Pratiche per gli incentivi del GSE, gestite da remoto.' },
-  { href: '/energia/detrazioni', titolo: 'Detrazioni fiscali', testo: 'Pratiche per le detrazioni sugli interventi in casa.' },
-  { href: '/energia/progettazione-impianti', titolo: 'Progettazione impianti', testo: 'Impianti termici e relazione Legge 10.' },
-  { href: '/design', titolo: 'Interior & garden design', testo: 'Progetti per interni e giardini.', soon: true },
-];
+const chiSono = await getPagina('chi-sono');
+const servizi = ['Legge 10', 'Conto Termico', 'Detrazioni fiscali'];
 ---
 
-<BaseLayout title={site.name} description={studio.data.metaDescrizione}>
+<BaseLayout title={site.name} description={chiSono.data.metaDescrizione}>
   <section class="hero">
-    <div class="container hero-inner">
-      <p class="eyebrow">{site.name} · {site.owner}</p>
-      <h1>Uno studio che rinnova la casa, <em>dall'impianto all'arredo</em>.</h1>
-      <p class="lead">
-        Pratiche per Conto Termico e detrazioni, progettazione impianti e, presto, interior e garden design.
-        Lavoriamo da remoto in tutta Italia, con privati e installatori.
-      </p>
-    </div>
-
-    <div class="container doors">
-      <a class="door door-energia" href="/energia">
-        <span class="door-label">Energia</span>
-        <span class="door-text">Conto Termico, detrazioni, progettazione impianti</span>
-        <span class="door-cta" aria-hidden="true">Scopri →</span>
-      </a>
-      <a class="door door-design" href="/design">
-        <span class="door-label">Design <span class="soon">In arrivo</span></span>
-        <span class="door-text">Interior &amp; garden design, pacchetti a prezzo chiaro</span>
-        <span class="door-cta" aria-hidden="true">Scopri →</span>
-      </a>
-    </div>
-
-    <div class="thermal-band" aria-hidden="true">
-      <span>impianto</span>
-      <span>arredo</span>
+    <div class="container">
+      <p class="eyebrow">Re-image your living space</p>
+      <h1>Servizi di <em>ingegneria</em> per la tua casa</h1>
+      <p class="lead">Pratiche per l'energia e progetti d'interni, seguiti dall'{site.owner}. Da remoto, in tutta Italia.</p>
     </div>
   </section>
+
+  <section class="doors-section" aria-label="I servizi dello studio">
+    <div class="container doors">
+      <a class="door door-energia" href="/energia">
+        <Image src={fotoEnergia} alt="" widths={[480, 960]} sizes="(min-width: 60rem) 34rem, 92vw" class="door-photo" />
+        <span class="door-eyebrow">Energia</span>
+        <span class="door-title">Pratiche e progetti per l'impianto</span>
+        <span class="chips">
+          {servizi.map((servizio) => <span class="chip">{servizio}</span>)}
+        </span>
+        <span class="door-text">Per privati e installatori. Preventivo in 24/48 ore.</span>
+        <span class="door-cta">Vai a Energia <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="door door-interior" href="/design">
+        <Image src={fotoInterior} alt="" widths={[480, 960]} sizes="(min-width: 60rem) 34rem, 92vw" class="door-photo" />
+        <span class="door-eyebrow">Interior · in arrivo</span>
+        <span class="door-title">Render online della tua stanza</span>
+        <span class="door-text">Indichi metri quadri, città, cosa desideri e lo stile: vedi subito quanto costa il servizio.</span>
+        <span class="door-cta">Vai a Interior <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </section>
+
+  <div class="thermal-band" aria-hidden="true"></div>
 
   <section class="section chi" aria-labelledby="chi-titolo">
     <div class="container chi-grid">
-      <Image src={ritratto} alt="TODO(Giada): foto ritratto" widths={[320, 640]} sizes="(min-width: 60rem) 22rem, 80vw" class="ritratto" />
+      <Ritratto />
       <div>
         <p class="eyebrow">Chi sono</p>
-        <h2 id="chi-titolo">{studio.data.titolo}</h2>
-        <p class="lead"><Testo value={studio.data.intro} /></p>
-        <div class="prose storia"><Storia /></div>
-        <ul class="valori">
-          {
-            studio.data.punti.map((punto) => (
-              <li>
-                <strong><Testo value={punto.titolo} /></strong>
-                <span><Testo value={punto.testo} /></span>
-              </li>
-            ))
-          }
-        </ul>
+        <h2 id="chi-titolo">{chiSono.data.titolo}</h2>
+        <p class="ruolo">Ingegnere civile</p>
+        <p class="lead"><Testo value={chiSono.data.intro} /></p>
+        <a class="btn btn-secondary" href="/chi-sono">Conosci Giada</a>
       </div>
     </div>
   </section>
 
-  <section class="section servizi" aria-labelledby="servizi-titolo">
+  <section class="band-section" aria-labelledby="installatori-titolo">
     <div class="container">
-      <p class="eyebrow">Servizi</p>
-      <h2 id="servizi-titolo">Cosa fa lo studio</h2>
-      <ul class="grid servizi-list">
-        {
-          servizi.map((servizio) => (
-            <li class="card servizio">
-              <h3>
-                <a href={servizio.href}>{servizio.titolo}</a>
-                {servizio.soon && <span class="soon">In arrivo</span>}
-              </h3>
-              <p>{servizio.testo}</p>
-            </li>
-          ))
-        }
-      </ul>
+      <div class="band">
+        <div>
+          <p class="eyebrow band-eyebrow">Per installatori e idraulici</p>
+          <h2 id="installatori-titolo">Pacchetti di pratiche per i tuoi clienti</h2>
+        </div>
+        <a class="btn btn-sun" href="/energia/installatori">Scopri i pacchetti</a>
+      </div>
     </div>
   </section>
-
-  {
-    lavori.length > 0 && (
-      <section class="section" aria-labelledby="lavori-titolo">
-        <div class="container">
-          <p class="eyebrow">Lavori</p>
-          <h2 id="lavori-titolo">Lavori recenti</h2>
-          <div class="lavori-grid">
-            <MappaLavori lavori={lavori} height="22rem" />
-            <div class="grid">
-              {lavori.slice(0, 2).map((lavoro) => <LavoroCard lavoro={lavoro} />)}
-            </div>
-          </div>
-          <p><a href="/lavori">Tutti i lavori →</a></p>
-        </div>
-      </section>
-    )
-  }
-
-  {
-    notizie.length > 0 && (
-      <section class="section" aria-labelledby="notizie-titolo">
-        <div class="container">
-          <p class="eyebrow">Notizie e normativa</p>
-          <h2 id="notizie-titolo">Ultime notizie</h2>
-          <div class="grid">
-            {notizie.map((notizia) => <NotiziaCard notizia={notizia} />)}
-          </div>
-          <p class="more"><a href="/notizie">Tutte le notizie →</a></p>
-        </div>
-      </section>
-    )
-  }
 
   <section class="section contatti" aria-labelledby="contatti-titolo">
-    <div class="container contatti-box">
-      <div>
-        <h2 id="contatti-titolo">Parliamone</h2>
-        <p class="lead">Chiama, scrivi su WhatsApp o lascia un recapito: ti ricontattiamo noi.</p>
-        {contatti.orari && <p class="orari"><Testo value={contatti.orari} /></p>}
-      </div>
-      <div class="contatti-actions">
-        <a class="btn btn-primary" href={telHref(contatti.telefono)}>Chiama <Testo value={contatti.telefono} /></a>
-        <a class="btn btn-secondary" href={whatsappHref(contatti.whatsapp)} target="_blank" rel="noopener">WhatsApp</a>
-        <a class="btn btn-secondary" href={isTodo(contatti.email) ? '/contatti' : `mailto:${contatti.email}`}>Email</a>
-        <a class="btn btn-secondary" href="/contatti#ricontatto">Richiamami</a>
+    <div class="container">
+      <div class="contatti-box">
+        <div>
+          <h2 id="contatti-titolo">Parliamone</h2>
+          <p class="lead">
+            <Testo value={contatti.telefono} />
+            {!isTodo(contatti.email) && <> · {contatti.email}</>}
+          </p>
+          {contatti.orari && <p class="orari"><Testo value={contatti.orari} /></p>}
+        </div>
+        <div class="contatti-actions">
+          <a class="btn btn-primary" href={telHref(contatti.telefono)}>Chiama</a>
+          <a class="btn btn-secondary" href={whatsappHref(contatti.whatsapp)} target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn btn-secondary" href={isTodo(contatti.email) ? '/contatti' : `mailto:${contatti.email}`}>Email</a>
+        </div>
       </div>
     </div>
   </section>
@@ -147,202 +93,218 @@ const servizi = [
 
 <style>
   .hero {
-    padding-top: var(--space-7);
-    overflow: hidden;
+    padding-block: var(--space-7) var(--space-5);
+    text-align: center;
   }
 
   .hero h1 {
-    max-width: 18ch;
+    max-width: 14ch;
+    margin-inline: auto;
+    line-height: 1.02;
   }
 
-  .hero h1 em {
-    font-style: italic;
-    color: var(--red);
+  .hero .eyebrow {
+    letter-spacing: 0.22em;
+    margin-bottom: var(--space-4);
+  }
+
+  .hero .lead {
+    margin-inline: auto;
+    max-width: 36em;
+  }
+
+  .doors-section {
+    padding-block: var(--space-5) var(--space-8);
   }
 
   .doors {
     display: grid;
-    gap: var(--space-4);
-    margin-top: var(--space-6);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 27.5rem), 1fr));
   }
 
   .door {
-    display: grid;
-    gap: var(--space-2);
-    padding: var(--space-6) var(--space-5);
-    border-radius: var(--radius-lg);
-    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border-radius: var(--radius-xl);
+    color: var(--ink);
     text-decoration: none;
-    min-height: 11rem;
-    align-content: end;
     transition: transform 0.2s ease;
   }
 
   .door:hover {
-    color: #fff;
+    color: var(--ink);
     transform: translateY(-3px);
   }
 
   .door-energia {
-    background: linear-gradient(135deg, #2b5470 0%, #3d6e8c 50%, #a8461f 100%);
+    background: var(--warm);
   }
 
-  .door-design {
-    background: linear-gradient(135deg, #a8461f 0%, #9e1b22 60%, #6f1218 100%);
+  .door-interior {
+    background: var(--sage);
   }
 
-  .door-label {
+  .door-photo {
+    width: 100%;
+    height: clamp(8rem, 22vw, 12.5rem);
+    object-fit: cover;
+    border-radius: 1.25rem;
+  }
+
+  .door-energia .door-photo {
+    background: var(--warm-strong);
+  }
+
+  .door-interior .door-photo {
+    background: var(--sage-strong);
+  }
+
+  .door-eyebrow {
+    font-family: var(--display);
+    font-size: 0.8125rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .door-energia .door-eyebrow,
+  .door-energia .door-cta {
+    color: var(--warm-text);
+  }
+
+  .door-interior .door-eyebrow,
+  .door-interior .door-cta {
+    color: var(--sage-text);
+  }
+
+  .door-title {
     font-family: var(--serif);
-    font-size: var(--fs-h2);
+    font-size: clamp(1.65rem, 1.2rem + 1.8vw, 2.5rem);
     font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .chips {
     display: flex;
-    align-items: center;
-    gap: var(--space-3);
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .chip {
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
   }
 
   .door-text {
-    opacity: 0.95;
+    color: var(--muted);
   }
 
   .door-cta {
+    margin-top: auto;
     font-weight: 700;
   }
 
-  .soon {
-    font-family: var(--sans);
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 0.15rem 0.5rem;
-    border-radius: 999px;
-    background: var(--blush);
-    color: #2e2828;
-    vertical-align: middle;
-  }
-
-  /* Elemento firma: fascia termica dal freddo al caldo */
-  .thermal-band {
-    margin-top: var(--space-7);
-    height: 3.5rem;
-    background: var(--thermal);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-inline: var(--gutter);
-    color: #fff;
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 1.1rem;
+  @media (min-width: 40rem) {
+    .door {
+      padding: var(--space-6) 2.5rem 2.5rem;
+    }
   }
 
   .chi-grid {
     display: grid;
-    gap: var(--space-6);
-    align-items: start;
-  }
-
-  .ritratto {
-    border-radius: var(--radius-lg);
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    width: min(100%, 22rem);
-  }
-
-  .valori {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: var(--space-3);
-    margin-top: var(--space-5);
-  }
-
-  .valori li {
-    display: grid;
-    gap: var(--space-1);
-    padding-left: var(--space-4);
-    border-left: 3px solid var(--ember);
-  }
-
-  .servizi-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .servizio {
-    position: relative;
-  }
-
-  .servizio h3 {
-    display: flex;
+    gap: var(--space-7);
     align-items: center;
-    gap: var(--space-2);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    padding-block: var(--space-5);
+  }
+
+  .chi h2 {
+    margin-bottom: var(--space-1);
+  }
+
+  .ruolo {
+    color: var(--link);
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+
+  .chi .lead {
+    margin-bottom: var(--space-5);
+  }
+
+  .band-section {
+    padding-bottom: var(--space-8);
+  }
+
+  .band {
+    display: flex;
     flex-wrap: wrap;
-  }
-
-  .servizio a {
-    color: var(--ink);
-    text-decoration: none;
-  }
-
-  .servizio a::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-  }
-
-  .servizio:hover {
-    border-color: var(--ember);
-  }
-
-  .servizio p {
-    margin: 0;
-    color: var(--muted);
-  }
-
-  .lavori-grid {
-    display: grid;
+    justify-content: space-between;
+    align-items: center;
     gap: var(--space-5);
-    margin-bottom: var(--space-4);
+    background: var(--band);
+    color: var(--band-ink);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6) var(--space-5);
   }
 
-  .more {
-    margin-top: var(--space-4);
+  .band h2 {
+    margin: 0;
+    font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.125rem);
+  }
+
+  .band-eyebrow {
+    color: var(--sun);
+  }
+
+  @media (min-width: 40rem) {
+    .band {
+      padding: 2.5rem 3rem;
+    }
+  }
+
+  .contatti {
+    padding-top: 0;
   }
 
   .contatti-box {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6) var(--space-5);
     display: grid;
     gap: var(--space-5);
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .contatti-box h2 {
+    margin-bottom: var(--space-2);
+  }
+
+  .contatti-box .lead {
+    margin: 0;
+  }
+
+  .orari {
+    margin: var(--space-2) 0 0;
+    color: var(--muted);
   }
 
   .contatti-actions {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
-    align-content: center;
   }
 
-  .orari {
-    color: var(--muted);
-  }
-
-  @media (min-width: 60rem) {
-    .chi-grid {
-      grid-template-columns: 22rem 1fr;
-    }
-
-    .lavori-grid {
-      grid-template-columns: 1.3fr 1fr;
-    }
-
+  @media (min-width: 40rem) {
     .contatti-box {
-      grid-template-columns: 1fr 1fr;
+      padding: var(--space-7);
     }
   }
 </style>

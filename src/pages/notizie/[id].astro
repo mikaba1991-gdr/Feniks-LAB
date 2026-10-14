@@ -25,7 +25,7 @@ const imageUrl = immagine ? new URL(immagine.src.src, siteUrl).href : undefined;
   ogType="article"
   breadcrumbs={[
     { name: 'Home', href: '/' },
-    { name: 'Notizie', href: '/notizie' },
+    { name: 'Aggiornamenti', href: '/notizie' },
     { name: titolo, href: `/notizie/${notizia.id}` },
   ]}
   jsonLd={[articleJsonLd({ title: titolo, description: sommario, url: new URL(Astro.url.pathname, siteUrl), date: data, image: imageUrl, siteUrl })]}
@@ -38,7 +38,7 @@ const imageUrl = immagine ? new URL(immagine.src.src, siteUrl).href : undefined;
       {video && <VideoYouTube url={video} title={titolo} />}
       {!video && immagine && <Image src={immagine.src} alt={immagine.alt} widths={[600, 1200]} sizes="(min-width: 48rem) 44rem, 100vw" class="cover" />}
       <div class="prose"><Content /></div>
-      <p class="back"><a href="/notizie">← Tutte le notizie</a></p>
+      <p class="back"><a href="/notizie">← Tutti gli aggiornamenti</a></p>
     </div>
   </article>
 </BaseLayout>

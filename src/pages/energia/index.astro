@@ -1,28 +1,27 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ServiceHero from '../../components/ServiceHero.astro';
+import Fasi from '../../components/Fasi.astro';
+import Icona from '../../components/Icona.astro';
+import Pacchetti from '../../components/Pacchetti.astro';
+import Testo from '../../components/Testo.astro';
+import { serviziEnergia } from '../../config/servizi';
+import { contatti, telHref, whatsappHref } from '../../config/site';
 import { getPagina } from '../../lib/content';
+import giada from '../../assets/giada.jpg';
 
 const pagina = await getPagina('energia');
-const servizi = [
-  {
-    href: '/energia/conto-termico',
-    titolo: 'Conto Termico',
-    testo: 'Pratica per gli incentivi del GSE sugli impianti di riscaldamento.',
-    richiesta: '/energia/conto-termico/richiesta',
-  },
-  {
-    href: '/energia/detrazioni',
-    titolo: 'Detrazioni fiscali',
-    testo: 'Pratiche per le detrazioni sugli interventi in casa.',
-    richiesta: '/energia/detrazioni/richiesta',
-  },
-  {
-    href: '/energia/progettazione-impianti',
-    titolo: 'Progettazione impianti e Legge 10',
-    testo: 'Progetto dell’impianto termico e relazione tecnica.',
-  },
-];
+const installatori = await getPagina('installatori');
+const servizi = await Promise.all(
+  serviziEnergia.map(async (servizio) => ({ ...servizio, pagina: await getPagina(servizio.slug) })),
+);
+
+// Dove porta ogni scelta del privato: al modulo guidato, oppure alla richiesta di ricontatto
+const richiestaPrivato = (servizio: (typeof serviziEnergia)[number]) =>
+  servizio.form
+    ? `/energia/${servizio.slug}/richiesta?profilo=Privato`
+    : `/contatti?argomento=${encodeURIComponent('Progettazione impianti / Legge 10')}#ricontatto`;
 ---
 
 <BaseLayout
@@ -33,75 +32,316 @@ const servizi = [
     { name: 'Energia', href: '/energia' },
   ]}
 >
-  <ServiceHero eyebrow="Ramo Energia" titolo="Pratiche e progetti per l'energia della casa" intro={pagina.data.intro} />
+  <ServiceHero eyebrow="Pratiche e progetti per l'impianto" titolo={pagina.data.titolo} intro={pagina.data.intro} />
 
-  <section class="section percorsi" aria-labelledby="percorsi-titolo">
+  <section class="servizi-section" aria-label="Servizi Energia">
     <div class="container">
-      <h2 id="percorsi-titolo">Da dove parti?</h2>
-      <div class="grid">
-        <div class="card percorso">
-          <h3>Sono un privato</h3>
-          <p>Vuoi capire se puoi accedere agli incentivi e affidare a noi la pratica. Scegli il servizio e compila la richiesta: ci vogliono pochi minuti.</p>
-          <a class="btn btn-primary" href="/energia/conto-termico/richiesta?profilo=Privato">Richiesta Conto Termico</a>
-          <a class="btn btn-secondary" href="/energia/detrazioni/richiesta?profilo=Privato">Richiesta detrazioni</a>
-        </div>
-        <div class="card percorso installatore">
-          <h3>Sono un installatore o idraulico</h3>
-          <p>Gestiamo le pratiche dei tuoi clienti da remoto, in tutta Italia. Tu mandi foto e dati, noi pensiamo al resto.</p>
-          <a class="btn btn-primary" href="/energia/installatori">Scopri come lavoriamo</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="servizi-titolo">
-    <div class="container">
-      <h2 id="servizi-titolo">Servizi</h2>
-      <ul class="grid servizi">
+      <ul class="servizi">
         {
           servizi.map((servizio) => (
-            <li class="card">
-              <h3>
-                <a href={servizio.href}>{servizio.titolo}</a>
-              </h3>
-              <p>{servizio.testo}</p>
-              {servizio.richiesta && <a href={servizio.richiesta}>Richiedi un preventivo →</a>}
+            <li class="servizio">
+              <span class="icona">
+                <Icona nome={servizio.icona} />
+              </span>
+              <h2>
+                <a href={`/energia/${servizio.slug}`}>{servizio.nome}</a>
+              </h2>
+              <p>
+                <Testo value={servizio.pagina.data.sommario} />
+              </p>
+              <span class="scopri" aria-hidden="true">
+                Scopri →
+              </span>
             </li>
           ))
         }
       </ul>
     </div>
   </section>
+
+  <section class="section percorsi-section" aria-label="Privati e installatori">
+    <div class="container percorsi">
+      <div class="percorso privati">
+        <p class="eyebrow">Privati</p>
+        <h2>Sei un privato?</h2>
+        <p class="percorso-lead">Compila pochi campi e ricevi un <strong>preventivo in 24/48 ore</strong>.</p>
+        <div class="scelta">
+          <h3 id="scelta-titolo">Di cosa hai bisogno?</h3>
+          <ul aria-labelledby="scelta-titolo">
+            {
+              servizi.map((servizio) => (
+                <li>
+                  <a href={richiestaPrivato(servizio)}>
+                    {servizio.nome}
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="scelta-nota">Il modulo guidato ti chiede dati e foto passo per passo, anche dal telefono.</p>
+        </div>
+      </div>
+
+      <div class="percorso installatori" id="installatori">
+        <p class="eyebrow">Installatori e idraulici</p>
+        <h2>Sei un installatore?</h2>
+        <p class="percorso-lead">Pacchetti di pratiche per i tuoi clienti, gestite da remoto in tutta Italia.</p>
+        <Pacchetti pacchetti={installatori.data.pacchetti} />
+        <a class="btn btn-sun" href="/energia/installatori">Richiedi un pacchetto</a>
+      </div>
+    </div>
+  </section>
+
+  <Fasi fasi={pagina.data.fasi} />
+
+  <section class="section" aria-labelledby="dubbio-titolo">
+    <div class="container">
+      <div class="dubbio">
+        <div class="dubbio-testo">
+          <Image src={giada} alt="" width={72} height={72} densities={[1, 2]} class="avatar" />
+          <div>
+            <h2 id="dubbio-titolo">Hai un dubbio prima di iniziare?</h2>
+            <p>Scrivi o chiama Giada: <Testo value={contatti.telefono} /></p>
+          </div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href={telHref(contatti.telefono)}>Chiama</a>
+          <a class="btn btn-secondary" href={whatsappHref(contatti.whatsapp)} target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .percorso {
+  .servizi {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: grid;
-    gap: var(--space-3);
-    align-content: start;
-    justify-items: start;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18.75rem), 1fr));
   }
 
-  .percorso p {
+  /* Tutta la scheda è cliccabile: il link del titolo si estende su tutta l'area */
+  .servizio {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: 1.75rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.15s, transform 0.2s ease;
+  }
+
+  .servizio:hover {
+    border-color: var(--coral);
+    transform: translateY(-2px);
+  }
+
+  .icona {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: grid;
+    place-items: center;
+    border-radius: 0.875rem;
+    background: var(--warm);
+    color: var(--warm-text);
+  }
+
+  .servizio h2 {
+    margin: var(--space-1) 0 0;
+    font-size: 1.625rem;
+  }
+
+  .servizio h2 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .servizio h2 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .servizio h2 a:focus-visible {
+    outline: none;
+  }
+
+  .servizio:has(a:focus-visible) {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .servizio p {
     margin: 0;
     color: var(--muted);
   }
 
-  .installatore {
-    border: 2px solid var(--ember);
+  .scopri {
+    margin-top: auto;
+    font-weight: 700;
+    color: var(--link);
   }
 
-  .servizi {
+  .percorsi {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 28.75rem), 1fr));
+    align-items: stretch;
+  }
+
+  .percorso {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-xl);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  @media (min-width: 40rem) {
+    .percorso {
+      padding: 2.5rem;
+    }
+  }
+
+  .percorso h2 {
+    margin-bottom: var(--space-2);
+    font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+  }
+
+  .percorso-lead {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-5);
+  }
+
+  .privati {
+    background: var(--warm);
+  }
+
+  .privati .eyebrow {
+    color: var(--warm-text);
+  }
+
+  .scelta {
+    background: var(--surface);
+    border-radius: 1.25rem;
+    padding: var(--space-5);
+  }
+
+  .scelta h3 {
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+  }
+
+  .scelta ul {
     list-style: none;
+    margin: 0 0 var(--space-3);
     padding: 0;
-    margin: 0;
+    display: grid;
+    gap: var(--space-2);
   }
 
-  .servizi h3 a {
+  .scelta a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 3rem;
+    padding: 0 var(--space-4);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    transition: border-color 0.15s, background-color 0.15s;
+  }
+
+  .scelta a:hover {
+    border-color: var(--accent);
+    background: var(--bg);
     color: var(--ink);
   }
 
-  .servizi p {
+  .scelta a span {
+    color: var(--link);
+  }
+
+  .scelta-nota {
+    margin: 0;
+    font-size: var(--fs-sm);
     color: var(--muted);
+  }
+
+  .installatori {
+    background: var(--band);
+    color: var(--band-ink);
+  }
+
+  .installatori .eyebrow {
+    color: var(--sun);
+  }
+
+  .installatori .percorso-lead {
+    color: var(--band-muted);
+  }
+
+  .installatori .btn-sun {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+
+  .dubbio {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  @media (min-width: 40rem) {
+    .dubbio {
+      padding: 2.5rem 3rem;
+    }
+  }
+
+  .dubbio-testo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .avatar {
+    flex: none;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .dubbio h2 {
+    margin: 0;
+    font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
+  }
+
+  .dubbio p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
   }
 </style>

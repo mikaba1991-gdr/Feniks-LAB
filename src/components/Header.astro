@@ -13,16 +13,14 @@ const path = Astro.url.pathname;
 
 const items = [
   { href: '/energia', label: t(locale, 'nav.energia') },
-  { href: '/energia/installatori', label: t(locale, 'nav.installatori') },
-  { href: locale === 'en' ? '/en/design' : '/design', label: t(locale, 'nav.design'), soon: true },
-  { href: '/lavori', label: t(locale, 'nav.lavori') },
-  { href: '/notizie', label: t(locale, 'nav.notizie') },
+  { href: locale === 'en' ? '/en/design' : '/design', label: t(locale, 'nav.design') },
+  { href: '/chi-sono', label: t(locale, 'nav.chiSono') },
   { href: '/contatti', label: t(locale, 'nav.contatti') },
 ];
 
-// "/energia" resta attivo solo sulla sua pagina: le sottopagine hanno voci proprie
+// Una voce resta evidenziata anche nelle sue sottopagine (es. /energia/conto-termico)
 function isCurrent(href: string) {
-  return path === href || (href !== '/energia' && path.startsWith(`${href}/`));
+  return path === href || path.startsWith(`${href}/`);
 }
 ---
 
@@ -40,7 +38,6 @@ function isCurrent(href: string) {
             <li>
               <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
                 {item.label}
-                {item.soon && <span class="soon">{t(locale, 'badge.soon')}</span>}
               </a>
             </li>
           ))
@@ -58,7 +55,6 @@ function isCurrent(href: string) {
     </nav>
     <a class="btn btn-primary header-cta" href="/contatti">{t(locale, 'cta.expert')}</a>
   </div>
-  <div class="thermal-line" aria-hidden="true"></div>
 </header>
 
 <script>
@@ -87,8 +83,9 @@ function isCurrent(href: string) {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
     backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
   }
 
   .bar {
@@ -96,13 +93,9 @@ function isCurrent(href: string) {
     align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
-    min-height: 4rem;
+    min-height: 4.5rem;
+    padding-block: var(--space-2);
     flex-wrap: wrap;
-  }
-
-  .thermal-line {
-    height: 3px;
-    background: var(--thermal);
   }
 
   .menu-toggle {
@@ -171,23 +164,12 @@ function isCurrent(href: string) {
 
   .nav a:hover {
     background: var(--surface);
-    color: var(--red);
+    color: var(--link);
   }
 
   .nav a[aria-current='page'] {
-    color: var(--red);
+    color: var(--link);
     font-weight: 700;
-  }
-
-  .soon {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 0.1rem 0.45rem;
-    border-radius: 999px;
-    background: var(--blush);
-    color: var(--ink);
   }
 
   .header-cta {
@@ -216,12 +198,16 @@ function isCurrent(href: string) {
 
     .nav ul {
       display: flex;
-      gap: var(--space-1);
+      gap: var(--space-4);
     }
 
     .nav a {
-      padding: var(--space-2) var(--space-3);
-      font-size: 0.97rem;
+      padding: var(--space-2) var(--space-2);
+      font-size: 0.9375rem;
+    }
+
+    .nav a:hover {
+      background: transparent;
     }
   }
 </style>

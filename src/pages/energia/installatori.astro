@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ServiceHero from '../../components/ServiceHero.astro';
 import Punti from '../../components/Punti.astro';
+import Pacchetti from '../../components/Pacchetti.astro';
 import Faq from '../../components/Faq.astro';
 import CtaRichiesta from '../../components/CtaRichiesta.astro';
 import { contatti, telHref, whatsappHref } from '../../config/site';
@@ -9,6 +10,7 @@ import { getPagina, hasTodo } from '../../lib/content';
 import { faqJsonLd, serviceJsonLd } from '../../lib/seo';
 
 const pagina = await getPagina('installatori');
+const richiestaPacchetto = `/contatti?argomento=${encodeURIComponent('Collaborazione come installatore')}#ricontatto`;
 const siteUrl = new URL('/', Astro.site ?? Astro.url);
 const jsonLd = [
   serviceJsonLd({ name: pagina.data.titolo, description: pagina.data.metaDescrizione, url: new URL(Astro.url.pathname, siteUrl), siteUrl }),
@@ -26,10 +28,28 @@ const jsonLd = [
   ]}
   jsonLd={jsonLd}
 >
-  <ServiceHero eyebrow="Per installatori e idraulici" titolo={pagina.data.titolo} intro={pagina.data.intro}>
+  <ServiceHero eyebrow="Energia · Installatori" titolo={pagina.data.titolo} intro={pagina.data.intro}>
     <a class="btn btn-primary" href="/energia/conto-termico/richiesta?profilo=Installatore">Invia una pratica Conto Termico</a>
     <a class="btn btn-secondary" href="/energia/detrazioni/richiesta?profilo=Installatore">Invia una pratica detrazioni</a>
   </ServiceHero>
+
+  {
+    pagina.data.pacchetti.length > 0 && (
+      <section class="section" id="pacchetti" aria-labelledby="pacchetti-titolo">
+        <div class="container">
+          <div class="band">
+            <div class="band-intro">
+              <p class="eyebrow band-eyebrow">Pacchetti</p>
+              <h2 id="pacchetti-titolo">Pacchetti di pratiche per i tuoi clienti</h2>
+              <p>Gestite da remoto in tutta Italia. Scegli il pacchetto e ti ricontattiamo per partire.</p>
+              <a class="btn btn-sun" href={richiestaPacchetto}>Richiedi un pacchetto</a>
+            </div>
+            <Pacchetti pacchetti={pagina.data.pacchetti} />
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   <Punti punti={pagina.data.punti} />
 
@@ -45,3 +65,38 @@ const jsonLd = [
 
   <Faq faq={pagina.data.faq} />
 </BaseLayout>
+
+<style>
+  .band {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    background: var(--band);
+    color: var(--band-ink);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6) var(--space-5);
+  }
+
+  @media (min-width: 40rem) {
+    .band {
+      padding: 2.5rem 3rem;
+    }
+  }
+
+  .band h2 {
+    font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.25rem);
+  }
+
+  .band-intro p:not(.eyebrow) {
+    color: var(--band-muted);
+  }
+
+  .band-eyebrow {
+    color: var(--sun);
+  }
+
+  .band :global(.pacchetti) {
+    margin: 0;
+  }
+</style>

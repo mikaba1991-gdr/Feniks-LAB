@@ -62,7 +62,7 @@ const notizie = defineCollection({
 
 const faqSchema = z.object({ domanda: z.string().min(5), risposta: z.string().min(5) });
 
-// Testi delle pagine servizio. Il nome del file è l'indirizzo: conto-termico.md → /energia/conto-termico
+// Testi delle pagine. Per i servizi Energia il nome del file è l'indirizzo: conto-termico.md → /energia/conto-termico
 const pagine = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/pagine' }),
   schema: z.object({
@@ -72,9 +72,22 @@ const pagine = defineCollection({
       .string({ error: 'manca la metaDescrizione (testo che appare su Google)' })
       .max(160, 'metaDescrizione troppo lunga (max 160 caratteri)'),
     intro: z.string({ error: "manca l'intro" }),
+    /** Una riga per la scheda del servizio (es. nella pagina Energia) */
+    sommario: optionalText(z.string().max(160, 'sommario troppo lungo (max 160 caratteri)')),
     punti: z.array(z.object({ titolo: z.string(), testo: z.string() })).default([]),
     fasi: z.array(z.object({ titolo: z.string(), testo: z.string() })).default([]),
     faq: z.array(faqSchema).default([]),
+    /** Pacchetti a prezzo fisso (pagina installatori) */
+    pacchetti: z
+      .array(
+        z.object({
+          nome: z.string({ error: 'manca il nome del pacchetto' }).min(2),
+          descrizione: z.string({ error: 'manca la descrizione del pacchetto' }),
+          prezzo: z.string({ error: 'manca il prezzo del pacchetto (es. "da 300 €")' }),
+          evidenza: z.boolean().default(false),
+        }),
+      )
+      .default([]),
   }),
 });
 

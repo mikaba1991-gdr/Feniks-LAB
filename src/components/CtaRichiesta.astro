@@ -18,7 +18,7 @@ const { href, titolo, testo, label = 'Inizia la richiesta' } = Astro.props;
         <p>{testo}</p>
       </div>
       <div class="cta-actions">
-        <a class="btn btn-light" href={href}>{label}</a>
+        <a class="btn btn-primary" href={href}>{label}</a>
         <slot />
       </div>
     </div>
@@ -30,39 +30,31 @@ const { href, titolo, testo, label = 'Inizia la richiesta' } = Astro.props;
     display: grid;
     gap: var(--space-5);
     padding: var(--space-6) var(--space-5);
-    border-radius: var(--radius-lg);
-    background: linear-gradient(120deg, #2b5470 0%, #7d2a24 60%, #9e1b22 100%);
-    color: #fff;
+    border-radius: var(--radius-xl);
+    background: var(--warm);
+    color: var(--ink);
   }
 
   h2 {
-    color: #fff;
+    margin-bottom: var(--space-2);
   }
 
   p {
     margin: 0;
-    opacity: 0.95;
+    color: var(--muted);
+    font-size: var(--fs-lg);
   }
 
   .cta-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3);
+    gap: var(--space-4);
     align-items: center;
   }
 
-  .btn-light {
-    background: #fff;
-    color: #9e1b22;
-  }
-
-  .btn-light:hover {
-    background: #fbf5f3;
-    color: #6f1218;
-  }
-
   .cta-actions :global(a:not(.btn)) {
-    color: #fff;
+    color: var(--warm-text);
+    font-weight: 600;
   }
 
   @media (min-width: 60rem) {

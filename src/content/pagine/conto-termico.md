@@ -2,6 +2,7 @@
 titolo: Conto Termico
 metaTitolo: Pratica Conto Termico da remoto
 metaDescrizione: "Gestione della pratica Conto Termico da remoto in tutta Italia, per privati e installatori. Invia i dati online e ricevi un preventivo."
+sommario: "TODO(Giada): una riga sul servizio, per la scheda nella pagina Energia."
 intro: "TODO(Giada): cos'è il Conto Termico in due frasi e cosa fa lo studio per il cliente."
 punti:
   - titolo: "TODO(Giada): a chi si rivolge"

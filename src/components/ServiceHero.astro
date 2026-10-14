@@ -21,10 +21,18 @@ const { eyebrow, titolo, intro } = Astro.props;
 
 <style>
   .service-hero {
-    padding-block: var(--space-6) var(--space-7);
-    background:
-      radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--ember) 18%, transparent), transparent 60%),
-      radial-gradient(ellipse at 0% 100%, color-mix(in srgb, var(--cold) 14%, transparent), transparent 60%);
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  h1 {
+    max-width: 18ch;
+    font-size: clamp(2.5rem, 1.7rem + 3.4vw, 4rem);
+    line-height: 1.05;
+  }
+
+  .lead {
+    max-width: 38em;
+    font-size: var(--fs-lg);
   }
 
   .actions {

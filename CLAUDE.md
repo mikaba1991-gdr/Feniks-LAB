@@ -33,7 +33,7 @@ i contenuti da sola tramite pannello `/admin`.
 | Email | Resend (API HTTP) |
 | Anti-spam | Cloudflare Turnstile |
 | CMS | **Decap CMS** ospitato sul sito in `/admin` (file in `public/admin/decap/`, versione bloccata, aggiornabile con `scripts/aggiorna-decap.sh`), configurato in `public/admin/config.yml`. Login GitHub tramite le Functions `/api/auth` e `/api/callback` (nessun servizio esterno a parte GitHub). Giada usa un suo account GitHub, collaboratrice del repository |
-| Mappa | Leaflet + tile OpenStreetMap (con attribuzione obbligatoria), caricata in automatico quando entra nello schermo |
+| Mappa | Leaflet + tile OpenStreetMap (con attribuzione obbligatoria), caricata in automatico quando entra nello schermo. **Per ora disattivata** su richiesta di Giada (niente lavori né mappa): componenti e collection restano pronti |
 | Analytics | Cloudflare Web Analytics (senza cookie) |
 | Package manager | npm, versioni fissate nel `package-lock.json` |
 
@@ -65,10 +65,10 @@ i contenuti da sola tramite pannello `/admin`.
 │  │  │  └─ design-quiz.json     # fase 2
 │  │  └─ site.ts                 # nome, contatti, social (letti anche da content/settings)
 │  ├─ content/                   # contenuti gestiti dal CMS (Content Collections)
-│  │  ├─ lavori/                 # un .md per lavoro
-│  │  ├─ notizie/                # articoli e video
+│  │  ├─ lavori/                 # un .md per lavoro (per ora non pubblicati)
+│  │  ├─ notizie/                # "Aggiornamenti": articoli e video
 │  │  ├─ portfolio/              # fase 2
-│  │  ├─ pagine/                 # testi delle pagine servizio
+│  │  ├─ pagine/                 # testi: chi-sono, energia, legge-10, conto-termico, detrazioni, installatori, design
 │  │  └─ settings/               # contatti.json, prezzi-design.json
 │  ├─ content.config.ts          # schemi Zod delle collection
 │  ├─ components/
@@ -78,12 +78,12 @@ i contenuti da sola tramite pannello `/admin`.
 │  │  └─ …
 │  ├─ layouts/
 │  ├─ pages/
-│  │  ├─ index.astro             # home studio
-│  │  ├─ energia/…               # conto-termico, detrazioni, progettazione, installatori
-│  │  ├─ design/…                # fase 2 (in fase 1: pagina "in arrivo")
+│  │  ├─ index.astro             # home "Servizi di ingegneria": porte Energia e Interior
+│  │  ├─ chi-sono.astro          # pagina Chi sono
+│  │  ├─ energia/…               # legge-10, conto-termico, detrazioni, installatori (+ sezioni Privati/Installatori)
+│  │  ├─ design/…                # Interior, fase 2 (in fase 1: pagina "in arrivo")
 │  │  ├─ en/design/…             # fase 2
-│  │  ├─ lavori/…
-│  │  ├─ notizie/…
+│  │  ├─ notizie/…               # Aggiornamenti (fuori dal menu finché non c'è un articolo)
 │  │  └─ privacy.astro
 │  └─ styles/tokens.css
 └─ functions/
@@ -94,16 +94,23 @@ i contenuti da sola tramite pannello `/admin`.
 
 ## 5. Design system
 
-Riprendi la bozza grafica approvata (palette del logo Instagram, fenice).
+Grafica approvata da Giada: **proposta A "studio caldo"** (`docs/mockup/a-*.html`). I token completi,
+con la variante scura, sono in `src/styles/tokens.css`.
 
 ```css
---bg:#F4E7E3; --surface:#FBF5F3; --ink:#2E2828; --muted:#6E6260;
---red:#9E1B22; --ember:#D9542B; --blush:#E9C3BE; --line:#DCC7C2; --cold:#3D6E8C;
---serif:"Fraunces", Georgia, serif;           /* titoli */
---sans:"Bricolage Grotesque", system-ui, sans-serif; /* testo */
+--bg:#FBF7F4; --surface:#FFFFFF; --ink:#3B3B3B; --muted:#6B6461; --line:#EAD9D0;
+--accent:#B04A2A; --accent-hover:#8A3820;              /* pulsanti e link */
+--warm:#F6E3D9; --warm-text:#8A3820;                   /* superfici Energia */
+--sage:#E7EFE3; --sage-text:#3F6B3C;                   /* superfici Interior */
+--band:#3B3B3B; --sun:#FFCE6D;                          /* fascia installatori */
+--thermal: linear-gradient(90deg,#8DBF8A,#FFCE6D 45%,#F18A6B); /* fascia termica */
+--serif:"Fraunces", Georgia, serif;                     /* titoli */
+--sans:"Bricolage Grotesque", system-ui, sans-serif;    /* testo */
+--display:"Jost", sans-serif;                           /* marchio e sovratitoli maiuscoli spaziati */
 ```
 
-- Elemento firma: la **fascia termica** (gradiente freddo → caldo) nella home.
+- Logo: marchio della fenice in `src/assets/brand/` (versione `-chiaro` per il tema scuro).
+- Elemento firma: la **fascia termica** (gradiente fresco → caldo) nella home.
 - Mobile first, contrasto AA, focus visibile, `prefers-reduced-motion` rispettato.
 - Tema scuro via `prefers-color-scheme`.
 - Font self-hosted (pacchetti `@fontsource`) per evitare richieste a Google (GDPR).
@@ -218,7 +225,7 @@ Ogni voce = una PR. Spunta solo quando la PR è unita.
 - [ ] F1-05 Pagine servizio Energia + pagina Installatori (testi da `content/pagine`)
 - [ ] F1-06 `FormWizard` generico + config `conto-termico.json` e `detrazioni.json`
 - [ ] F1-07 Function `/api/richiesta` + R2 + Resend + Turnstile + `/api/file`
-- [ ] F1-08 Mappa lavori + elenco + pagina dettaglio lavoro
+- [ ] F1-08 Mappa lavori + elenco + pagina dettaglio lavoro (fatto, poi **sospeso** su richiesta di Giada: pagine tolte)
 - [ ] F1-09 Notizie: elenco, dettaglio, video al click
 - [ ] F1-10 SEO (§9), privacy, pagina 404, pagina "Design in arrivo"
 - [ ] F1-11 Pannello CMS: Decap CMS in `/admin` con login GitHub dalle nostre Functions (decisione presa)

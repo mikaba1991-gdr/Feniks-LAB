@@ -1,7 +1,7 @@
 # Sito Feniks LAB
 
-Sito dello studio di ingegneria **Feniks LAB – Ing. Giada Molari**: ramo Energia (Conto Termico,
-detrazioni, progettazione impianti) e, in fase 2, ramo Design.
+Sito dello studio di ingegneria **Feniks LAB – Ing. Giada Molari**: ramo Energia (Legge 10, Conto Termico,
+detrazioni) e, in fase 2, ramo Interior.
 
 Contesto, regole e backlog sono in [`CLAUDE.md`](CLAUDE.md); le specifiche di business in
 [`docs/specifiche.md`](docs/specifiche.md); la messa online in [`docs/deploy.md`](docs/deploy.md).
@@ -33,7 +33,7 @@ La chiave Turnstile di test fa sempre passare la verifica; i file finiscono in u
 - `src/lib/forms/` – validazione condivisa tra browser e server, scheda cliente, nomi file.
 - `functions/api/richiesta.ts` – riceve i moduli, salva su R2, invia email (Resend).
 - `functions/api/file/[[path]].ts` – download dei file con link firmato (90 giorni).
-- `src/content/` – contenuti di Giada: `lavori/`, `notizie/`, `pagine/` (testi servizi), `settings/contatti.json`.
+- `src/content/` – contenuti di Giada: `notizie/` (Aggiornamenti), `pagine/` (Chi sono e pagine servizio), `settings/contatti.json`. `lavori/` resta pronto ma per ora non è pubblicato (niente pagine né mappa).
 - `public/admin/` – pannello Decap CMS (`config.yml` definisce cosa Giada può modificare); login in `functions/api/auth.ts` e `callback.ts`.
-- `docs/mockup/` – proposte grafiche in HTML statico.
+- `docs/mockup/` – proposte grafiche in HTML statico. Giada ha scelto la **A**, che è la grafica del sito.
 - I testi da completare sono segnati `TODO(Giada)` e appaiono evidenziati in giallo nel sito.
